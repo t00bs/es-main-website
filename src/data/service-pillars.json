@@ -1,0 +1,26 @@
+[
+  {
+    "id": "design",
+    "label": "DESIGN",
+    "title": "Strategy, identity, product.",
+    "body": "Brand and UX/UI systems built to hold up in serious rooms. Strategy first, then identity, then a design system that keeps both honest.",
+    "linkText": "View design work",
+    "href": "/work"
+  },
+  {
+    "id": "automation",
+    "label": "AUTOMATION",
+    "title": "AI does the typing.",
+    "body": "Document drafting, checks and chasing, handled by machines. Every decision that matters gets handed to a human. That part isn’t for sale.",
+    "linkText": "View automation work",
+    "href": "/work"
+  },
+  {
+    "id": "portals",
+    "label": "PORTALS",
+    "title": "One place for everything.",
+    "body": "Custom portals where clients upload once and teams see everything. Six-week paper processes, done the same day.",
+    "linkText": "View portal work",
+    "href": "/work"
+  }
+]

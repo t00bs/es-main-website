@@ -1,6 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import HeroSlideshow from '../components/HeroSlideshow.astro';
+import ClientLogoBar from '../components/ClientLogoBar.astro';
+import ServicesBreakdown from '../components/ServicesBreakdown.astro';
+import ResultsStrip from '../components/ResultsStrip.astro';
+import ProcessSection from '../components/ProcessSection.astro';
 import WorkTabs from '../components/WorkTabs.astro';
 import PixelLink from '../components/PixelLink.astro';
 import ServicesMarquee from '../components/ServicesMarquee.astro';
@@ -32,6 +36,8 @@ const heroSlides = [
     />
   </div>
 
+  <ClientLogoBar />
+
   <WorkTabs />
 
   <div class="px-hover view-all">
@@ -39,6 +45,12 @@ const heroSlides = [
   </div>
 
   <ServicesMarquee />
+
+  <ServicesBreakdown />
+
+  <ResultsStrip />
+
+  <ProcessSection />
 
   <div class="px-hover testimonials">
     {

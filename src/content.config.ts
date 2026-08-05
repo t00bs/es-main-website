@@ -42,4 +42,34 @@ const services = defineCollection({
   }),
 });
 
-export const collections = { caseStudies, services };
+// Client names in the homepage "Trusted by" bar.
+const clientLogos = defineCollection({
+  loader: file('src/data/client-logos.json'),
+  schema: z.object({ name: z.string() }),
+});
+
+// The three service pillars on the homepage.
+const servicePillars = defineCollection({
+  loader: file('src/data/service-pillars.json'),
+  schema: z.object({
+    label: z.string(),
+    title: z.string(),
+    body: z.string(),
+    linkText: z.string(),
+    href: z.string(),
+  }),
+});
+
+// Headline results in the homepage stats strip.
+const results = defineCollection({
+  loader: file('src/data/results.json'),
+  schema: z.object({ figure: z.string(), caption: z.string() }),
+});
+
+// Numbered steps in the homepage process section.
+const processSteps = defineCollection({
+  loader: file('src/data/process-steps.json'),
+  schema: z.object({ number: z.string(), title: z.string(), body: z.string() }),
+});
+
+export const collections = { caseStudies, services, clientLogos, servicePillars, results, processSteps };

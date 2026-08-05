@@ -1,0 +1,26 @@
+[
+  {
+    "id": "discover",
+    "number": "01",
+    "title": "Discover",
+    "body": "We sit with your team and map the work as it actually happens. The bottlenecks tend to name themselves."
+  },
+  {
+    "id": "design",
+    "number": "02",
+    "title": "Design",
+    "body": "We design the tool around the people using it. Prototypes you can click, not decks you can nod at."
+  },
+  {
+    "id": "build",
+    "number": "03",
+    "title": "Build",
+    "body": "We build it, test it against real work, and adjust until it disappears into the day."
+  },
+  {
+    "id": "automate",
+    "number": "04",
+    "title": "Automate",
+    "body": "AI takes the repetition. Your people keep the judgement. We stay on hand while it beds in."
+  }
+]

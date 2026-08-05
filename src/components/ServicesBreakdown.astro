@@ -1,0 +1,75 @@
+---
+// "What we actually do": three service pillars in ruled columns.
+import SectionLabel from './SectionLabel.astro';
+import PixelLink from './PixelLink.astro';
+import servicePillars from '../data/service-pillars.json';
+---
+
+<div class="services-breakdown">
+  <div class="label-on-light"><SectionLabel highlight="we actually do">What</SectionLabel></div>
+  <div class="px-hover services-breakdown__grid">
+    {
+      servicePillars.map((item) => (
+        <div class="pillar">
+          <span class="pillar__label">{item.label}</span>
+          <span class="pillar__title">{item.title}</span>
+          <span class="pillar__body">{item.body}</span>
+          <div class="pillar__link">
+            <PixelLink href={item.href} color="var(--text-primary)">
+              {item.linkText}
+            </PixelLink>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .services-breakdown {
+    padding: var(--section-pad) var(--page-margin);
+  }
+  .services-breakdown__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    margin-top: 48px;
+  }
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-top: 1px solid var(--rule-hairline);
+    padding-top: 20px;
+  }
+  .pillar__label {
+    font-family: var(--font-pixel);
+    font-size: var(--text-pixel-label);
+    letter-spacing: var(--tracking-pixel);
+    color: var(--text-primary);
+  }
+  .pillar__title {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-card-title);
+    line-height: var(--leading-tight);
+    color: var(--text-primary);
+  }
+  .pillar__body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-body);
+    line-height: 1.4;
+    color: var(--text-primary);
+    text-wrap: pretty;
+  }
+  .pillar__link {
+    margin-top: auto;
+    padding-top: 8px;
+  }
+  @media (max-width: 960px) {
+    .services-breakdown__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

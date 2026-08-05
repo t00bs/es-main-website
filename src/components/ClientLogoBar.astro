@@ -1,0 +1,42 @@
+---
+// "Trusted by" bar: pixel label + client names between hairlines.
+import clientLogos from '../data/client-logos.json';
+---
+
+<div class="logo-bar">
+  <div class="logo-bar__row">
+    <span class="logo-bar__label">Trusted by:</span>
+    {clientLogos.map((item) => <span class="logo-bar__name">{item.name}</span>)}
+  </div>
+</div>
+
+<style>
+  .logo-bar {
+    padding: 0 var(--page-margin) var(--section-pad) var(--page-margin);
+  }
+  .logo-bar__row {
+    display: flex;
+    align-items: baseline;
+    gap: 40px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-top: 1px solid var(--rule-hairline);
+    border-bottom: 1px solid var(--rule-hairline);
+  }
+  .logo-bar__label {
+    font-family: var(--font-pixel);
+    font-size: var(--text-pixel-label);
+    letter-spacing: var(--tracking-pixel);
+    color: var(--text-primary);
+  }
+  .logo-bar__name {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: var(--leading-tight);
+    color: var(--text-primary);
+    opacity: 0.5;
+    white-space: nowrap;
+  }
+</style>

@@ -1,0 +1,70 @@
+---
+// "How we work": four numbered steps in ruled columns.
+import SectionLabel from './SectionLabel.astro';
+import processSteps from '../data/process-steps.json';
+---
+
+<div class="process">
+  <div class="label-on-light"><SectionLabel highlight="we work">How</SectionLabel></div>
+  <div class="process__grid">
+    {
+      processSteps.map((item) => (
+        <div class="step">
+          <span class="step__number">{item.number}</span>
+          <span class="step__title">{item.title}</span>
+          <span class="step__body">{item.body}</span>
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .process {
+    padding: var(--section-pad) var(--page-margin);
+  }
+  .process__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gap);
+    margin-top: 48px;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border-top: 1px solid var(--rule-hairline);
+    padding-top: 20px;
+  }
+  .step__number {
+    font-family: var(--font-pixel);
+    font-size: var(--text-pixel-label);
+    letter-spacing: var(--tracking-pixel);
+    color: var(--text-primary);
+  }
+  .step__title {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-card-title);
+    line-height: var(--leading-tight);
+    color: var(--text-primary);
+  }
+  .step__body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-body);
+    line-height: 1.4;
+    color: var(--text-primary);
+    text-wrap: pretty;
+  }
+  @media (max-width: 960px) {
+    .process__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 600px) {
+    .process__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

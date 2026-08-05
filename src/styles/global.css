@@ -54,6 +54,12 @@ a.px-hover:hover {
   opacity: 0.6;
 }
 
+/* Section labels on page-coloured (light) sections: the lead word follows the
+   page text colour instead of the cream redaction treatment. */
+.label-on-light .section-label {
+  color: var(--text-primary);
+}
+
 /* Brand rule: italicised text in headlines renders in Neue Pixel instead */
 em,
 i {
