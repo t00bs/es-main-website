@@ -4,7 +4,11 @@ import SectionLabel from '../../components/SectionLabel.astro';
 import TickerRow from '../../components/TickerRow.astro';
 import SectionRule from '../../components/SectionRule.astro';
 import WorkCard from '../../components/WorkCard.astro';
-import { CASE_STUDIES } from '../../data/case-studies';
+import { getCollection } from 'astro:content';
+
+const caseStudies = (await getCollection('caseStudies')).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <Layout title="Electric Sheep — Work">
@@ -23,8 +27,14 @@ import { CASE_STUDIES } from '../../data/case-studies';
 
   <div class="hover-zoom work-grid">
     {
-      CASE_STUDIES.map((c) => (
-        <WorkCard src={c.cardImage} title={c.title} subtitle={c.subtitle} showArrow href={`/work/${c.id}`} />
+      caseStudies.map((e) => (
+        <WorkCard
+          src={e.data.cardImage}
+          title={e.data.title}
+          subtitle={e.data.subtitle}
+          showArrow
+          href={`/work/${e.id}`}
+        />
       ))
     }
     <WorkCard title="Your project here." subtitle="Say hello and we'll talk" showArrow href="/contact" />

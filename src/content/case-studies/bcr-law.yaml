@@ -1,0 +1,38 @@
+title: BCR Law LLP
+subtitle: A law firm, minus the paperwork
+client: BCR Law LLP
+year: "2025"
+heroImage: /assets/images/work-generic.jpg
+cardImage: /assets/images/work-generic.jpg
+services:
+  - AI Automations
+  - Digital Transformation
+tags:
+  - automation
+order: 3
+liveUrl: https://bcrlawjersey.com
+liveLabel: Visit bcrlawjersey.com
+summary: >-
+  One of Jersey's leading law firms asked us to take the repetition out of
+  client intake. We automated the process end to end — without automating the
+  judgement.
+sections:
+  - type: text
+    label: The challenge
+    body: >-
+      Client onboarding meant re-keying the same details into four systems.
+      Skilled people were doing unskilled work, and the backlog showed it.
+  - type: image
+    src: /assets/images/work-generic.jpg
+    caption: Intake pipeline — four systems, one entry point.
+  - type: text
+    label: What we did
+    body: >-
+      A single intake flow feeding every system at once, with AI-assisted
+      document checks and clear handoffs to humans wherever a decision matters.
+  - type: text
+    label: The result
+    body: >-
+      Onboarding time cut by two thirds. Zero re-keying. The lawyers went back
+      to lawyering.
+quote: null

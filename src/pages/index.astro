@@ -7,9 +7,11 @@ import ServicesMarquee from '../components/ServicesMarquee.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import FeatureCard from '../components/FeatureCard.astro';
-import { CASE_STUDIES } from '../data/case-studies';
+import { getCollection } from 'astro:content';
 
-const testimonials = CASE_STUDIES.filter((c) => c.quote);
+const testimonials = (await getCollection('caseStudies', (e) => e.data.quote)).sort(
+  (a, b) => a.data.order - b.data.order
+);
 ---
 
 <Layout title="Electric Sheep — Home">
@@ -27,12 +29,12 @@ const testimonials = CASE_STUDIES.filter((c) => c.quote);
 
   <div class="px-hover testimonials">
     {
-      testimonials.map((c) => (
+      testimonials.map((e) => (
         <TestimonialCard
-          src={c.cardImage}
-          quote={c.quote!.text}
-          linkText={`View ${c.title} Case Study`}
-          href={`/work/${c.id}`}
+          src={e.data.cardImage}
+          quote={e.data.quote!.text}
+          linkText={`View ${e.data.title} Case Study`}
+          href={`/work/${e.id}`}
         />
       ))
     }

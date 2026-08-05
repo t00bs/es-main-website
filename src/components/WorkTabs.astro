@@ -1,14 +1,20 @@
 ---
 // Home work section: three pixel-label tabs, the rule segment slides to the
 // active tab, and each tab reveals its own 3-card grid with a crossfade.
+// A case study appears under every tab listed in its `tags` frontmatter.
+import { getCollection } from 'astro:content';
 import WorkCard from './WorkCard.astro';
-import { getCaseStudy } from '../data/case-studies';
+
+const all = (await getCollection('caseStudies')).sort((a, b) => a.data.order - b.data.order);
 
 const TABS = [
-  { label: 'DESIGN', ids: ['virdaris', 'mortgage-shop', 'farm-jersey'] },
-  { label: 'AUTOMATION', ids: ['foxdocs', 'bcr-law', 'mortgage-shop'] },
-  { label: 'PORTALS', ids: ['farm-jersey', 'virdaris', 'mortgage-shop'] },
-];
+  { label: 'DESIGN', tag: 'design' },
+  { label: 'AUTOMATION', tag: 'automation' },
+  { label: 'PORTALS', tag: 'portals' },
+].map((tab) => ({
+  ...tab,
+  entries: all.filter((e) => e.data.tags.includes(tab.tag as any)).slice(0, 3),
+}));
 ---
 
 <div class="work-tabs">
@@ -30,18 +36,15 @@ const TABS = [
   {
     TABS.map((tab, i) => (
       <div class="hover-zoom tab-grid" data-grid={i} hidden={i !== 0}>
-        {tab.ids.map((id) => {
-          const cs = getCaseStudy(id);
-          return (
-            <WorkCard
-              src={cs.cardImage}
-              title={cs.title}
-              subtitle={cs.subtitle}
-              showArrow
-              href={`/work/${cs.id}`}
-            />
-          );
-        })}
+        {tab.entries.map((e) => (
+          <WorkCard
+            src={e.data.cardImage}
+            title={e.data.title}
+            subtitle={e.data.subtitle}
+            showArrow
+            href={`/work/${e.id}`}
+          />
+        ))}
       </div>
     ))
   }
