@@ -1,11 +1,13 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file } from 'astro/loaders';
 
 // Homepage tab keys — a case study appears under every tab listed in its `tags`.
 export const WORK_TAGS = ['design', 'automation', 'portals'] as const;
 
+// One collection, one file: every case study is an item in the array, keyed by
+// its `id` (which is also the /work/<id> slug).
 const caseStudies = defineCollection({
-  loader: glob({ pattern: '*.json', base: './src/content/case-studies' }),
+  loader: file('src/data/case-studies.json'),
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
