@@ -63,8 +63,8 @@ const { cs, next } = Astro.props;
 
   {
     cs.quote && (
-      <div data-theme="dark" class="quote">
-        <PillBadge color="var(--es-cream)">Customer Stories</PillBadge>
+      <div class="inverse-section quote">
+        <PillBadge color="var(--text-on-inverse)">Customer Stories</PillBadge>
         <span class="quote__text">{cs.quote.text}</span>
         <span class="quote__author">{cs.quote.author}</span>
       </div>
@@ -167,7 +167,6 @@ const { cs, next } = Astro.props;
     color: var(--es-cream);
   }
   .quote {
-    background-color: var(--es-ink);
     margin-top: 48px;
     padding: var(--section-pad) var(--page-margin);
     display: flex;
@@ -180,14 +179,14 @@ const { cs, next } = Astro.props;
     font-style: italic;
     font-size: var(--text-card-title);
     line-height: var(--leading-tight);
-    color: var(--es-cream);
+    color: var(--text-on-inverse);
     max-width: 900px;
   }
   .quote__author {
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: var(--leading-none);
-    color: var(--es-cream);
+    color: var(--text-on-inverse);
   }
   .next {
     padding: var(--section-pad) var(--page-margin);

@@ -60,6 +60,18 @@ a.px-hover:hover {
   color: var(--text-primary);
 }
 
+/* Inverse band: ink on the light theme, cream on the dark theme, with every
+   semantic token rebound so nested components swap automatically. */
+.inverse-section {
+  background-color: var(--surface-inverse);
+  --text-primary: var(--text-on-inverse);
+  --text-on-dark: var(--text-on-inverse);
+  --highlight-block: var(--text-on-inverse);
+  --highlight-text: var(--surface-inverse);
+  --rule-strong: var(--text-on-inverse);
+  --rule-hairline: var(--rule-hairline-inverse);
+}
+
 /* Brand rule: italicised text in headlines renders in Neue Pixel instead */
 em,
 i {

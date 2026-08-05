@@ -65,7 +65,7 @@ const heroSlides = [
     }
   </div>
 
-  <div data-theme="dark" class="section-grid about">
+  <div class="inverse-section section-grid about">
     <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel>
     <span class="statement about__body"
       >{
@@ -99,11 +99,8 @@ const heroSlides = [
     grid-template-columns: 1fr 1fr;
     gap: var(--grid-gap);
   }
-  .about {
-    background-color: var(--es-ink);
-  }
   .about__body {
-    color: var(--es-cream);
+    color: var(--text-on-inverse);
   }
   .feature {
     padding: var(--section-pad) var(--page-margin);

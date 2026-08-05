@@ -37,6 +37,8 @@
   /* Semantic — light (default) */
   --surface-page: var(--es-cream);
   --surface-inverse: var(--es-ink);
+  --text-on-inverse: var(--es-cream);
+  --rule-hairline-inverse: rgba(255, 255, 255, 0.5);
   --surface-footer: var(--es-black);
   --surface-placeholder: var(--es-gray);
   --text-primary: var(--es-black);
@@ -97,6 +99,9 @@
 
 [data-theme="dark"] {
   --surface-page: var(--es-ink);
+  --surface-inverse: var(--es-cream);
+  --text-on-inverse: var(--es-ink);
+  --rule-hairline-inverse: rgba(0, 0, 0, 0.5);
   --text-primary: var(--es-cream);
   --highlight-block: var(--es-cream);
   --highlight-text: var(--es-ink);
