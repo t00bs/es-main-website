@@ -1,12 +1,23 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
-import TickerRow from '../../components/TickerRow.astro';
 import SectionRule from '../../components/SectionRule.astro';
 import WorkCard from '../../components/WorkCard.astro';
 import caseStudies from '../../data/case-studies.json';
 
 const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
+
+// Category tags (capitalised) followed by the service tags shown on the
+// case-study pages.
+const TAG_LABELS: Record<string, string> = {
+  design: 'Design',
+  automation: 'Automation',
+  portals: 'Portals',
+};
+const cardTags = (item: (typeof caseStudies)[number]) => [
+  ...item.tags.map((tag) => TAG_LABELS[tag] ?? tag),
+  ...item.services,
+];
 ---
 
 <Layout title="Electric Sheep — Work">
@@ -19,7 +30,6 @@ const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
   </div>
 
   <div class="rule-wrap">
-    <TickerRow />
     <SectionRule />
   </div>
 
@@ -32,6 +42,7 @@ const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
           subtitle={item.subtitle}
           showArrow
           href={`/work/${item.id}`}
+          tags={cardTags(item)}
         />
       ))
     }
