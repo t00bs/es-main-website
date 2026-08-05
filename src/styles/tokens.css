@@ -97,7 +97,7 @@
 
 [data-theme="dark"] {
   --surface-page: var(--es-ink);
-  --text-primary: var(--es-white);
+  --text-primary: var(--es-cream);
   --highlight-block: var(--es-cream);
   --highlight-text: var(--es-ink);
   --rule-strong: var(--es-white);
