@@ -17,7 +17,7 @@ const testimonials = caseStudies.filter((e) => e.data.quote);
 // Hero rotation: brand imagery bookends the top case study's card image.
 const heroSlides = [
   '/assets/images/hero-sheep.png',
-  caseStudies[0].data.cardImage,
+  ...(caseStudies.length ? [caseStudies[0].data.cardImage] : []),
   '/assets/images/toby.jpg',
 ];
 ---
