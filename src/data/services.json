@@ -1,0 +1,20 @@
+[
+  { "id": "ai-automations", "text": "AI Automations." },
+  { "id": "custom-portals", "text": "Custom Portals." },
+  { "id": "strategic-design", "text": "Strategic Design." },
+  { "id": "ux-ui-systems", "text": "UX/UI Systems." },
+  { "id": "brand-identity", "text": "Brand Identity." },
+  { "id": "machine-learning", "text": "Machine Learning." },
+  { "id": "integration", "text": "Integration" },
+  { "id": "digital-transformation", "text": "Digital Transformation •" },
+  { "id": "workflow-optimisation", "text": "Workflow Optimisation •" },
+  { "id": "creative-technology", "text": "Creative Technology •" },
+  { "id": "product-engineering", "text": "Product Engineering •" },
+  { "id": "generative-design", "text": "Generative Design" },
+  { "id": "consulting", "text": "Consulting" },
+  { "id": "strategy", "text": "Strategy" },
+  { "id": "intelligent-interfaces", "text": "Intelligent Interfaces" },
+  { "id": "data-architecture", "text": "Data Architecture" },
+  { "id": "rapid-prototyping", "text": "Rapid Prototyping" },
+  { "id": "human-centric-systems", "text": "Human-Centric Systems" }
+]

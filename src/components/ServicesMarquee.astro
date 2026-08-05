@@ -1,14 +1,14 @@
 ---
-// Dark services strip: "We offer:" pixel label pinned left, 36px list scrolling behind an edge fade.
+// Dark services strip: "We offer:" pixel label pinned left, 36px list scrolling
+// behind an edge fade. Statements come from the services collection.
+import services from '../data/services.json';
+
 interface Props {
   label?: string;
-  text?: string;
 }
 
-const SERVICES_TEXT =
-  'AI Automations. Custom Portals. Strategic Design. UX/UI Systems. Brand Identity. Machine Learning. Integration Digital Transformation • Workflow Optimisation • Creative Technology • Product Engineering • Generative Design Consulting Strategy Intelligent Interfaces Data Architecture Rapid Prototyping Human-Centric Systems';
-
-const { label = 'We offer:', text = SERVICES_TEXT } = Astro.props;
+const { label = 'We offer:' } = Astro.props;
+const text = services.map((item) => item.text).join(' ');
 ---
 
 <div class="marquee">
@@ -35,7 +35,7 @@ const { label = 'We offer:', text = SERVICES_TEXT } = Astro.props;
     display: flex;
     white-space: nowrap;
     padding-left: 393px;
-    animation: es-marquee 60s linear infinite;
+    animation: es-marquee 120s linear infinite;
   }
   @keyframes es-marquee {
     from {
@@ -67,11 +67,14 @@ const { label = 'We offer:', text = SERVICES_TEXT } = Astro.props;
     width: 249px;
     background: linear-gradient(270deg, rgba(16, 16, 16, 0) 0%, rgb(16, 16, 16) 86.06%);
   }
+  /* Solid cover from the page edge through the label so the scrolling text
+     never shows to the left of it; the fade takes over from there. */
   .marquee__label {
     position: absolute;
-    left: var(--page-margin);
+    left: 0;
     top: 0;
     bottom: 0;
+    padding-left: var(--page-margin);
     background-color: var(--es-ink);
     display: flex;
     align-items: center;

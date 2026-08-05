@@ -34,4 +34,12 @@ const caseStudies = defineCollection({
   }),
 });
 
-export const collections = { caseStudies };
+// Statements shown in the homepage services marquee, in display order.
+const services = defineCollection({
+  loader: file('src/data/services.json'),
+  schema: z.object({
+    text: z.string(),
+  }),
+});
+
+export const collections = { caseStudies, services };
