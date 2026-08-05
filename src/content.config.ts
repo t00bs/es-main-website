@@ -15,7 +15,7 @@ const caseStudies = defineCollection({
     title: z.string(),
     subtitle: z.string(),
     client: z.string(),
-    year: z.string(),
+    year: z.string().optional(),
     heroImage: z.string(),
     cardImage: z.string(),
     services: z.array(z.string()),

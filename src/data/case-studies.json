@@ -2,174 +2,135 @@
   {
     "id": "farm-jersey",
     "title": "Farm Jersey",
-    "subtitle": "Lightning-fast applications",
+    "subtitle": "Government and rural economy",
     "client": "Farm Jersey",
-    "year": "2024",
-    "heroImage": "/assets/images/work-farm-jersey.png",
-    "cardImage": "/assets/images/work-farm-jersey.png",
+    "heroImage": "/assets/images/case-studies/farm-jersey-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/farm-jersey-desktop.jpg",
     "services": [
-      "Custom Portals",
-      "UX/UI Systems"
+      "Web design",
+      "Webflow development",
+      "Custom web application",
+      "CMS build"
     ],
     "tags": [
       "design",
       "portals"
     ],
     "order": 1,
-    "liveUrl": "https://farmjersey.je",
+    "liveUrl": "https://farmjersey.je/",
     "liveLabel": "Visit farmjersey.je",
-    "summary": "Jersey's agricultural network needed one place to manage growers, produce and grant applications. We built a portal that turned a six-week paper process into a same-day one.",
+    "summary": "A digital home for Jersey's rural economy, pairing a content-rich Webflow site with a purpose-built online portal for Rural Support Scheme grant applications.",
     "sections": [
       {
         "type": "text",
-        "label": "The challenge",
-        "body": "Applications arrived by post, moved by hand, and disappeared into filing cabinets. Growers waited weeks for answers that took minutes to make. Nobody could see where anything was."
+        "label": "The brief",
+        "body": "Farm Jersey supports the island's farmers and fishers, so the site had to do far more than tell a story. Islanders needed one place to find business support, funding routes, events and resources, and the annual Rural Support Scheme needed to move from paperwork to a modern online application process."
       },
       {
         "type": "image",
-        "src": "/assets/images/work-farm-jersey.png",
-        "caption": "The grower portal — application status at a glance."
+        "src": "/assets/images/case-studies/farm-jersey-rss-desktop.jpg",
+        "caption": "Farm Jersey — Webflow site + custom grant portal."
       },
       {
         "type": "text",
-        "label": "What we did",
-        "body": "One portal for growers, one dashboard for the team. Structured applications, automated checks, and a status anyone can read. No training manual required."
+        "label": "What we built",
+        "body": "The public site leads with three clear journeys: apply for the RSS, get business support, and learn through the Knowledge Hub. Alongside it sits a custom-built portal where applicants complete their agricultural return, land declaration and supporting documents, track progress in real time, and the Farm Jersey team manages every application from an admin dashboard."
       },
       {
         "type": "text",
-        "label": "The result",
-        "body": "Same-day decisions on standard applications. Six weeks of admin, gone. The filing cabinets are now used for biscuits."
+        "label": "Highlights",
+        "body": "Custom Rural Support Scheme portal with application tracking and an admin dashboard • Knowledge Hub resource library, industry events and producer showcases • Warm, photographic design that reflects the island's landscape and community"
       }
     ],
     "quote": null
   },
   {
-    "id": "foxdocs",
-    "title": "Foxdocs",
-    "subtitle": "Documents that write themselves",
-    "client": "Foxdocs",
-    "year": "2024",
-    "heroImage": "/assets/images/work-generic.jpg",
-    "cardImage": "/assets/images/work-generic.jpg",
+    "id": "mortgage-shop",
+    "title": "The Mortgage Shop",
+    "subtitle": "Financial services",
+    "client": "The Mortgage Shop (Henley Offshore Financial Services)",
+    "heroImage": "/assets/images/case-studies/mortgage-shop-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/mortgage-shop-desktop.jpg",
     "services": [
-      "AI Automations",
-      "Workflow Optimisation"
+      "Web design",
+      "Webflow development",
+      "Custom calculator",
+      "Copy structure"
     ],
     "tags": [
-      "automation"
+      "design"
     ],
     "order": 2,
-    "liveUrl": "https://foxdocs.example",
-    "liveLabel": "Visit foxdocs site",
-    "summary": "Foxdocs turns hours of drafting into minutes of reviewing. We designed and built the automation engine that fills, checks and files documents while people do the thinking.",
+    "liveUrl": "https://www.mortgageshop.je/",
+    "liveLabel": "Visit mortgageshop.je",
+    "summary": "A confident rebrand online for Jersey's independent mortgage broker, matching over thirty years of expertise with a site that says 'Register Once. Apply everywhere.'",
     "sections": [
       {
         "type": "text",
-        "label": "The challenge",
-        "body": "The same clauses, typed again and again. Every document a fresh chance for a typo, and every typo a phone call."
+        "label": "The brief",
+        "body": "The Mortgage Shop has matched Jersey home hunters with lenders since 1990, but needed a site that felt as approachable as its advisers, guided each type of buyer to the right service, and let people act there and then."
       },
       {
         "type": "image",
-        "src": "/assets/images/work-generic.jpg",
-        "caption": "Template engine — one source of truth per clause."
+        "src": "/assets/images/case-studies/mortgage-shop-desktop-2.jpg",
+        "caption": "The Mortgage Shop — Webflow."
       },
       {
         "type": "text",
-        "label": "What we did",
-        "body": "A template engine driven by structured data, with AI handling the boring parts and a human signing off on the important ones. Automated by AI. Driven by people."
+        "label": "What we built",
+        "body": "A bold, characterful design built around clear buyer journeys for first-time buyers, remortgaging, buy to let and moving house. An interactive mortgage calculator estimates monthly repayments, legal fees and stamp duty with first-time buyer logic built in, and appointment booking sits one click away throughout."
       },
       {
         "type": "text",
-        "label": "The result",
-        "body": "Drafting time down from hours to minutes. Error rate down to approximately zero. Phone calls now mostly pleasant."
+        "label": "Highlights",
+        "body": "Custom mortgage calculator covering repayments, legal fees and stamp duty • Distinctive 3D character illustrations and a strong green identity • Client testimonials, rate newsletter sign-up and appointment booking throughout"
       }
     ],
-    "quote": null
-  },
-  {
-    "id": "bcr-law",
-    "title": "BCR Law LLP",
-    "subtitle": "A law firm, minus the paperwork",
-    "client": "BCR Law LLP",
-    "year": "2025",
-    "heroImage": "/assets/images/work-generic.jpg",
-    "cardImage": "/assets/images/work-generic.jpg",
-    "services": [
-      "AI Automations",
-      "Digital Transformation"
-    ],
-    "tags": [
-      "automation"
-    ],
-    "order": 3,
-    "liveUrl": "https://bcrlawjersey.com",
-    "liveLabel": "Visit bcrlawjersey.com",
-    "summary": "One of Jersey's leading law firms asked us to take the repetition out of client intake. We automated the process end to end — without automating the judgement.",
-    "sections": [
-      {
-        "type": "text",
-        "label": "The challenge",
-        "body": "Client onboarding meant re-keying the same details into four systems. Skilled people were doing unskilled work, and the backlog showed it."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/work-generic.jpg",
-        "caption": "Intake pipeline — four systems, one entry point."
-      },
-      {
-        "type": "text",
-        "label": "What we did",
-        "body": "A single intake flow feeding every system at once, with AI-assisted document checks and clear handoffs to humans wherever a decision matters."
-      },
-      {
-        "type": "text",
-        "label": "The result",
-        "body": "Onboarding time cut by two thirds. Zero re-keying. The lawyers went back to lawyering."
-      }
-    ],
-    "quote": null
+    "quote": {
+      "text": "“A massive thank you for delivering this project early, and on-budget.”",
+      "author": "Mortgage Shop"
+    }
   },
   {
     "id": "virdaris",
     "title": "Virdaris",
-    "subtitle": "A brand with a backbone",
-    "client": "Virdaris",
-    "year": "2025",
-    "heroImage": "/assets/images/testimonial-virdaris.png",
-    "cardImage": "/assets/images/testimonial-virdaris.png",
+    "subtitle": "Private wealth and family office",
+    "client": "Virdaris Limited",
+    "heroImage": "/assets/images/case-studies/virdaris-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/virdaris-desktop.jpg",
     "services": [
-      "Brand Identity",
-      "Strategic Design",
-      "Custom Portals"
+      "Brand-led web design",
+      "Webflow development",
+      "CMS build",
+      "Motion design"
     ],
     "tags": [
-      "design",
-      "portals"
+      "design"
     ],
-    "order": 4,
-    "liveUrl": "https://virdaris.example",
-    "liveLabel": "Visit virdaris site",
-    "summary": "Virdaris came to us with a business plan and no face. We gave them a brand, a design system, and a client portal that made the whole thing feel inevitable.",
+    "order": 3,
+    "liveUrl": "https://www.virdaris.com/",
+    "liveLabel": "Visit virdaris.com",
+    "summary": "A quietly luxurious site for a Jersey multi family office serving UHNW families, where restraint, typography and motion do the talking.",
     "sections": [
       {
         "type": "text",
-        "label": "The challenge",
-        "body": "A new venture with serious ambitions and nothing to show for it yet. The brand had to earn trust before the track record could."
+        "label": "The brief",
+        "body": "Virdaris offers discreet, best in class family office and fiduciary services to a small number of significant wealth holders. The site had to feel as considered and exclusive as the service itself, building trust without ever shouting."
       },
       {
         "type": "image",
-        "src": "/assets/images/testimonial-virdaris.png",
-        "caption": "Identity system — built to hold up in serious rooms."
+        "src": "/assets/images/case-studies/virdaris-desktop-2.jpg",
+        "caption": "Virdaris — Webflow."
       },
       {
         "type": "text",
-        "label": "What we did",
-        "body": "Strategy first, then identity, then product. One design system carried the brand from pitch deck to client portal without changing its accent."
+        "label": "What we built",
+        "body": "An editorial design built on elegant serif typography, a calm natural palette and slow, layered scroll animations. The structure is deliberately simple: the story of the firm, the founder, two clear service pillars and a Perspectives section for thought leadership, all underpinned by client testimonials."
       },
       {
         "type": "text",
-        "label": "The result",
-        "body": "Launched on time, and the first client meetings did the rest. See the quote below — we didn't write it."
+        "label": "Highlights",
+        "body": "Refined scroll-driven typography and landscape imagery that set a tone of quiet authority • Perspectives CMS for family office thought leadership • Clear presentation of regulated status and service structure for a discerning audience"
       }
     ],
     "quote": {
@@ -178,52 +139,438 @@
     }
   },
   {
-    "id": "mortgage-shop",
-    "title": "Mortgage Shop",
-    "subtitle": "Early and on-budget",
-    "client": "Mortgage Shop",
-    "year": "2025",
-    "heroImage": "/assets/images/testimonial-mortgage-shop.jpg",
-    "cardImage": "/assets/images/testimonial-mortgage-shop.jpg",
+    "id": "chapter-2",
+    "title": "Chapter 2",
+    "subtitle": "Talent and recruitment (RPO)",
+    "client": "Chapter 2 Group",
+    "heroImage": "/assets/images/case-studies/chapter2-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/chapter2-desktop.jpg",
     "services": [
-      "Custom Portals",
-      "UX/UI Systems",
-      "Workflow Optimisation"
+      "Web design",
+      "Webflow development",
+      "CMS build",
+      "Motion design"
     ],
     "tags": [
       "design",
-      "automation",
-      "portals"
+      "automation"
     ],
-    "order": 5,
-    "liveUrl": "https://mortgageshop.je",
-    "liveLabel": "Visit mortgageshop.je",
-    "summary": "Mortgage applications involve a lot of paper and a lot of waiting. We built Mortgage Shop a portal that removed most of the first and all of the second.",
+    "order": 4,
+    "liveUrl": "https://www.chapter2.group/",
+    "liveLabel": "Visit chapter2.group",
+    "summary": "A global-scale site for the AI-enabled talent company positioning itself as the next generation of RPO, complete with a spinning 3D globe and results that speak for themselves.",
     "sections": [
       {
         "type": "text",
-        "label": "The challenge",
-        "body": "Advisers chased documents by email while clients wondered what was happening. Everyone was busy. Nothing moved."
+        "label": "The brief",
+        "body": "Chapter 2 blends embedded talent teams with its own AI technology and needed a site that could carry that story to global enterprise clients, showcase measurable results and keep pace with a fast-growing team, event calendar and case study library."
       },
       {
         "type": "image",
-        "src": "/assets/images/testimonial-mortgage-shop.jpg",
-        "caption": "Client portal — every application, one timeline."
+        "src": "/assets/images/case-studies/chapter2-desktop-2.jpg",
+        "caption": "Chapter 2 — Webflow."
       },
       {
         "type": "text",
-        "label": "What we did",
-        "body": "A shared portal where clients upload once, advisers see everything, and the system does the chasing. Progress you can actually look at."
+        "label": "What we built",
+        "body": "A crisp, editorial design fronted by an animated 3D globe and bold typography. Four service pillars are laid out in an interactive carousel, client outcomes are given headline treatment, and CMS collections power case studies, events, and a large leadership and advisory team that the Chapter 2 team can update themselves."
       },
       {
         "type": "text",
-        "label": "The result",
-        "body": "Delivered early. On budget. The client said so themselves, below."
+        "label": "Highlights",
+        "body": "Headline client results: offers accepted up 22 percent, cost per hire down 72 percent, 2m dollars of agency spend removed • Animated globe hero and staggered text reveals that bring the brand to life • CMS-driven case studies, events and team profiles built for a growing business"
       }
     ],
-    "quote": {
-      "text": "“A massive thank you for delivering this project early, and on-budget.”",
-      "author": "Mortgage Shop"
-    }
+    "quote": null
+  },
+  {
+    "id": "policy-futures",
+    "title": "Policy Futures",
+    "subtitle": "Public policy and education",
+    "client": "Policy Futures Programme",
+    "heroImage": "/assets/images/case-studies/policy-futures-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/policy-futures-desktop.jpg",
+    "services": [
+      "Web design",
+      "Webflow development",
+      "Content structure"
+    ],
+    "tags": [
+      "design"
+    ],
+    "order": 5,
+    "liveUrl": "https://www.policyfutures.org.uk/",
+    "liveLabel": "Visit policyfutures.org.uk",
+    "summary": "A friendly, accessible campaign site opening up a new route into policy research careers, hosted by three of the UK's leading think tanks.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "The Policy Futures Programme exists to make policy research careers accessible to people from all backgrounds, so the site had to feel welcoming rather than institutional, answer applicants' questions quickly and drive applications for each annual cohort."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/policy-futures-desktop-2.jpg",
+        "caption": "Policy Futures — Webflow."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "A warm, plain-speaking design that puts the essentials up front: what the programme is, who it is for, what it pays and when applications open. Numbered explainer cards, key stats and a cohort testimonial guide would-be applicants from curiosity to application without jargon."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Clear applicant journey: programme, eligibility and how to apply in three steps • Key facts given visual weight: 30k salary, one-year paid programme, three host think tanks • Approachable identity that deliberately avoids the usual think tank formality"
+      }
+    ],
+    "quote": null
+  },
+  {
+    "id": "foxdocs",
+    "title": "Foxdocs",
+    "subtitle": "SaaS and compliance technology",
+    "client": "Foxdocs Limited",
+    "heroImage": "/assets/images/case-studies/foxdocs-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/foxdocs-desktop.jpg",
+    "services": [
+      "Product marketing site",
+      "Web design",
+      "Webflow development"
+    ],
+    "tags": [
+      "design",
+      "automation"
+    ],
+    "order": 6,
+    "liveUrl": "https://foxdocs.com/",
+    "liveLabel": "Visit foxdocs.com",
+    "summary": "A sharp, product-led marketing site for an AI compliance platform that keeps business policies up to date when regulations change.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "Foxdocs is a new product in a serious category. The site needed to explain a novel idea quickly, look credible to compliance-minded buyers, and show the real product rather than abstract promises."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/foxdocs-desktop-2.jpg",
+        "caption": "Foxdocs — Webflow."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "A dark, confident design with the product itself as the hero: real interface captures sit inside browser frames as the page walks through data sources, AI reviews and staff acknowledgement. Two clear calls to action, analyse a document and book a demo, run throughout."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Product-first storytelling with genuine app UI throughout • Feature narrative covering AI reviews, integrations and regulator expectations • Striking dark identity with a distinctive green accent"
+      }
+    ],
+    "quote": null
+  },
+  {
+    "id": "steedman-planning",
+    "title": "Steedman Planning",
+    "subtitle": "Planning and design consultancy",
+    "client": "Steedman Planning Limited",
+    "heroImage": "/assets/images/case-studies/steedman-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/steedman-desktop.jpg",
+    "services": [
+      "Web design",
+      "Webflow development",
+      "CMS build"
+    ],
+    "tags": [
+      "design"
+    ],
+    "order": 7,
+    "liveUrl": "https://www.steedmanplanning.com/",
+    "liveLabel": "Visit steedmanplanning.com",
+    "summary": "A calm, portfolio-led site for a Jersey planning consultancy whose work shapes the island's places, from affordable homes to agri-solar infrastructure.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "Steedman Planning needed its projects to do the persuading: a small consultancy with an outsized portfolio, from 200 affordable homes to National Park golf course realignment, and a people-first ethos that had to come through."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/steedman-desktop-2.jpg",
+        "caption": "Steedman Planning — Webflow."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "A clean, earthy design centred on a featured projects carousel, with services grouped into planning and design, environment and community. Client testimonials from the likes of Jersey Electricity and La Moye Golf Club anchor the consultancy's credibility, and the team story sits front and centre."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Portfolio carousel showcasing landmark Jersey projects • Service architecture covering planning, environment, community and EIA work • Full-bleed island photography that roots the practice in place"
+      }
+    ],
+    "quote": null
+  },
+  {
+    "id": "bcr-law",
+    "title": "BCR Law",
+    "subtitle": "Legal services",
+    "client": "BCR Law LLP",
+    "heroImage": "/assets/images/case-studies/bcr-law-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/bcr-law-desktop.jpg",
+    "services": [
+      "Multi-brand site architecture",
+      "Web design",
+      "Webflow development",
+      "CMS build"
+    ],
+    "tags": [
+      "design"
+    ],
+    "order": 8,
+    "liveUrl": "https://www.bcrlawllp.com/",
+    "liveLabel": "Visit bcrlawllp.com",
+    "summary": "One site, three brands: a cinematic hub that lets visitors choose between BCR Pro, BCR Law and BCR EDA, each with its own identity and colourway.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "BCR operates three distinct offerings: private client tax (Pro), the full-service law firm (Law) and executor and attorney support (EDA). The site had to give each brand room to breathe while keeping one coherent architecture and a shared backbone of people, articles and contact journeys."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/bcr-law-desktop-2.jpg",
+        "caption": "BCR Law — Webflow."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "A full-screen video triptych landing page splits the three brands, each carrying its own colour and typographic treatment through to dedicated sections. The Law site brings together a services carousel across eight practice areas, a Reading Room article library, team profiles and Legal 500 testimonials."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Three-brand hub landing with full-screen video panels • Reading Room CMS for legal insight articles across practice areas • Legal 500 client testimonials and clear speak to an expert journeys"
+      }
+    ],
+    "quote": null
+  },
+  {
+    "id": "allens-caravans",
+    "title": "Allens Caravans",
+    "subtitle": "Holiday and residential parks",
+    "client": "Allens Caravans Estates Limited",
+    "heroImage": "/assets/images/case-studies/allens-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/allens-desktop.jpg",
+    "services": [
+      "Web design",
+      "Webflow development",
+      "CMS build",
+      "Search and filtering"
+    ],
+    "tags": [
+      "design"
+    ],
+    "order": 9,
+    "liveUrl": "https://allenscaravans-esdev.webflow.io/",
+    "liveLabel": "View staging site",
+    "summary": "A warm, heritage-led site for a family holiday park business approaching its eightieth year, built around finding your own place to belong.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "Allens Caravans has been creating park communities since 1947, with parks across the Midlands, Wales and Northamptonshire. The new site had to serve three distinct audiences at once: holiday home owners, residential park home buyers and short-break guests."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/allens-desktop-2.jpg",
+        "caption": "Allens Caravans — Webflow (in development)."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "An elegant design led by the line 'Making memories for generations'. A home finder lets visitors search by location, new or pre-loved, and budget; a parks collection presents each location with holiday and residential tags; and clear journeys guide people to own, stay, book a tour or download the brochure."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Home finder with location, condition and budget filters • Parks CMS with aerial photography for every location • Heritage-forward brand story with modern enquiry and booking journeys"
+      }
+    ],
+    "quote": null
+  },
+  {
+    "id": "normans",
+    "title": "Normans",
+    "subtitle": "Builders' merchant and trade retail",
+    "client": "Normans Limited",
+    "heroImage": "/assets/images/case-studies/normans-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/normans-desktop.jpg",
+    "services": [
+      "Web design",
+      "Webflow development",
+      "CMS build"
+    ],
+    "tags": [
+      "design"
+    ],
+    "order": 10,
+    "liveUrl": "https://normans-esdev.webflow.io/",
+    "liveLabel": "View staging site",
+    "summary": "A no-nonsense trade brand online for Jersey's family-run builders' merchant, three generations old and still telling customers straight.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "Normans has served Jersey's trade since 1923 across three branches. The site needed to work as hard as the yard does: helping builders find the right department, branch and account tools fast, on any device, often mid-job."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/normans-desktop-2.jpg",
+        "caption": "Normans — Webflow (in development)."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "A bold, high-contrast design with a search-first header and quick actions for the things trade customers actually do: open a trade account in sixty seconds, pay an invoice, WhatsApp an order to a branch and hire tools. A branch finder pairs a live map with real-time opening status."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Branch finder with live map and open now status for all three yards • Sixty-second trade account sign-up and pay an invoice journeys • WhatsApp ordering straight to the branch"
+      }
+    ],
+    "quote": null
+  },
+  {
+    "id": "great-green-systems",
+    "title": "Great Green Systems",
+    "subtitle": "Ecommerce and environmental products",
+    "client": "Great Green Systems Ltd",
+    "heroImage": "/assets/images/case-studies/great-green-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/great-green-desktop.jpg",
+    "services": [
+      "Shopify design and build",
+      "Ecommerce UX",
+      "Content structure"
+    ],
+    "tags": [
+      "design"
+    ],
+    "order": 11,
+    "liveUrl": "https://greatgreensystems.com/",
+    "liveLabel": "Visit greatgreensystems.com",
+    "summary": "A fresh, guidance-led Shopify store for the home of the Green Johanna and Green Cone, helping households and councils get ahead of new food waste regulations.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "Composting is a considered purchase with lots of jargon. The store had to help shoppers choose the right system for their home and habits, serve both consumers and wholesale buyers, and capitalise on the new Simpler Recycling regulations."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/great-green-desktop-2.jpg",
+        "caption": "Great Green Systems — Shopify."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "A clean, optimistic storefront that organises products by aim and living space rather than category jargon, with best for guidance on every product family. Editorial sections explain the regulation changes, product carousels drive discovery, and a separate commercial store serves wholesalers and retailers."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Shop by aim and by living space navigation that mirrors how people actually choose • Regulations explainer content tied to the Simpler Recycling changes • Consumer store and commercial wholesale store in one build"
+      }
+    ],
+    "quote": null
+  },
+  {
+    "id": "team-monaco",
+    "title": "Team Monaco",
+    "subtitle": "Sport and sustainability",
+    "client": "Team Monaco (UIM E1 World Championship)",
+    "heroImage": "/assets/images/case-studies/team-monaco-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/team-monaco-desktop.jpg",
+    "services": [
+      "Web design",
+      "Shopify build",
+      "Merchandise store"
+    ],
+    "tags": [
+      "design"
+    ],
+    "order": 12,
+    "liveUrl": "https://www.teammonaco.com/",
+    "liveLabel": "Visit teammonaco.com",
+    "summary": "The official home of Monaco's electric raceboat team in the UIM E1 World Championship, blending race news, ocean advocacy and the 98 Collection merchandise store.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "Team Monaco competes at the intersection of elite sport and ocean protection, with the backing of H.S.H. Prince Albert II. The site had to carry race news and team stories, champion the sustainability mission and sell merchandise, all under one brand."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/team-monaco-desktop-2.jpg",
+        "caption": "Team Monaco — Shopify."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "A fast, editorial Shopify build that leads with race highlights and team storytelling, backed by the Protect Our Ocean sustainability platform and heritage stats reaching back to 1862. The 98 Collection brings team merchandise into the same home."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Race news and video highlights alongside team and pilot profiles • Protect Our Ocean sustainability storytelling with the Prince Albert II Foundation quote • 98 Collection merchandise store integrated into the main site"
+      }
+    ],
+    "quote": null
+  },
+  {
+    "id": "execta-social",
+    "title": "ExecTA Social",
+    "subtitle": "Professional community and membership",
+    "client": "Exec TA Social",
+    "heroImage": "/assets/images/case-studies/execta-desktop.jpg",
+    "cardImage": "/assets/images/case-studies/execta-desktop.jpg",
+    "services": [
+      "Brand-led web design",
+      "Webflow development",
+      "Motion design"
+    ],
+    "tags": [
+      "design"
+    ],
+    "order": 13,
+    "liveUrl": "https://www.execta.social/",
+    "liveLabel": "Visit execta.social",
+    "summary": "A playful, space-themed home for the universe's only exclusive community for Heads of Talent Acquisition, now landing in cities across the globe.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "ExecTA Social is a closed-door community for senior TA leaders, so the site had to feel exclusive and fun at the same time: credible enough for VPs at global brands, characterful enough to stand apart from every corporate community platform."
+      },
+      {
+        "type": "image",
+        "src": "/assets/images/case-studies/execta-desktop-2.jpg",
+        "caption": "ExecTA Social — Webflow."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "A distinctive identity built around a rocket-and-UFO space theme, animated typography and a bold magenta accent. Membership and partner journeys are kept crisp, a wall of member testimonials from companies like Sage, ThoughtWorks and Mimecast builds trust, and a live chapter list shows the community's global spread."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Characterful space-themed brand world with animated type • Member testimonial wall featuring 1,200 plus global Heads of TA • Application-based membership and partner journeys with a global chapter map"
+      }
+    ],
+    "quote": null
   }
 ]

@@ -29,7 +29,7 @@ const { cs, next } = Astro.props;
       {cs.services.map((s) => <PillBadge color="var(--text-primary)">{s}</PillBadge>)}
     </div>
     <div class="px-hover meta__client">
-      <span>{cs.client} · {cs.year}</span>
+      <span>{cs.client}{cs.year ? ` · ${cs.year}` : ''}</span>
       <PixelLink href={cs.liveUrl} color="var(--text-primary)">{cs.liveLabel}</PixelLink>
     </div>
   </div>

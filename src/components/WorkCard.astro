@@ -21,6 +21,7 @@ const ARROW_PATH =
 <a href={href} class="work-card">
   {src && <img src={src} alt="" loading="lazy" />}
   <div class="work-card__overlay"></div>
+  {tags.length > 0 && <div class="work-card__tags-protect" />}
   {
     tags.length > 0 && (
       <div class="work-card__tags">
@@ -78,6 +79,13 @@ const ARROW_PATH =
     position: absolute;
     inset: 0;
     background: var(--overlay-protect);
+  }
+  /* Top counterpart of the bottom protection gradient so the tag pills stay
+     legible on light imagery. */
+  .work-card__tags-protect {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 45%);
   }
   .work-card__tags {
     position: absolute;
