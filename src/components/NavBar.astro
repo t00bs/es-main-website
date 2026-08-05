@@ -1,0 +1,97 @@
+---
+// Site header: logo lockup left, text links right, theme toggle last.
+---
+
+<header class="nav-bar">
+  <a href="/" aria-label="Electric Sheep home" class="nav-bar__logo">
+    <img class="logo-dark" src="/assets/logo/es-logo-dark.svg" alt="Electric Sheep" />
+    <img class="logo-cream" src="/assets/logo/es-logo-cream.svg" alt="Electric Sheep" />
+  </a>
+  <nav>
+    <a href="/work">Work</a>
+    <a href="/contact">Contact</a>
+    <button type="button" data-theme-toggle>Dark mode</button>
+  </nav>
+</header>
+
+<style>
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--page-margin) var(--page-margin) 8px var(--page-margin);
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .nav-bar__logo {
+    display: block;
+    width: 256px;
+  }
+  .nav-bar__logo img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .logo-cream {
+    display: none;
+  }
+  :global([data-theme='dark']) .logo-dark {
+    display: none;
+  }
+  :global([data-theme='dark']) .logo-cream {
+    display: block;
+  }
+  nav {
+    display: flex;
+    gap: var(--nav-gap);
+    align-items: center;
+  }
+  nav a,
+  nav button {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-body);
+    line-height: var(--leading-none);
+    color: var(--text-primary);
+    text-decoration: none;
+    white-space: nowrap;
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+  nav button:hover {
+    opacity: 0.55;
+  }
+  @media (max-width: 720px) {
+    .nav-bar__logo {
+      width: 180px;
+    }
+  }
+</style>
+
+<script>
+  function currentTheme(): string {
+    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  }
+
+  function updateLabel(button: HTMLButtonElement) {
+    button.textContent = currentTheme() === 'dark' ? 'Light mode' : 'Dark mode';
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
+    updateLabel(button);
+    button.addEventListener('click', () => {
+      const next = currentTheme() === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = next;
+      try {
+        localStorage.setItem('es-theme', next);
+      } catch {
+        /* private browsing */
+      }
+      updateLabel(button);
+    });
+  });
+</script>

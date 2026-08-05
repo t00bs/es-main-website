@@ -1,0 +1,49 @@
+---
+// Hero image banner with the bold 58px headline bottom-left (case-study pages).
+interface Props {
+  src?: string;
+  headline?: string;
+}
+
+const { src, headline = 'Sheep by name. Not by nature.' } = Astro.props;
+---
+
+<div class="hero-banner">
+  {src && <img src={src} alt="" />}
+  <h1>{headline}</h1>
+</div>
+
+<style>
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    height: 428px;
+    overflow: hidden;
+    background-color: var(--surface-placeholder);
+  }
+  .hero-banner img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  h1 {
+    position: absolute;
+    left: 39px;
+    bottom: 30px;
+    margin: 0;
+    max-width: 444px;
+    font-family: var(--font-hero);
+    font-weight: 700;
+    font-size: var(--text-hero);
+    line-height: var(--leading-tight);
+    color: var(--es-cream-warm);
+  }
+  @media (max-width: 720px) {
+    h1 {
+      left: var(--card-pad);
+      right: var(--card-pad);
+    }
+  }
+</style>

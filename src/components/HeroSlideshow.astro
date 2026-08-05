@@ -1,0 +1,165 @@
+---
+// Home hero: canvas slideshow with a pixelation transition, glitch headline
+// bottom-left (chars flicker into Neue Pixel). Port of the reference React
+// implementation to a vanilla script.
+interface Props {
+  headline?: string;
+  slides?: string[];
+}
+
+const {
+  headline = 'Sheep by name. Not by nature.',
+  slides = ['/assets/images/hero-sheep.png', '/assets/images/work-farm-jersey.png', '/assets/images/toby.jpg'],
+} = Astro.props;
+---
+
+<div class="hero" data-slides={JSON.stringify(slides)}>
+  <canvas></canvas>
+  <h1>
+    {headline.split('').map((ch) => <span>{ch}</span>)}
+  </h1>
+</div>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    height: 428px;
+    min-height: 50vh;
+    overflow: hidden;
+    background-color: var(--surface-placeholder);
+  }
+  canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  h1 {
+    position: absolute;
+    left: 39px;
+    bottom: 30px;
+    margin: 0;
+    max-width: 444px;
+    font-family: var(--font-hero);
+    font-weight: 700;
+    font-size: var(--text-hero);
+    line-height: var(--leading-tight);
+    color: var(--es-cream-warm);
+  }
+  @media (max-width: 720px) {
+    h1 {
+      left: var(--card-pad);
+      right: var(--card-pad);
+    }
+  }
+</style>
+
+<script>
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('.hero').forEach((hero) => {
+    const canvas = hero.querySelector('canvas')!;
+    const spans = hero.querySelectorAll('h1 span');
+    const slides: string[] = JSON.parse(hero.dataset.slides || '[]');
+    const ctx = canvas.getContext('2d')!;
+    const buf = document.createElement('canvas');
+    const bctx = buf.getContext('2d')!;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let cur = 0;
+    let raf = 0;
+    let W = 0;
+    let H = 0;
+
+    const glitchTimers: number[] = [];
+    function glitchBurst(dur: number) {
+      if (REDUCED) return;
+      const ticks = Math.floor(dur / 70);
+      for (let i = 0; i <= ticks; i++) {
+        glitchTimers.push(
+          window.setTimeout(() => {
+            spans.forEach((s) => s.classList.toggle('glx', i < ticks && Math.random() < 0.3));
+          }, i * 70)
+        );
+      }
+    }
+
+    function drawCover(c: CanvasRenderingContext2D, img: HTMLImageElement, w: number, h: number) {
+      const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+      const dw = img.naturalWidth * s;
+      const dh = img.naturalHeight * s;
+      c.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    }
+
+    function drawFrame(img: HTMLImageElement | undefined, px: number) {
+      if (!img || !img.naturalWidth || !W) return;
+      if (px <= 1.01) {
+        ctx.imageSmoothingEnabled = true;
+        drawCover(ctx, img, W, H);
+        return;
+      }
+      const bw = Math.max(2, Math.round(W / px));
+      const bh = Math.max(2, Math.round(H / px));
+      buf.width = bw;
+      buf.height = bh;
+      bctx.imageSmoothingEnabled = true;
+      drawCover(bctx, img, bw, bh);
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(buf, 0, 0, W, H);
+    }
+
+    function size() {
+      const r = canvas.getBoundingClientRect();
+      const w = Math.round(r.width * dpr);
+      const h = Math.round(r.height * dpr);
+      if (w !== W || h !== H) {
+        W = w;
+        H = h;
+        canvas.width = W;
+        canvas.height = H;
+        drawFrame(imgs[cur], 1);
+      }
+    }
+
+    function transition() {
+      const nxt = (cur + 1) % imgs.length;
+      if (!imgs[nxt].naturalWidth) return;
+      const D = 1100;
+      const maxPx = 42 * dpr;
+      const start = performance.now();
+      glitchBurst(1100);
+      function step(now: number) {
+        const t = Math.min(1, (now - start) / D);
+        if (t < 0.5) drawFrame(imgs[cur], 1 + (t / 0.5) * maxPx);
+        else drawFrame(imgs[nxt], 1 + ((1 - t) / 0.5) * maxPx);
+        if (t < 1) raf = requestAnimationFrame(step);
+        else {
+          cur = nxt;
+          drawFrame(imgs[cur], 1);
+        }
+      }
+      raf = requestAnimationFrame(step);
+    }
+
+    const imgs = slides.map((src, i) => {
+      const im = new Image();
+      im.onload = () => {
+        if (i === cur) {
+          size();
+          drawFrame(im, 1);
+        }
+      };
+      im.src = src;
+      return im;
+    });
+
+    new ResizeObserver(size).observe(canvas);
+    size();
+
+    if (!REDUCED) {
+      spans.forEach((s) => s.classList.add('glx'));
+      glitchBurst(900);
+      setInterval(transition, 5000);
+    }
+  });
+</script>

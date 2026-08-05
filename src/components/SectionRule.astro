@@ -1,0 +1,32 @@
+---
+// Signature divider: 77px × 6px solid segment over a full-width 1px hairline.
+---
+
+<div class="section-rule">
+  <div class="section-rule__hairline"></div>
+  <div class="section-rule__segment"></div>
+</div>
+
+<style>
+  .section-rule {
+    position: relative;
+    width: 100%;
+    height: 6px;
+  }
+  .section-rule__hairline {
+    position: absolute;
+    left: 0;
+    top: 2.5px;
+    width: 100%;
+    height: 1px;
+    background-color: var(--rule-hairline);
+  }
+  .section-rule__segment {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 77px;
+    height: 6px;
+    background-color: var(--rule-strong);
+  }
+</style>

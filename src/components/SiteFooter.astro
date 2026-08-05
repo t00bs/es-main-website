@@ -1,0 +1,59 @@
+---
+// Black footer: giant full-bleed logotype, then contact rows in cream.
+interface Props {
+  address?: string;
+  email?: string;
+  legal?: string;
+}
+
+const {
+  address = '10 Minden Street, St Helier, JE2 4WR',
+  email = 'hello@electricsheep.design',
+  legal = '© 2026 Electric Sheep Limited.\nAll rights reserved.',
+} = Astro.props;
+---
+
+<footer class="site-footer">
+  <img src="/assets/logo/es-logo-cream.svg" alt="Electric Sheep" loading="lazy" />
+  <div class="site-footer__rows">
+    <span>{address}</span>
+    <a href={`mailto:${email}`}>{email}</a>
+    <a href="#">Privacy</a>
+    <span class="site-footer__legal">{legal}</span>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--surface-footer);
+    padding: 42px var(--page-margin) var(--page-margin) var(--page-margin);
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+  .site-footer > img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .site-footer__rows {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .site-footer__rows span,
+  .site-footer__rows a {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-body);
+    line-height: var(--leading-none);
+    color: var(--es-cream);
+    text-decoration: none;
+    white-space: pre-line;
+  }
+  .site-footer__legal {
+    text-align: right;
+  }
+</style>

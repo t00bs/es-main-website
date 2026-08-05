@@ -1,0 +1,164 @@
+---
+// Home work section: three pixel-label tabs, the rule segment slides to the
+// active tab, and each tab reveals its own 3-card grid with a crossfade.
+import WorkCard from './WorkCard.astro';
+import { getCaseStudy } from '../data/case-studies';
+
+const TABS = [
+  { label: 'DESIGN', ids: ['virdaris', 'mortgage-shop', 'farm-jersey'] },
+  { label: 'AUTOMATION', ids: ['foxdocs', 'bcr-law', 'mortgage-shop'] },
+  { label: 'PORTALS', ids: ['farm-jersey', 'virdaris', 'mortgage-shop'] },
+];
+---
+
+<div class="work-tabs">
+  <div class="work-tabs__bar">
+    <div class="work-tabs__labels">
+      {
+        TABS.map((tab, i) => (
+          <button type="button" class:list={['work-tab', { active: i === 0 }]} data-tab={i}>
+            {tab.label}
+          </button>
+        ))
+      }
+    </div>
+    <div class="work-tabs__rule">
+      <div class="work-tabs__hairline"></div>
+      <div class="work-tabs__segment" data-segment></div>
+    </div>
+  </div>
+  {
+    TABS.map((tab, i) => (
+      <div class="hover-zoom tab-grid" data-grid={i} hidden={i !== 0}>
+        {tab.ids.map((id) => {
+          const cs = getCaseStudy(id);
+          return (
+            <WorkCard
+              src={cs.cardImage}
+              title={cs.title}
+              subtitle={cs.subtitle}
+              showArrow
+              href={`/work/${cs.id}`}
+            />
+          );
+        })}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .work-tabs__bar {
+    padding: 0 var(--page-margin);
+  }
+  .work-tabs__labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+  }
+  .work-tab {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: var(--font-pixel);
+    font-weight: 400;
+    font-size: var(--text-pixel-label);
+    line-height: var(--leading-none);
+    letter-spacing: var(--tracking-pixel);
+    white-space: nowrap;
+    color: var(--text-primary);
+    opacity: 0.35;
+    transition: opacity 0.25s ease;
+  }
+  .work-tab.active {
+    opacity: 1;
+  }
+  .work-tab:not(.active):hover {
+    opacity: 0.7;
+  }
+  .work-tabs__rule {
+    position: relative;
+    height: 6px;
+  }
+  .work-tabs__hairline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--rule-hairline);
+  }
+  .work-tabs__segment {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 77px;
+    height: 6px;
+    background: var(--rule-strong);
+    transition:
+      left 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+  .tab-grid {
+    padding: 24px var(--page-margin);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--grid-gap);
+    animation: tab-grid-in 0.4s ease both;
+  }
+  .tab-grid[hidden] {
+    display: none;
+  }
+  @keyframes tab-grid-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (max-width: 960px) {
+    .tab-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const SEGMENT_POS = [
+    { left: '0%', transform: 'translateX(0)' },
+    { left: '50%', transform: 'translateX(-50%)' },
+    { left: '100%', transform: 'translateX(-100%)' },
+  ];
+
+  document.querySelectorAll<HTMLElement>('.work-tabs').forEach((root) => {
+    const tabs = root.querySelectorAll<HTMLButtonElement>('.work-tab');
+    const grids = root.querySelectorAll<HTMLElement>('[data-grid]');
+    const segment = root.querySelector<HTMLElement>('[data-segment]')!;
+
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t, j) => t.classList.toggle('active', i === j));
+        const pos = SEGMENT_POS[i];
+        segment.style.left = pos.left;
+        segment.style.transform = pos.transform;
+        grids.forEach((grid, j) => {
+          const show = i === j;
+          if (show && grid.hidden) {
+            grid.hidden = false;
+            grid.style.animation = 'none';
+            void grid.offsetHeight;
+            grid.style.animation = '';
+          } else if (!show) {
+            grid.hidden = true;
+          }
+        });
+      });
+    });
+  });
+</script>

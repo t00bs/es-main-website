@@ -1,0 +1,77 @@
+---
+// Testimonial image card: pill badge top, serif-italic quote, pixel link bottom.
+import PillBadge from './PillBadge.astro';
+import PixelLink from './PixelLink.astro';
+
+interface Props {
+  src?: string;
+  quote: string;
+  linkText?: string;
+  badge?: string;
+  href?: string;
+}
+
+const { src, quote, linkText, badge = 'Customer Stories', href = '#' } = Astro.props;
+---
+
+<div class="testimonial-card">
+  {src && <img src={src} alt="" loading="lazy" />}
+  <div class="testimonial-card__overlay"></div>
+  <div class="testimonial-card__badge">
+    <PillBadge>{badge}</PillBadge>
+  </div>
+  <blockquote>{quote}</blockquote>
+  {
+    linkText && (
+      <div class="testimonial-card__link">
+        <PixelLink href={href}>{linkText}</PixelLink>
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .testimonial-card {
+    position: relative;
+    width: 100%;
+    height: 440px;
+    overflow: hidden;
+    background-color: var(--surface-placeholder);
+  }
+  .testimonial-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .testimonial-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-protect);
+  }
+  .testimonial-card__badge {
+    position: absolute;
+    left: var(--card-pad);
+    top: 22px;
+  }
+  blockquote {
+    position: absolute;
+    left: var(--card-pad);
+    top: 81px;
+    margin: 0;
+    max-width: 410px;
+    padding-right: var(--card-pad);
+    font-family: var(--font-serif-quote);
+    font-weight: 400;
+    font-style: italic;
+    font-size: var(--text-card-title);
+    line-height: var(--leading-tight);
+    color: var(--es-cream);
+  }
+  .testimonial-card__link {
+    position: absolute;
+    left: var(--card-pad);
+    bottom: 24px;
+  }
+</style>

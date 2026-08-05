@@ -1,0 +1,42 @@
+---
+// Section label with the brand's "redaction mark": the label renders in cream,
+// and the words in `highlight` sit on a solid block. On light surfaces the
+// cream text is invisible except where the ink block reveals it; on dark
+// surfaces the cream block hides the highlighted words.
+interface Props {
+  highlight?: string;
+}
+
+const { highlight } = Astro.props;
+const hasChildren = Astro.slots.has('default');
+---
+
+<span class="section-label">
+  <slot />
+  {
+    highlight && (
+      <>
+        {hasChildren && <br />}
+        <span class="section-label__highlight">{highlight}</span>
+      </>
+    )
+  }
+</span>
+
+<style>
+  .section-label {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-section-label);
+    line-height: var(--leading-label);
+    color: var(--text-on-dark);
+  }
+  .section-label__highlight {
+    display: inline-block;
+    padding: 1px 6px 2px 4px;
+    margin-left: -4px;
+    border-radius: var(--radius-highlight);
+    background-color: var(--highlight-block);
+  }
+</style>

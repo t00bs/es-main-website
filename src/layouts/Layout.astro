@@ -1,12 +1,17 @@
 ---
+import NavBar from '../components/NavBar.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/tokens.css';
+import '../styles/global.css';
+
 interface Props {
   title?: string;
   description?: string;
 }
 
 const {
-  title = 'Electric Sheep Design',
-  description = 'Electric Sheep Design — design studio.',
+  title = 'Electric Sheep',
+  description = 'We design & build digital tools that are automated by AI, but driven by people.',
 } = Astro.props;
 ---
 
@@ -18,26 +23,24 @@ const {
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <link
+      rel="preload"
+      href="/fonts/HelveticaNeueLTStd-55Roman.otf"
+      as="font"
+      type="font/otf"
+      crossorigin
+    />
+    <link rel="preload" href="/fonts/NeuePixel-Regular.otf" as="font" type="font/otf" crossorigin />
     <title>{title}</title>
+    <script is:inline>
+      try {
+        document.documentElement.dataset.theme = localStorage.getItem('es-theme') || 'light';
+      } catch (e) {}
+    </script>
   </head>
   <body>
+    <NavBar />
     <slot />
+    <SiteFooter />
   </body>
 </html>
-
-<style is:global>
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
-
-  html {
-    font-family: system-ui, sans-serif;
-  }
-
-  body {
-    margin: 0;
-    min-height: 100vh;
-  }
-</style>

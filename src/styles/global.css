@@ -1,0 +1,97 @@
+/* Electric Sheep — shared page styles (from design-reference/css/site.css) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--surface-page);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--surface-page);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  transition: opacity 0.2s ease;
+}
+
+nav a:hover {
+  opacity: 0.55;
+}
+
+/* Clean hover: slow zoom on image cards, arrow nudges NE */
+.hover-zoom a img,
+a.hover-zoom img {
+  transition: transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.hover-zoom a:hover img,
+a.hover-zoom:hover img {
+  transform: scale(1.04);
+}
+.hover-zoom a svg,
+a.hover-zoom svg {
+  transition: transform 0.25s ease;
+}
+.hover-zoom a:hover svg,
+a.hover-zoom:hover svg {
+  transform: translate(4px, -4px);
+}
+
+/* Pixel links */
+.px-hover a:hover,
+a.px-hover:hover {
+  opacity: 0.6;
+}
+
+/* Page-level section labels: in dark theme the highlight block and its cream
+   text both resolve to cream — force ink text so labels stay readable. */
+[data-theme="dark"] .label-readable .section-label__highlight {
+  color: var(--es-ink);
+}
+
+/* Brand rule: italicised text in headlines renders in Neue Pixel instead */
+em,
+i {
+  font-family: var(--font-pixel);
+  font-style: normal;
+}
+
+/* Hero headline glitch: chars flicker into Neue Pixel */
+h1 span.glx {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+}
+
+/* Shared page grid: 460px label column + content (stacks on small screens) */
+.section-grid {
+  padding: var(--section-pad) var(--page-margin);
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 4px;
+}
+
+.statement {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--text-statement);
+  line-height: var(--leading-body);
+  color: var(--text-primary);
+  white-space: pre-line;
+}
+
+@media (max-width: 960px) {
+  .section-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}

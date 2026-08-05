@@ -1,0 +1,88 @@
+---
+// Square work-grid tile: image, protection gradient, title (+ optional subtitle & arrow).
+interface Props {
+  src?: string;
+  title: string;
+  subtitle?: string;
+  showArrow?: boolean;
+  href?: string;
+}
+
+const { src, title, subtitle, showArrow = false, href = '#' } = Astro.props;
+
+const ARROW_PATH =
+  'M 27 19.286 L 23.143 19.286 L 23.143 3.857 L 7.714 3.857 L 7.714 0 L 27 0 L 27 19.286 Z M 0 27 L 0 23.143 L 3.857 23.143 L 3.857 27 L 0 27 Z M 3.857 23.143 L 3.857 19.286 L 7.714 19.286 L 7.714 23.143 L 3.857 23.143 Z M 7.714 19.286 L 7.714 15.429 L 11.571 15.429 L 11.571 19.286 L 7.714 19.286 Z M 11.571 15.429 L 11.571 11.571 L 15.429 11.571 L 15.429 15.429 L 11.571 15.429 Z M 15.429 11.571 L 15.429 7.714 L 19.286 7.714 L 19.286 11.571 L 15.429 11.571 Z';
+---
+
+<a href={href} class="work-card">
+  {src && <img src={src} alt="" loading="lazy" />}
+  <div class="work-card__overlay"></div>
+  <div class="work-card__caption" style={`bottom: ${subtitle ? 16 : 11}px;`}>
+    <div class="work-card__text">
+      <span class="work-card__title">{title}</span>
+      {subtitle && <span class="work-card__subtitle">{subtitle}</span>}
+    </div>
+    {
+      showArrow && (
+        <svg width="27" height="27" viewBox="0 0 27 27" fill="var(--es-cream)" aria-hidden="true">
+          <path d={ARROW_PATH} fill-rule="nonzero" />
+        </svg>
+      )
+    }
+  </div>
+</a>
+
+<style>
+  .work-card {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background-color: var(--surface-placeholder);
+    text-decoration: none;
+  }
+  .work-card img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .work-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-protect);
+  }
+  .work-card__caption {
+    position: absolute;
+    left: var(--card-pad);
+    right: var(--card-pad);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .work-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .work-card__title {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-card-title);
+    line-height: var(--leading-tight);
+    white-space: nowrap;
+    color: var(--es-cream);
+  }
+  .work-card__subtitle {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-caption);
+    line-height: var(--leading-tight);
+    white-space: nowrap;
+    color: var(--es-cream);
+  }
+  .work-card svg {
+    flex-shrink: 0;
+  }
+</style>

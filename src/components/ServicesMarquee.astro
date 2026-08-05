@@ -1,0 +1,87 @@
+---
+// Dark services strip: "We offer:" pixel label pinned left, 36px list scrolling behind an edge fade.
+interface Props {
+  label?: string;
+  text?: string;
+}
+
+const SERVICES_TEXT =
+  'AI Automations. Custom Portals. Strategic Design. UX/UI Systems. Brand Identity. Machine Learning. Integration Digital Transformation • Workflow Optimisation • Creative Technology • Product Engineering • Generative Design Consulting Strategy Intelligent Interfaces Data Architecture Rapid Prototyping Human-Centric Systems';
+
+const { label = 'We offer:', text = SERVICES_TEXT } = Astro.props;
+---
+
+<div class="marquee">
+  <div class="marquee__track">
+    <span>{text}</span>
+    <span aria-hidden="true">{text}</span>
+  </div>
+  <div class="marquee__fade"></div>
+  <div class="marquee__label">
+    <span>{label}</span>
+  </div>
+</div>
+
+<style>
+  .marquee {
+    position: relative;
+    background-color: var(--es-ink);
+    height: 68px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+  .marquee__track {
+    display: flex;
+    white-space: nowrap;
+    padding-left: 393px;
+    animation: es-marquee 60s linear infinite;
+  }
+  @keyframes es-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+  .marquee__track span {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-statement);
+    line-height: var(--leading-marquee);
+    white-space: nowrap;
+    color: var(--es-cream);
+    padding-right: 80px;
+  }
+  .marquee__fade {
+    position: absolute;
+    left: 133px;
+    top: 0;
+    bottom: 0;
+    width: 249px;
+    background: linear-gradient(270deg, rgba(16, 16, 16, 0) 0%, rgb(16, 16, 16) 86.06%);
+  }
+  .marquee__label {
+    position: absolute;
+    left: var(--page-margin);
+    top: 0;
+    bottom: 0;
+    background-color: var(--es-ink);
+    display: flex;
+    align-items: center;
+  }
+  .marquee__label span {
+    font-family: var(--font-pixel);
+    font-weight: 400;
+    font-size: var(--text-section-label);
+    line-height: var(--leading-label);
+    white-space: nowrap;
+    color: var(--es-cream);
+  }
+</style>
