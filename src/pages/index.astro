@@ -9,14 +9,22 @@ import SectionLabel from '../components/SectionLabel.astro';
 import FeatureCard from '../components/FeatureCard.astro';
 import { getCollection } from 'astro:content';
 
-const testimonials = (await getCollection('caseStudies', (e) => e.data.quote)).sort(
+const caseStudies = (await getCollection('caseStudies')).sort(
   (a, b) => a.data.order - b.data.order
 );
+const testimonials = caseStudies.filter((e) => e.data.quote);
+
+// Hero rotation: brand imagery bookends the top case study's card image.
+const heroSlides = [
+  '/assets/images/hero-sheep.png',
+  caseStudies[0].data.cardImage,
+  '/assets/images/toby.jpg',
+];
 ---
 
 <Layout title="Electric Sheep — Home">
   <div class="hero-wrap">
-    <HeroSlideshow headline="Sheep by name. Not by nature." />
+    <HeroSlideshow headline="Sheep by name. Not by nature." slides={heroSlides} />
   </div>
 
   <WorkTabs />
