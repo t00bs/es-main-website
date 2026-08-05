@@ -1,0 +1,43 @@
+{
+  "title": "Farm Jersey",
+  "subtitle": "Lightning-fast applications",
+  "client": "Farm Jersey",
+  "year": "2024",
+  "heroImage": "/assets/images/work-farm-jersey.png",
+  "cardImage": "/assets/images/work-farm-jersey.png",
+  "services": [
+    "Custom Portals",
+    "UX/UI Systems"
+  ],
+  "tags": [
+    "design",
+    "portals"
+  ],
+  "order": 1,
+  "liveUrl": "https://farmjersey.je",
+  "liveLabel": "Visit farmjersey.je",
+  "summary": "Jersey's agricultural network needed one place to manage growers, produce and grant applications. We built a portal that turned a six-week paper process into a same-day one.",
+  "sections": [
+    {
+      "type": "text",
+      "label": "The challenge",
+      "body": "Applications arrived by post, moved by hand, and disappeared into filing cabinets. Growers waited weeks for answers that took minutes to make. Nobody could see where anything was."
+    },
+    {
+      "type": "image",
+      "src": "/assets/images/work-farm-jersey.png",
+      "caption": "The grower portal — application status at a glance."
+    },
+    {
+      "type": "text",
+      "label": "What we did",
+      "body": "One portal for growers, one dashboard for the team. Structured applications, automated checks, and a status anyone can read. No training manual required."
+    },
+    {
+      "type": "text",
+      "label": "The result",
+      "body": "Same-day decisions on standard applications. Six weeks of admin, gone. The filing cabinets are now used for biscuits."
+    }
+  ],
+  "quote": null
+}

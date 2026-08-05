@@ -5,7 +5,7 @@ import { glob } from 'astro/loaders';
 export const WORK_TAGS = ['design', 'automation', 'portals'] as const;
 
 const caseStudies = defineCollection({
-  loader: glob({ pattern: '*.yaml', base: './src/content/case-studies' }),
+  loader: glob({ pattern: '*.json', base: './src/content/case-studies' }),
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
