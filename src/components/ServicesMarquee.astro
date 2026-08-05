@@ -31,7 +31,12 @@ const text = services.map((item) => item.text).join(' ');
     display: flex;
     align-items: center;
   }
+  /* Explicit stacking: the animated transform promotes the track to its own
+     compositing layer, which some renderers paint above z-index-less siblings
+     — so the cover layers declare their order outright. */
   .marquee__track {
+    position: relative;
+    z-index: 1;
     display: flex;
     white-space: nowrap;
     padding-left: 393px;
@@ -61,6 +66,7 @@ const text = services.map((item) => item.text).join(' ');
   }
   .marquee__fade {
     position: absolute;
+    z-index: 2;
     left: 133px;
     top: 0;
     bottom: 0;
@@ -71,6 +77,7 @@ const text = services.map((item) => item.text).join(' ');
      never shows to the left of it; the fade takes over from there. */
   .marquee__label {
     position: absolute;
+    z-index: 3;
     left: 0;
     top: 0;
     bottom: 0;
