@@ -4,11 +4,9 @@ import SectionLabel from '../../components/SectionLabel.astro';
 import TickerRow from '../../components/TickerRow.astro';
 import SectionRule from '../../components/SectionRule.astro';
 import WorkCard from '../../components/WorkCard.astro';
-import { getCollection } from 'astro:content';
+import caseStudies from '../../data/case-studies.json';
 
-const caseStudies = (await getCollection('caseStudies')).sort(
-  (a, b) => a.data.order - b.data.order
-);
+const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
 ---
 
 <Layout title="Electric Sheep — Work">
@@ -27,13 +25,13 @@ const caseStudies = (await getCollection('caseStudies')).sort(
 
   <div class="hover-zoom work-grid">
     {
-      caseStudies.map((e) => (
+      sorted.map((item) => (
         <WorkCard
-          src={e.data.cardImage}
-          title={e.data.title}
-          subtitle={e.data.subtitle}
+          src={item.cardImage}
+          title={item.title}
+          subtitle={item.subtitle}
           showArrow
-          href={`/work/${e.id}`}
+          href={`/work/${item.id}`}
         />
       ))
     }

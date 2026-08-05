@@ -5,7 +5,10 @@ import { file } from 'astro/loaders';
 export const WORK_TAGS = ['design', 'automation', 'portals'] as const;
 
 // One collection, one file: every case study is an item in the array, keyed by
-// its `id` (which is also the /work/<id> slug).
+// its `id` (which is also the /work/<id> slug). Pages and components import
+// src/data/case-studies.json directly (visual editors bind loops to that
+// import); this collection exists so the JSON is still schema-validated on
+// every build — a malformed entry fails the build instead of rendering wrong.
 const caseStudies = defineCollection({
   loader: file('src/data/case-studies.json'),
   schema: z.object({

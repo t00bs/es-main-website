@@ -6,18 +6,17 @@ import SectionLabel from '../../components/SectionLabel.astro';
 import PillBadge from '../../components/PillBadge.astro';
 import PixelLink from '../../components/PixelLink.astro';
 import FeatureCard from '../../components/FeatureCard.astro';
-import { getCollection } from 'astro:content';
+import caseStudies from '../../data/case-studies.json';
 
-export async function getStaticPaths() {
-  const sorted = (await getCollection('caseStudies')).sort((a, b) => a.data.order - b.data.order);
-  return sorted.map((entry, i) => ({
-    params: { id: entry.id },
-    props: { entry, next: sorted[(i + 1) % sorted.length] },
+export function getStaticPaths() {
+  const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
+  return sorted.map((cs, i) => ({
+    params: { id: cs.id },
+    props: { cs, next: sorted[(i + 1) % sorted.length] },
   }));
 }
 
-const { entry, next } = Astro.props;
-const cs = entry.data;
+const { cs, next } = Astro.props;
 ---
 
 <Layout title={`Electric Sheep — ${cs.title}`} description={cs.summary}>
@@ -76,8 +75,8 @@ const cs = entry.data;
 
   <div class="hover-zoom px-hover next">
     <FeatureCard
-      src={next.data.cardImage}
-      headline={`Next: ${next.data.title}.`}
+      src={next.cardImage}
+      headline={`Next: ${next.title}.`}
       linkText="View case study"
       href={`/work/${next.id}`}
     />

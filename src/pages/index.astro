@@ -7,17 +7,15 @@ import ServicesMarquee from '../components/ServicesMarquee.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import FeatureCard from '../components/FeatureCard.astro';
-import { getCollection } from 'astro:content';
+import caseStudies from '../data/case-studies.json';
 
-const caseStudies = (await getCollection('caseStudies')).sort(
-  (a, b) => a.data.order - b.data.order
-);
-const testimonials = caseStudies.filter((e) => e.data.quote);
+const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
+const testimonials = sorted.filter((item) => item.quote);
 
 // Hero rotation: brand imagery bookends the top case study's card image.
 const heroSlides = [
   '/assets/images/hero-sheep.png',
-  ...(caseStudies.length ? [caseStudies[0].data.cardImage] : []),
+  ...(sorted.length ? [sorted[0].cardImage] : []),
   '/assets/images/toby.jpg',
 ];
 ---
@@ -37,12 +35,12 @@ const heroSlides = [
 
   <div class="px-hover testimonials">
     {
-      testimonials.map((e) => (
+      testimonials.map((item) => (
         <TestimonialCard
-          src={e.data.cardImage}
-          quote={e.data.quote!.text}
-          linkText={`View ${e.data.title} Case Study`}
-          href={`/work/${e.id}`}
+          src={item.cardImage}
+          quote={item.quote!.text}
+          linkText={`View ${item.title} Case Study`}
+          href={`/work/${item.id}`}
         />
       ))
     }

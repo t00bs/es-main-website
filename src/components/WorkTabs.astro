@@ -1,17 +1,15 @@
 ---
 // Home work section: three pixel-label tabs, the rule segment slides to the
 // active tab, and each tab reveals its own 3-card grid with a crossfade.
-// A case study appears under every tab listed in its `tags` field. Each grid
-// maps its own collection-derived array directly so visual editors can trace
-// the loops back to the caseStudies collection.
-import { getCollection } from 'astro:content';
+// A case study appears under every tab listed in its `tags` field. The JSON
+// collection is imported directly so visual editors can bind the loops to it.
+import caseStudies from '../data/case-studies.json';
 import WorkCard from './WorkCard.astro';
 
-const caseStudies = (await getCollection('caseStudies')).sort((a, b) => a.data.order - b.data.order);
-
-const designWork = caseStudies.filter((item) => item.data.tags.includes('design')).slice(0, 3);
-const automationWork = caseStudies.filter((item) => item.data.tags.includes('automation')).slice(0, 3);
-const portalsWork = caseStudies.filter((item) => item.data.tags.includes('portals')).slice(0, 3);
+const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
+const designWork = sorted.filter((item) => item.tags.includes('design')).slice(0, 3);
+const automationWork = sorted.filter((item) => item.tags.includes('automation')).slice(0, 3);
+const portalsWork = sorted.filter((item) => item.tags.includes('portals')).slice(0, 3);
 ---
 
 <div class="work-tabs">
@@ -31,9 +29,9 @@ const portalsWork = caseStudies.filter((item) => item.data.tags.includes('portal
     {
       designWork.map((item) => (
         <WorkCard
-          src={item.data.cardImage}
-          title={item.data.title}
-          subtitle={item.data.subtitle}
+          src={item.cardImage}
+          title={item.title}
+          subtitle={item.subtitle}
           showArrow
           href={`/work/${item.id}`}
         />
@@ -45,9 +43,9 @@ const portalsWork = caseStudies.filter((item) => item.data.tags.includes('portal
     {
       automationWork.map((item) => (
         <WorkCard
-          src={item.data.cardImage}
-          title={item.data.title}
-          subtitle={item.data.subtitle}
+          src={item.cardImage}
+          title={item.title}
+          subtitle={item.subtitle}
           showArrow
           href={`/work/${item.id}`}
         />
@@ -59,9 +57,9 @@ const portalsWork = caseStudies.filter((item) => item.data.tags.includes('portal
     {
       portalsWork.map((item) => (
         <WorkCard
-          src={item.data.cardImage}
-          title={item.data.title}
-          subtitle={item.data.subtitle}
+          src={item.cardImage}
+          title={item.title}
+          subtitle={item.subtitle}
           showArrow
           href={`/work/${item.id}`}
         />
