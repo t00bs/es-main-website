@@ -1,7 +1,9 @@
 ---
+import services from '../data/services.json';
+
 // Dark services strip: "We offer:" pixel label pinned left, 36px list scrolling
 // behind an edge fade. Statements come from the services collection.
-import services from '../data/services.json';
+
 
 interface Props {
   label?: string;
@@ -10,26 +12,21 @@ interface Props {
 const { label = 'We offer:' } = Astro.props;
 const text = services.map((item) => item.text).join(' ');
 ---
-
 <div class="marquee">
-  <div class="marquee__track">
-    <span>{text}</span>
-    <span aria-hidden="true">{text}</span>
+  <div class="marquee__track"><span>{text}</span><span aria-hidden="true">{text}</span></div>
+  <div class="marquee__fade">
   </div>
-  <div class="marquee__fade"></div>
-  <div class="marquee__label">
-    <span>{label}</span>
-  </div>
+  <div class="marquee__label"><span>{label}</span></div>
 </div>
-
 <style>
   .marquee {
     position: relative;
     background-color: var(--es-ink);
-    height: 68px;
+    height: 4rem;
     overflow: hidden;
     display: flex;
     align-items: center;
+    padding-top: 0.5rem;
   }
   /* Explicit stacking: the animated transform promotes the track to its own
      compositing layer, which some renderers paint above z-index-less siblings
@@ -85,6 +82,7 @@ const text = services.map((item) => item.text).join(' ');
     background-color: var(--es-ink);
     display: flex;
     align-items: center;
+    padding-right: 0.5rem;
   }
   .marquee__label span {
     font-family: var(--font-pixel);

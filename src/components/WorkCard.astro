@@ -20,11 +20,24 @@ const ARROW_PATH =
   <div class="work-card__caption" style={`bottom: ${subtitle ? 16 : 11}px;`}>
     <div class="work-card__text">
       <span class="work-card__title">{title}</span>
-      {subtitle && <span class="work-card__subtitle">{subtitle}</span>}
+      {
+        subtitle && (
+          <span class="work-card__reveal">
+            <span class="work-card__subtitle">{subtitle}</span>
+          </span>
+        )
+      }
     </div>
     {
       showArrow && (
-        <svg width="27" height="27" viewBox="0 0 27 27" fill="var(--es-cream)" aria-hidden="true">
+        <svg
+          class="work-card__arrow"
+          width="27"
+          height="27"
+          viewBox="0 0 27 27"
+          fill="var(--es-cream)"
+          aria-hidden="true"
+        >
           <path d={ARROW_PATH} fill-rule="nonzero" />
         </svg>
       )
@@ -64,7 +77,14 @@ const ARROW_PATH =
   .work-card__text {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+  }
+  /* The subtitle's row collapses via the 0fr grid trick so its reveal can
+     animate height and push the title up. Its 8px gap to the title lives as
+     padding inside the clipped row so the collapsed state is exactly
+     title-only. */
+  .work-card__reveal {
+    display: grid;
+    grid-template-rows: 1fr;
   }
   .work-card__title {
     font-family: var(--font-sans);
@@ -81,8 +101,61 @@ const ARROW_PATH =
     line-height: var(--leading-tight);
     white-space: nowrap;
     color: var(--es-cream);
+    min-height: 0;
+    overflow: hidden;
+    padding-top: 8px;
   }
   .work-card svg {
     flex-shrink: 0;
+  }
+
+  /* Desktop hover: only the title shows at rest; the subtitle and arrow fade
+     in and rise, the subtitle's expanding row pushing the title up. */
+  @media (hover: hover) and (pointer: fine) {
+    .work-card__reveal {
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+    }
+    /* padding-top collapses with the row — even at 0fr it would keep an 8px
+       floor under the title otherwise. */
+    .work-card__subtitle {
+      opacity: 0;
+      padding-top: 0;
+      transform: translateY(6px);
+      transition:
+        opacity 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+        padding-top 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+        transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+    }
+    .work-card__arrow {
+      opacity: 0;
+      transform: translateY(10px);
+      transition:
+        opacity 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+        transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+    }
+    .work-card:hover .work-card__reveal,
+    .work-card:focus-visible .work-card__reveal {
+      grid-template-rows: 1fr;
+    }
+    .work-card:hover .work-card__subtitle,
+    .work-card:focus-visible .work-card__subtitle,
+    .work-card:hover .work-card__arrow,
+    .work-card:focus-visible .work-card__arrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .work-card:hover .work-card__subtitle,
+    .work-card:focus-visible .work-card__subtitle {
+      padding-top: 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .work-card__reveal,
+    .work-card__subtitle,
+    .work-card__arrow {
+      transition-duration: 0s;
+    }
   }
 </style>

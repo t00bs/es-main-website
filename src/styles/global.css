@@ -29,7 +29,8 @@ nav a:hover {
   opacity: 0.55;
 }
 
-/* Clean hover: slow zoom on image cards, arrow nudges NE */
+/* Clean hover: slow zoom on image cards, arrow nudges NE. Work cards own
+   their arrow motion (fade + rise reveal), so they're excluded here. */
 .hover-zoom a img,
 a.hover-zoom img {
   transition: transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
@@ -38,11 +39,11 @@ a.hover-zoom img {
 a.hover-zoom:hover img {
   transform: scale(1.04);
 }
-.hover-zoom a svg,
+.hover-zoom a:not(.work-card) svg,
 a.hover-zoom svg {
   transition: transform 0.25s ease;
 }
-.hover-zoom a:hover svg,
+.hover-zoom a:not(.work-card):hover svg,
 a.hover-zoom:hover svg {
   transform: translate(4px, -4px);
 }
