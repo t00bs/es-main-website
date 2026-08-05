@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import TickerRow from '../components/TickerRow.astro';
+import SectionRule from '../components/SectionRule.astro';
+import PixelLink from '../components/PixelLink.astro';
+---
+
+<Layout
+  title="Electric Sheep — About"
+  description="Meet Toby Balderson, the human behind Electric Sheep."
+>
+  <div class="section-grid intro">
+    <SectionLabel highlight="The human behind the sheep." />
+    <span class="statement"
+      >Toby Balderson founded Electric Sheep in 2023 to sit at the intersection of technology and
+      humanity. He designs the tools, builds the automations, and answers the emails. Usually in
+      that order.</span
+    >
+  </div>
+
+  <div class="rule-wrap">
+    <TickerRow />
+    <SectionRule />
+  </div>
+
+  <div class="portrait">
+    <div class="portrait__frame">
+      <img src="/assets/images/toby.jpg" alt="Toby Balderson" />
+      <div class="portrait__overlay"></div>
+      <span class="portrait__caption">Big nose, bigger ideas.</span>
+    </div>
+  </div>
+
+  <div class="section-grid text-section">
+    <SectionLabel highlight="What he does" />
+    <span class="text-section__body"
+      >Strategy, brand, UX and the plumbing behind them. If a robot can do the boring part, Toby
+      will build the robot. The judgement stays human.</span
+    >
+  </div>
+
+  <div class="section-grid text-section">
+    <SectionLabel highlight="Why sheep?" />
+    <span class="text-section__body"
+      >Do Androids dream of Electric Sheep? We don't know. But naming a studio after the question
+      felt honest. Sheep by name. Not by nature.</span
+    >
+  </div>
+
+  <div class="section-grid text-section">
+    <SectionLabel highlight="The studio" />
+    <span class="text-section__body"
+      >10 Minden Street, St Helier, Jersey. Coffee is good. Toby accepts visitors by
+      appointment.</span
+    >
+  </div>
+
+  <div class="px-hover links">
+    <PixelLink
+      href="https://www.linkedin.com/in/toby-balderson-69b752164/"
+      color="var(--text-primary)"
+      fontSize={24}
+    >
+      Find Toby on LinkedIn
+    </PixelLink>
+    <PixelLink href="/contact" color="var(--text-primary)" fontSize={24}>
+      Start a conversation
+    </PixelLink>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    padding-bottom: 48px;
+  }
+  .rule-wrap {
+    padding: 0 var(--page-margin);
+  }
+  .portrait {
+    padding: 24px var(--page-margin) 16px var(--page-margin);
+  }
+  .portrait__frame {
+    position: relative;
+    height: 515px;
+    overflow: hidden;
+    background-color: var(--surface-placeholder);
+  }
+  .portrait__frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .portrait__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--overlay-protect);
+  }
+  .portrait__caption {
+    position: absolute;
+    left: var(--card-pad);
+    bottom: 16px;
+    font-family: var(--font-sans);
+    font-size: var(--text-caption);
+    line-height: var(--leading-tight);
+    color: var(--es-cream);
+  }
+  .text-section {
+    padding-top: 48px;
+    padding-bottom: 0;
+  }
+  .text-section__body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: var(--text-section-label);
+    line-height: var(--leading-body);
+    color: var(--text-primary);
+    max-width: 760px;
+  }
+  .links {
+    padding: var(--section-pad) var(--page-margin);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+</style>
