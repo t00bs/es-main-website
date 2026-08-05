@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electric Sheep CMS — Case Studies</title>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="js/data.js"></script>
+<style>
+:root {
+  --cms-bg: #F6F6F4;
+  --cms-panel: #FFFFFF;
+  --cms-border: #E2E2DE;
+  --cms-text: #1A1A1A;
+  --cms-muted: #77776F;
+  --cms-accent: #101010;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cms-bg); color: var(--cms-text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; }
+button { font: inherit; cursor: pointer; }
+input, textarea, select { font: inherit; color: inherit; }
+.cms-input, .cms-textarea {
+  width: 100%; padding: 8px 10px; border: 1px solid var(--cms-border); border-radius: 6px;
+  background: #fff; outline: none;
+}
+.cms-input:focus, .cms-textarea:focus { border-color: var(--cms-accent); }
+.cms-textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+.cms-label { display: block; font-size: 12px; font-weight: 600; color: var(--cms-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+.btn { border: 1px solid var(--cms-border); background: #fff; border-radius: 6px; padding: 7px 14px; transition: background 0.15s ease, border-color 0.15s ease; }
+.btn:hover { background: #F0F0EC; }
+.btn-primary { background: var(--cms-accent); border-color: var(--cms-accent); color: #fff; }
+.btn-primary:hover { background: #333; }
+.btn-ghost { border: none; background: transparent; color: var(--cms-muted); }
+.btn-ghost:hover { color: var(--cms-text); background: #F0F0EC; }
+.row-hover { transition: background 0.15s ease; }
+.row-hover:hover { background: #FAFAF7; cursor: pointer; }
+.tag { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--cms-border); border-radius: 999px; padding: 4px 12px; background: #fff; user-select: none; transition: all 0.15s ease; }
+.tag.on { background: var(--cms-accent); border-color: var(--cms-accent); color: #fff; }
+.tag:hover { border-color: var(--cms-accent); }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const STATUSES = { "farm-jersey": "Published", "foxdocs": "Published", "bcr-law": "Draft", "virdaris": "Published", "mortgage-shop": "Published" };
+const UPDATED = { "farm-jersey": "2 days ago", "foxdocs": "1 week ago", "bcr-law": "Yesterday", "virdaris": "3 weeks ago", "mortgage-shop": "1 month ago" };
+
+function StatusChip({ status }) {
+  const on = status === "Published";
+  return (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, fontWeight: 600, color: on ? "#1F7A3D" : "#8A6D1A", background: on ? "#E8F4EC" : "#F7F0DA", borderRadius: 999, padding: "3px 10px" }}>
+      <span style={{ width: 6, height: 6, borderRadius: "50%", background: on ? "#2AA457" : "#C9A227" }}></span>
+      {status}
+    </span>
+  );
+}
+
+function TopBar({ onList }) {
+  return (
+    <header style={{ background: "var(--cms-panel)", borderBottom: "1px solid var(--cms-border)", padding: "0 24px", height: 56, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <img src="assets/logo/es-logomark.svg" alt="" style={{ height: 26, width: "auto", display: "block" }}></img>
+        <span style={{ fontWeight: 600 }}>Electric Sheep CMS</span>
+        <span style={{ color: "var(--cms-muted)" }}>/</span>
+        <button className="btn-ghost btn" onClick={onList} style={{ padding: "4px 8px" }}>Case studies</button>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <a href="Home.html" style={{ color: "var(--cms-muted)", textDecoration: "none", fontSize: 13 }}>View site ↗</a>
+        <span style={{ width: 28, height: 28, borderRadius: "50%", background: "#101010", color: "#F7EED5", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 600 }}>ES</span>
+      </div>
+    </header>
+  );
+}
+
+function ListView({ onEdit }) {
+  return (
+    <main style={{ maxWidth: 960, margin: "0 auto", padding: "32px 24px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: 20 }}>Case studies</h1>
+          <p style={{ margin: "4px 0 0", color: "var(--cms-muted)" }}>{window.ES_CASE_STUDIES.length} entries · shown on Work and Home</p>
+        </div>
+        <div style={{ display: "flex", gap: 10 }}>
+          <input className="cms-input" placeholder="Search…" style={{ width: 200 }}></input>
+          <button className="btn btn-primary" onClick={() => onEdit(null)}>+ New case study</button>
+        </div>
+      </div>
+      <div style={{ background: "var(--cms-panel)", border: "1px solid var(--cms-border)", borderRadius: 10, overflow: "hidden" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "56px 1.6fr 1.4fr 1fr 0.8fr 90px", gap: 12, alignItems: "center", padding: "10px 16px", borderBottom: "1px solid var(--cms-border)", fontSize: 12, fontWeight: 600, color: "var(--cms-muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+          <span></span><span>Title</span><span>Services</span><span>Updated</span><span>Status</span><span></span>
+        </div>
+        {window.ES_CASE_STUDIES.map((c) => (
+          <div key={c.id} className="row-hover" onClick={() => onEdit(c)} style={{ display: "grid", gridTemplateColumns: "56px 1.6fr 1.4fr 1fr 0.8fr 90px", gap: 12, alignItems: "center", padding: "10px 16px", borderBottom: "1px solid var(--cms-border)" }}>
+            <img src={c.cardImage} alt="" style={{ width: 40, height: 40, objectFit: "cover", borderRadius: 6, display: "block" }}></img>
+            <div>
+              <div style={{ fontWeight: 600 }}>{c.title}</div>
+              <div style={{ color: "var(--cms-muted)", fontSize: 12 }}>{c.subtitle}</div>
+            </div>
+            <span style={{ color: "var(--cms-muted)", fontSize: 12 }}>{c.services.join(" · ")}</span>
+            <span style={{ color: "var(--cms-muted)" }}>{UPDATED[c.id]}</span>
+            <StatusChip status={STATUSES[c.id]}></StatusChip>
+            <button className="btn" onClick={(e) => { e.stopPropagation(); onEdit(c); }}>Edit</button>
+          </div>
+        ))}
+      </div>
+      <p style={{ color: "var(--cms-muted)", fontSize: 12, marginTop: 16 }}>Design mockup — actions are illustrative, nothing is saved.</p>
+    </main>
+  );
+}
+
+function Field({ label, children }) {
+  return (
+    <div>
+      <label className="cms-label">{label}</label>
+      {children}
+    </div>
+  );
+}
+
+function BodyBlock({ block }) {
+  return (
+    <div style={{ border: "1px solid var(--cms-border)", borderRadius: 8, background: "#fff" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 12px", borderBottom: "1px solid var(--cms-border)" }}>
+        <span style={{ fontSize: 12, fontWeight: 600, color: "var(--cms-muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+          {block.type === "image" ? "Image block" : "Text block"}
+        </span>
+        <div style={{ display: "flex", gap: 4 }}>
+          <button className="btn btn-ghost" title="Move up">↑</button>
+          <button className="btn btn-ghost" title="Move down">↓</button>
+          <button className="btn btn-ghost" title="Delete">✕</button>
+        </div>
+      </div>
+      <div style={{ padding: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+        {block.type === "image" ? (
+          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+            <img src={block.src} alt="" style={{ width: 96, height: 64, objectFit: "cover", borderRadius: 6, display: "block" }}></img>
+            <div style={{ flex: 1 }}>
+              <Field label="Caption"><input className="cms-input" defaultValue={block.caption}></input></Field>
+            </div>
+            <button className="btn">Replace image</button>
+          </div>
+        ) : (
+          <React.Fragment>
+            <Field label="Section label"><input className="cms-input" defaultValue={block.label}></input></Field>
+            <Field label="Body"><textarea className="cms-textarea" defaultValue={block.body}></textarea></Field>
+          </React.Fragment>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function EditorView({ cs, onList }) {
+  const c = cs || { title: "", subtitle: "", client: "", year: "2026", heroImage: null, services: [], liveUrl: "", summary: "", sections: [], quote: null, id: "new-case-study" };
+  const isNew = !cs;
+  return (
+    <main style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 24px 64px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <button className="btn btn-ghost" onClick={onList}>← All case studies</button>
+          <h1 style={{ margin: 0, fontSize: 20 }}>{isNew ? "New case study" : c.title}</h1>
+          {!isNew ? <StatusChip status={STATUSES[c.id] || "Draft"}></StatusChip> : <StatusChip status="Draft"></StatusChip>}
+        </div>
+        <div style={{ display: "flex", gap: 10 }}>
+          <button className="btn">Save draft</button>
+          <button className="btn btn-primary">Publish</button>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: 20, alignItems: "start" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+
+          <section style={{ background: "var(--cms-panel)", border: "1px solid var(--cms-border)", borderRadius: 10, padding: 16, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+            <Field label="Title"><input className="cms-input" defaultValue={c.title}></input></Field>
+            <Field label="Client name"><input className="cms-input" defaultValue={c.client}></input></Field>
+            <Field label="Tagline"><input className="cms-input" defaultValue={c.subtitle}></input></Field>
+            <Field label="Live site link"><input className="cms-input" defaultValue={c.liveUrl} placeholder="https://…"></input></Field>
+            <div style={{ gridColumn: "1 / -1" }}>
+              <Field label="Summary / intro">
+                <textarea className="cms-textarea" defaultValue={c.summary} placeholder="One or two sentences. Short declaratives. Full stops."></textarea>
+              </Field>
+            </div>
+          </section>
+
+          <section style={{ background: "var(--cms-panel)", border: "1px solid var(--cms-border)", borderRadius: 10, padding: 16 }}>
+            <label className="cms-label">Hero image</label>
+            {c.heroImage ? (
+              <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                <img src={c.heroImage} alt="" style={{ width: 200, height: 90, objectFit: "cover", borderRadius: 6, display: "block" }}></img>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-start" }}>
+                  <button className="btn">Replace image</button>
+                  <span style={{ fontSize: 12, color: "var(--cms-muted)" }}>Min 1360×428 · photographic, warm, characterful</span>
+                </div>
+              </div>
+            ) : (
+              <div style={{ border: "1.5px dashed var(--cms-border)", borderRadius: 8, padding: "36px 16px", textAlign: "center", color: "var(--cms-muted)" }}>
+                Drop an image here, or <span style={{ textDecoration: "underline", cursor: "pointer" }}>browse</span>
+              </div>
+            )}
+          </section>
+
+          <section style={{ background: "var(--cms-panel)", border: "1px solid var(--cms-border)", borderRadius: 10, padding: 16 }}>
+            <label className="cms-label">Services</label>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+              {window.ES_SERVICES.map((s) => (
+                <span key={s} className={"tag" + (c.services.includes(s) ? " on" : "")}>{s}</span>
+              ))}
+            </div>
+          </section>
+
+          <section style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <label className="cms-label" style={{ marginBottom: 0 }}>Body sections</label>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button className="btn">+ Text block</button>
+                <button className="btn">+ Image block</button>
+              </div>
+            </div>
+            {c.sections.length ? c.sections.map((s, i) => <BodyBlock key={i} block={s}></BodyBlock>) : (
+              <div style={{ border: "1.5px dashed var(--cms-border)", borderRadius: 8, padding: "28px 16px", textAlign: "center", color: "var(--cms-muted)" }}>No sections yet. Add a text or image block.</div>
+            )}
+          </section>
+
+          <section style={{ background: "var(--cms-panel)", border: "1px solid var(--cms-border)", borderRadius: 10, padding: 16, display: "flex", flexDirection: "column", gap: 14 }}>
+            <Field label="Testimonial quote (optional)">
+              <textarea className="cms-textarea" defaultValue={c.quote ? c.quote.text : ""} placeholder="“Keep the curly quotes and the human asides.”"></textarea>
+            </Field>
+            <Field label="Attribution"><input className="cms-input" defaultValue={c.quote ? c.quote.author : ""} placeholder="Client name"></input></Field>
+          </section>
+        </div>
+
+        <aside style={{ position: "sticky", top: 20, display: "flex", flexDirection: "column", gap: 20 }}>
+          <section style={{ background: "var(--cms-panel)", border: "1px solid var(--cms-border)", borderRadius: 10, padding: 16, display: "flex", flexDirection: "column", gap: 14 }}>
+            <Field label="Status">
+              <select className="cms-input" defaultValue={STATUSES[c.id] || "Draft"}>
+                <option>Draft</option>
+                <option>Published</option>
+              </select>
+            </Field>
+            <Field label="Slug">
+              <input className="cms-input" defaultValue={c.id}></input>
+            </Field>
+            <div style={{ fontSize: 12, color: "var(--cms-muted)", lineHeight: 1.5 }}>
+              Last edited {UPDATED[c.id] || "just now"}<br></br>by hello@electricsheep.design
+            </div>
+          </section>
+          <section style={{ background: "var(--cms-panel)", border: "1px solid var(--cms-border)", borderRadius: 10, padding: 16, display: "flex", flexDirection: "column", gap: 10 }}>
+            <label className="cms-label" style={{ marginBottom: 0 }}>Preview</label>
+            <a className="btn" href={"Case Study.html?cs=" + c.id} style={{ textAlign: "center", textDecoration: "none", color: "inherit", display: "block" }}>Open live preview ↗</a>
+            <span style={{ fontSize: 12, color: "var(--cms-muted)" }}>Opens the case study page as visitors will see it.</span>
+          </section>
+        </aside>
+      </div>
+    </main>
+  );
+}
+
+function CMSApp() {
+  const [editing, setEditing] = React.useState(undefined); // undefined = list
+  return (
+    <div data-screen-label={editing === undefined ? "CMS — Case studies list" : "CMS — Editor"} style={{ minHeight: "100vh" }}>
+      <TopBar onList={() => setEditing(undefined)}></TopBar>
+      {editing === undefined ? (
+        <ListView onEdit={(c) => setEditing(c)}></ListView>
+      ) : (
+        <EditorView cs={editing} onList={() => setEditing(undefined)}></EditorView>
+      )}
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<CMSApp></CMSApp>);
+</script>
+</body>
+</html>

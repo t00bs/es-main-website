@@ -1,0 +1,53 @@
+/* Electric Sheep — typography tokens + webfonts */
+
+@font-face {
+  font-family: "Helvetica Neue LT Std";
+  src: url("../assets/fonts/HelveticaNeueLTStd-55Roman.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Neue Pixel";
+  src: url("../assets/fonts/NeuePixel-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Awesome Serif Italic VAR";
+  src: url("../assets/fonts/AwesomeSerifItalicVAR.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Families */
+  --font-sans: "Helvetica Neue LT Std", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-pixel: "Neue Pixel", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif-quote: "Awesome Serif Italic VAR", ui-serif, Georgia, "Times New Roman", serif;
+  --font-hero: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; /* Bold hero only */
+
+  /* Sizes (exact from source) */
+  --text-caption: 16px;      /* card subtitles */
+  --text-body: 18px;         /* nav, footer, pixel links, pill labels */
+  --text-pixel-label: 20px;  /* ticker labels — letter-spacing .075em */
+  --text-section-label: 24px;/* highlighted section labels, "We offer:" */
+  --text-card-title: 32px;   /* work-card titles, serif quotes */
+  --text-statement: 36px;    /* about body, services marquee */
+  --text-hero: 58px;         /* hero headline — Helvetica Neue Bold */
+  --text-display: 62px;      /* feature-card headline */
+
+  /* Line heights */
+  --leading-none: 1;         /* nav, pill labels */
+  --leading-tight: 1.1;      /* headlines, card titles, quotes */
+  --leading-label: 1.2;      /* section labels */
+  --leading-body: 1.25;      /* 36px statement body */
+  --leading-marquee: 0.9;    /* services marquee */
+
+  /* Tracking */
+  --tracking-pixel: 0.075em; /* ticker labels only */
+}

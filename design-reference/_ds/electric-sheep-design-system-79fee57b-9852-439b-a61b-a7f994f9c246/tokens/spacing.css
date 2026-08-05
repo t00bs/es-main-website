@@ -1,0 +1,27 @@
+/* Electric Sheep — spacing, radii, borders (exact from source) */
+:root {
+  /* Layout */
+  --page-margin: 40px;       /* outer gutter on every section */
+  --page-width: 1440px;      /* desktop frame width */
+  --content-width: 1360px;   /* page width minus 2× margin */
+  --grid-gap: 20px;          /* work grid + testimonial grid */
+  --section-pad: 64px;       /* vertical rhythm between major sections */
+  --card-pad: 20px;          /* text inset inside image cards */
+  --nav-gap: 28px;           /* gap between nav links */
+
+  /* Radii — surfaces are square; the exceptions: */
+  --radius-none: 0;          /* image cards, sections */
+  --radius-highlight: 3px;   /* rectangle behind section labels */
+  --radius-pill: 40px;       /* badge pills */
+  --radius-favicon: 4px;     /* 32px favicon tile */
+  --radius-app: 16px;        /* 256px app-icon tile */
+
+  /* Rules */
+  --rule-thick: 6px;         /* short 77px-wide rule segment */
+  --rule-thin: 1px;          /* full-width hairline */
+  --stroke-pill-w: 1px;      /* inset pill outline */
+
+  /* Card sizes */
+  --work-card: 440px;        /* square work-grid tile */
+  --testimonial-h: 440px;    /* half-width testimonial card */
+}

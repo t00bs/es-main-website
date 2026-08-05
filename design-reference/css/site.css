@@ -1,0 +1,68 @@
+/* Electric Sheep site — shared page styles */
+html {
+  background: var(--surface-page);
+}
+body {
+  margin: 0;
+  background: var(--surface-page);
+  transition: background-color 0.3s ease;
+}
+a {
+  transition: opacity 0.2s ease;
+}
+nav a:hover {
+  opacity: 0.55;
+}
+/* Clean hover: slow zoom on image cards, arrow nudges NE */
+.hover-zoom a img,
+a.hover-zoom img {
+  transition: transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.hover-zoom a:hover img,
+a.hover-zoom:hover img {
+  transform: scale(1.04);
+}
+.hover-zoom a svg,
+a.hover-zoom svg {
+  transition: transform 0.25s ease;
+}
+.hover-zoom a:hover svg,
+a.hover-zoom:hover svg {
+  transform: translate(4px, -4px);
+}
+/* Hero headline: --text-hero is redefined as a size by typography.css, so the
+   color var resolves invalid inside HeroBanner — force the cream-warm color. */
+.hero-fix h1 {
+  color: #F7F0DE !important;
+}
+/* Page-level section labels: in dark theme the highlight block and its cream
+   text both resolve to cream — force ink text so labels stay readable. */
+[data-theme="dark"] .label-readable > span > span {
+  color: #101010 !important;
+}
+/* Work tabs: hover + grid crossfade */
+.work-tab:not(.active):hover {
+  opacity: 0.7 !important;
+}
+.tab-grid {
+  animation: tab-grid-in 0.4s ease both;
+}
+@keyframes tab-grid-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Brand rule: italicised text in headlines renders in Neue Pixel instead */
+em, i {
+  font-family: var(--font-pixel);
+  font-style: normal;
+}
+/* Hero headline glitch: chars flicker into Neue Pixel */
+.hero-fix h1 span.glx {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+}
+/* Pixel links */
+.px-hover a:hover,
+a.px-hover:hover {
+  opacity: 0.6;
+}

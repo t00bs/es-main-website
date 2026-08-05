@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electric Sheep — Case Study</title>
+<script>try { document.documentElement.dataset.theme = localStorage.getItem("es-theme") || "light"; } catch (e) {}</script>
+<link rel="stylesheet" href="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/tokens/colors.css">
+<link rel="stylesheet" href="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/tokens/typography.css">
+<link rel="stylesheet" href="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/styles.css">
+<link rel="stylesheet" href="css/site.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/_ds_bundle.js"></script>
+<script src="js/data.js"></script>
+<script type="text/babel" src="js/chrome.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { HeroBanner, SectionRule, SectionLabel, PillBadge, PixelLink, FeatureCard } = ES_DS;
+
+const csId = new URLSearchParams(location.search).get("cs");
+const cs = window.ES_GET_CS(csId);
+const all = window.ES_CASE_STUDIES;
+const next = all[(all.findIndex((c) => c.id === cs.id) + 1) % all.length];
+document.title = "Electric Sheep — " + cs.title;
+
+function TextSection({ section }) {
+  return (
+    <div style={{ padding: "48px 40px", display: "grid", gridTemplateColumns: "460px 1fr", gap: 4 }}>
+      <div className="label-readable"><SectionLabel highlight={section.label}>{""}</SectionLabel></div>
+      <span style={{ fontFamily: "var(--font-sans)", fontWeight: 400, fontSize: "var(--text-section-label)", lineHeight: "var(--leading-body)", color: "var(--text-primary)", maxWidth: 760 }}>{section.body}</span>
+    </div>
+  );
+}
+
+function ImageSection({ section }) {
+  return (
+    <div style={{ padding: "16px 40px" }}>
+      <div style={{ position: "relative", height: 515, overflow: "hidden", backgroundColor: "var(--surface-placeholder)" }}>
+        <img src={section.src} alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}></img>
+        <div style={{ position: "absolute", inset: 0, background: "var(--overlay-protect)" }}></div>
+        <span style={{ position: "absolute", left: 20, bottom: 16, fontFamily: "var(--font-sans)", fontSize: "var(--text-caption)", lineHeight: "var(--leading-tight)", color: "var(--es-cream)" }}>{section.caption}</span>
+      </div>
+    </div>
+  );
+}
+
+function CaseStudyPage() {
+  return (
+    <div data-screen-label={"Case Study — " + cs.title} style={{ background: "var(--surface-page)", minHeight: "100vh" }}>
+      <SiteNav></SiteNav>
+
+      <div className="hero-fix" style={{ padding: "10px 40px 24px 40px" }}>
+        <HeroBanner src={cs.heroImage} headline={cs.title + ". " + cs.subtitle + "."}></HeroBanner>
+      </div>
+
+      <div style={{ padding: "0 40px 24px 40px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          {cs.services.map((s) => (
+            <PillBadge key={s} color="var(--text-primary)">{s}</PillBadge>
+          ))}
+        </div>
+        <div className="px-hover" style={{ display: "flex", alignItems: "center", gap: 24 }}>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: "var(--text-body)", lineHeight: "var(--leading-none)", color: "var(--text-primary)" }}>{cs.client} · {cs.year}</span>
+          <PixelLink href={cs.liveUrl} color="var(--text-primary)">{cs.liveLabel}</PixelLink>
+        </div>
+      </div>
+
+      <div style={{ padding: "0 40px" }}>
+        <SectionRule></SectionRule>
+      </div>
+
+      <div style={{ padding: "48px 40px 16px 40px" }}>
+        <span style={{ display: "block", fontFamily: "var(--font-sans)", fontWeight: 400, fontSize: "var(--text-statement)", lineHeight: "var(--leading-body)", color: "var(--text-primary)", maxWidth: 1080 }}>{cs.summary}</span>
+      </div>
+
+      {cs.sections.map((s, i) => (s.type === "image" ? <ImageSection key={i} section={s}></ImageSection> : <TextSection key={i} section={s}></TextSection>))}
+
+      {cs.quote ? (
+        <div data-theme="dark" style={{ backgroundColor: "#101010", marginTop: 48, padding: "64px 40px", display: "flex", flexDirection: "column", gap: 32, alignItems: "flex-start" }}>
+          <PillBadge color="var(--es-cream)">Customer Stories</PillBadge>
+          <span style={{ fontFamily: "var(--font-serif-quote)", fontStyle: "italic", fontSize: "var(--text-card-title)", lineHeight: "var(--leading-tight)", color: "var(--es-cream)", maxWidth: 900 }}>{cs.quote.text}</span>
+          <span style={{ fontFamily: "var(--font-sans)", fontSize: "var(--text-body)", lineHeight: "var(--leading-none)", color: "var(--es-cream)" }}>{cs.quote.author}</span>
+        </div>
+      ) : null}
+
+      <div className="hover-zoom px-hover" style={{ padding: "64px 40px" }}>
+        <FeatureCard src={next.cardImage} headline={"Next: " + next.title + "."} linkText="View case study" href={"Case Study.html?cs=" + next.id}></FeatureCard>
+      </div>
+
+      <SiteFooterStd></SiteFooterStd>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<CaseStudyPage></CaseStudyPage>);
+</script>
+</body>
+</html>

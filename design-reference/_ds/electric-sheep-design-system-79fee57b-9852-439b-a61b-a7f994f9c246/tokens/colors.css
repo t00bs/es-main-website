@@ -1,0 +1,38 @@
+/* Electric Sheep — color tokens (values transcribed from Rebuild 2026.fig) */
+:root {
+  /* Base palette */
+  --es-cream: #F7EED5;        /* rgb(247,238,213) — primary page surface */
+  --es-cream-soft: #F6F1E2;   /* rgb(246,241,226) — text-on-dark variant */
+  --es-cream-warm: #F7F0DE;   /* rgb(247,240,222) — hero headline on imagery */
+  --es-ink: #101010;          /* rgb(16,16,16) — dark surface + logomark */
+  --es-black: #000000;        /* pure black — text on cream, footer surface */
+  --es-white: #FFFFFF;        /* dark-mode text + logomark */
+  --es-gray: #D9D9D9;         /* rgb(217,217,217) — image placeholder fill */
+
+  /* Semantic — light (default) */
+  --surface-page: var(--es-cream);
+  --surface-inverse: var(--es-ink);
+  --surface-footer: var(--es-black);
+  --surface-placeholder: var(--es-gray);
+  --text-primary: var(--es-black);
+  --text-on-dark: var(--es-cream);
+  --text-on-image: var(--es-cream);
+  --text-hero: var(--es-cream-warm);
+  --highlight-block: var(--es-ink);        /* rectangle behind section labels */
+  --rule-strong: var(--es-black);          /* 6px rule segment */
+  --rule-hairline: rgba(0, 0, 0, 0.5);     /* 1px full-width hairline */
+  --stroke-pill: var(--es-cream);          /* 1px inset pill outline (on imagery) */
+
+  /* Image protection gradient (bottom of every image card) */
+  --overlay-protect: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%); /* @kind other */
+}
+
+/* Dark scope — mirrors Desktop-3 */
+[data-theme="dark"] {
+  --surface-page: var(--es-ink);
+  --text-primary: var(--es-white);
+  --highlight-block: var(--es-cream);
+  --rule-strong: var(--es-white);
+  --rule-hairline: rgba(255, 255, 255, 0.5);
+  --surface-placeholder: var(--es-gray);
+}

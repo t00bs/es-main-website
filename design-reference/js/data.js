@@ -1,0 +1,200 @@
+// Electric Sheep — seed case-study content (placeholder copy)
+window.ES_CASE_STUDIES = [
+  {
+    id: "farm-jersey",
+    title: "Farm Jersey",
+    subtitle: "Lightning-fast applications",
+    client: "Farm Jersey",
+    year: "2024",
+    heroImage: "assets/images/work-farm-jersey.png",
+    cardImage: "assets/images/work-farm-jersey.png",
+    services: ["Custom Portals", "UX/UI Systems"],
+    liveUrl: "https://farmjersey.je",
+    liveLabel: "Visit farmjersey.je",
+    summary:
+      "Jersey's agricultural network needed one place to manage growers, produce and grant applications. We built a portal that turned a six-week paper process into a same-day one.",
+    sections: [
+      {
+        type: "text",
+        label: "The challenge",
+        body:
+          "Applications arrived by post, moved by hand, and disappeared into filing cabinets. Growers waited weeks for answers that took minutes to make. Nobody could see where anything was.",
+      },
+      { type: "image", src: "assets/images/work-farm-jersey.png", caption: "The grower portal — application status at a glance." },
+      {
+        type: "text",
+        label: "What we did",
+        body:
+          "One portal for growers, one dashboard for the team. Structured applications, automated checks, and a status anyone can read. No training manual required.",
+      },
+      {
+        type: "text",
+        label: "The result",
+        body:
+          "Same-day decisions on standard applications. Six weeks of admin, gone. The filing cabinets are now used for biscuits.",
+      },
+    ],
+    quote: null,
+  },
+  {
+    id: "foxdocs",
+    title: "Foxdocs",
+    subtitle: "Documents that write themselves",
+    client: "Foxdocs",
+    year: "2024",
+    heroImage: "assets/images/work-generic.jpg",
+    cardImage: "assets/images/work-generic.jpg",
+    services: ["AI Automations", "Workflow Optimisation"],
+    liveUrl: "https://foxdocs.example",
+    liveLabel: "Visit foxdocs site",
+    summary:
+      "Foxdocs turns hours of drafting into minutes of reviewing. We designed and built the automation engine that fills, checks and files documents while people do the thinking.",
+    sections: [
+      {
+        type: "text",
+        label: "The challenge",
+        body:
+          "The same clauses, typed again and again. Every document a fresh chance for a typo, and every typo a phone call.",
+      },
+      { type: "image", src: "assets/images/work-generic.jpg", caption: "Template engine — one source of truth per clause." },
+      {
+        type: "text",
+        label: "What we did",
+        body:
+          "A template engine driven by structured data, with AI handling the boring parts and a human signing off on the important ones. Automated by AI. Driven by people.",
+      },
+      {
+        type: "text",
+        label: "The result",
+        body: "Drafting time down from hours to minutes. Error rate down to approximately zero. Phone calls now mostly pleasant.",
+      },
+    ],
+    quote: null,
+  },
+  {
+    id: "bcr-law",
+    title: "BCR Law LLP",
+    subtitle: "A law firm, minus the paperwork",
+    client: "BCR Law LLP",
+    year: "2025",
+    heroImage: "assets/images/work-generic.jpg",
+    cardImage: "assets/images/work-generic.jpg",
+    services: ["AI Automations", "Digital Transformation"],
+    liveUrl: "https://bcrlawjersey.com",
+    liveLabel: "Visit bcrlawjersey.com",
+    summary:
+      "One of Jersey's leading law firms asked us to take the repetition out of client intake. We automated the process end to end — without automating the judgement.",
+    sections: [
+      {
+        type: "text",
+        label: "The challenge",
+        body:
+          "Client onboarding meant re-keying the same details into four systems. Skilled people were doing unskilled work, and the backlog showed it.",
+      },
+      { type: "image", src: "assets/images/work-generic.jpg", caption: "Intake pipeline — four systems, one entry point." },
+      {
+        type: "text",
+        label: "What we did",
+        body:
+          "A single intake flow feeding every system at once, with AI-assisted document checks and clear handoffs to humans wherever a decision matters.",
+      },
+      {
+        type: "text",
+        label: "The result",
+        body: "Onboarding time cut by two thirds. Zero re-keying. The lawyers went back to lawyering.",
+      },
+    ],
+    quote: null,
+  },
+  {
+    id: "virdaris",
+    title: "Virdaris",
+    subtitle: "A brand with a backbone",
+    client: "Virdaris",
+    year: "2025",
+    heroImage: "assets/images/testimonial-virdaris.png",
+    cardImage: "assets/images/testimonial-virdaris.png",
+    services: ["Brand Identity", "Strategic Design", "Custom Portals"],
+    liveUrl: "https://virdaris.example",
+    liveLabel: "Visit virdaris site",
+    summary:
+      "Virdaris came to us with a business plan and no face. We gave them a brand, a design system, and a client portal that made the whole thing feel inevitable.",
+    sections: [
+      {
+        type: "text",
+        label: "The challenge",
+        body:
+          "A new venture with serious ambitions and nothing to show for it yet. The brand had to earn trust before the track record could.",
+      },
+      { type: "image", src: "assets/images/testimonial-virdaris.png", caption: "Identity system — built to hold up in serious rooms." },
+      {
+        type: "text",
+        label: "What we did",
+        body:
+          "Strategy first, then identity, then product. One design system carried the brand from pitch deck to client portal without changing its accent.",
+      },
+      {
+        type: "text",
+        label: "The result",
+        body: "Launched on time, and the first client meetings did the rest. See the quote below — we didn't write it.",
+      },
+    ],
+    quote: {
+      text: "“I can’t thank or endorse you enough for the amazing process throughout (you can print that!)”",
+      author: "Virdaris",
+    },
+  },
+  {
+    id: "mortgage-shop",
+    title: "Mortgage Shop",
+    subtitle: "Early and on-budget",
+    client: "Mortgage Shop",
+    year: "2025",
+    heroImage: "assets/images/testimonial-mortgage-shop.jpg",
+    cardImage: "assets/images/testimonial-mortgage-shop.jpg",
+    services: ["Custom Portals", "UX/UI Systems", "Workflow Optimisation"],
+    liveUrl: "https://mortgageshop.je",
+    liveLabel: "Visit mortgageshop.je",
+    summary:
+      "Mortgage applications involve a lot of paper and a lot of waiting. We built Mortgage Shop a portal that removed most of the first and all of the second.",
+    sections: [
+      {
+        type: "text",
+        label: "The challenge",
+        body:
+          "Advisers chased documents by email while clients wondered what was happening. Everyone was busy. Nothing moved.",
+      },
+      { type: "image", src: "assets/images/testimonial-mortgage-shop.jpg", caption: "Client portal — every application, one timeline." },
+      {
+        type: "text",
+        label: "What we did",
+        body:
+          "A shared portal where clients upload once, advisers see everything, and the system does the chasing. Progress you can actually look at.",
+      },
+      {
+        type: "text",
+        label: "The result",
+        body: "Delivered early. On budget. The client said so themselves, below.",
+      },
+    ],
+    quote: {
+      text: "“A massive thank you for delivering this project early, and on-budget.”",
+      author: "Mortgage Shop",
+    },
+  },
+];
+
+window.ES_SERVICES = [
+  "AI Automations",
+  "Custom Portals",
+  "Strategic Design",
+  "UX/UI Systems",
+  "Brand Identity",
+  "Machine Learning",
+  "Digital Transformation",
+  "Workflow Optimisation",
+];
+
+window.ES_GET_CS = function (id) {
+  return window.ES_CASE_STUDIES.find(function (c) { return c.id === id; }) || window.ES_CASE_STUDIES[0];
+};

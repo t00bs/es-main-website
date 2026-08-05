@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electric Sheep — Home</title>
+<script>try { document.documentElement.dataset.theme = localStorage.getItem("es-theme") || "light"; } catch (e) {}</script>
+<link rel="stylesheet" href="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/tokens/colors.css">
+<link rel="stylesheet" href="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/tokens/typography.css">
+<link rel="stylesheet" href="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/styles.css">
+<link rel="stylesheet" href="css/site.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="_ds/electric-sheep-design-system-79fee57b-9852-439b-a61b-a7f994f9c246/_ds_bundle.js"></script>
+<script src="js/data.js"></script>
+<script type="text/babel" src="js/chrome.jsx"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { TickerRow, SectionRule, WorkCard, ServicesMarquee, TestimonialCard, SectionLabel, FeatureCard, PixelLink } = ES_DS;
+const testimonials = window.ES_CASE_STUDIES.filter((c) => c.quote);
+const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const HERO_SLIDES = ["assets/images/hero-sheep.png", "assets/images/work-farm-jersey.png", "assets/images/toby.jpg"];
+
+function GlitchHeadline({ text }) {
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (REDUCED) return;
+    const spans = ref.current.querySelectorAll("span");
+    const timers = [];
+    function burst(dur) {
+      const ticks = Math.floor(dur / 70);
+      for (let i = 0; i <= ticks; i++) {
+        timers.push(setTimeout(() => {
+          spans.forEach((s) => s.classList.toggle("glx", i < ticks && Math.random() < 0.3));
+        }, i * 70));
+      }
+    }
+    spans.forEach((s) => s.classList.add("glx"));
+    burst(900);
+    window.__heroGlitch = () => burst(1100);
+    return () => { delete window.__heroGlitch; timers.forEach(clearTimeout); };
+  }, []);
+  return (
+    <h1 ref={ref} style={{ position: "absolute", left: 39, bottom: 30, margin: 0, maxWidth: 444, fontFamily: "var(--font-hero)", fontWeight: 700, fontSize: "var(--text-hero)", lineHeight: "var(--leading-tight)" }}>
+      {text.split("").map((ch, i) => (<span key={i}>{ch}</span>))}
+    </h1>
+  );
+}
+
+function HeroSlideshow({ headline }) {
+  const canvasRef = React.useRef(null);
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    const buf = document.createElement("canvas");
+    const bctx = buf.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let imgs = [], cur = 0, raf = 0, timer = 0, disposed = false, W = 0, H = 0;
+    function drawCover(c, img, w, h) {
+      const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+      const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
+      c.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    }
+    function drawFrame(img, px) {
+      if (!img || !img.naturalWidth || !W) return;
+      if (px <= 1.01) { ctx.imageSmoothingEnabled = true; drawCover(ctx, img, W, H); return; }
+      const bw = Math.max(2, Math.round(W / px)), bh = Math.max(2, Math.round(H / px));
+      buf.width = bw; buf.height = bh;
+      bctx.imageSmoothingEnabled = true;
+      drawCover(bctx, img, bw, bh);
+      ctx.imageSmoothingEnabled = false;
+      ctx.drawImage(buf, 0, 0, W, H);
+    }
+    function size() {
+      const r = canvas.getBoundingClientRect();
+      const w = Math.round(r.width * dpr), h = Math.round(r.height * dpr);
+      if (w !== W || h !== H) { W = w; H = h; canvas.width = W; canvas.height = H; drawFrame(imgs[cur], 1); }
+    }
+    function transition() {
+      const nxt = (cur + 1) % imgs.length;
+      if (!imgs[nxt].naturalWidth) return;
+      const D = 1100, maxPx = 42 * dpr, start = performance.now();
+      if (window.__heroGlitch) window.__heroGlitch();
+      function step(now) {
+        if (disposed) return;
+        const t = Math.min(1, (now - start) / D);
+        if (t < 0.5) drawFrame(imgs[cur], 1 + (t / 0.5) * maxPx);
+        else drawFrame(imgs[nxt], 1 + ((1 - t) / 0.5) * maxPx);
+        if (t < 1) raf = requestAnimationFrame(step);
+        else { cur = nxt; drawFrame(imgs[cur], 1); }
+      }
+      raf = requestAnimationFrame(step);
+    }
+    imgs = HERO_SLIDES.map((src, i) => {
+      const im = new Image();
+      im.onload = () => { if (i === cur) { size(); drawFrame(im, 1); } };
+      im.src = src;
+      return im;
+    });
+    const ro = new ResizeObserver(size);
+    ro.observe(canvas);
+    size();
+    if (!REDUCED) timer = setInterval(transition, 5000);
+    return () => { disposed = true; ro.disconnect(); clearInterval(timer); cancelAnimationFrame(raf); };
+  }, []);
+  return (
+    <div style={{ position: "relative", width: "100%", height: 428, minHeight: "50vh", overflow: "hidden", backgroundColor: "var(--surface-placeholder)" }}>
+      <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}></canvas>
+      <GlitchHeadline text={headline}></GlitchHeadline>
+    </div>
+  );
+}
+
+const WORK_TABS = [
+  { label: "DESIGN", ids: ["virdaris", "mortgage-shop", "farm-jersey"] },
+  { label: "AUTOMATION", ids: ["foxdocs", "bcr-law", "mortgage-shop"] },
+  { label: "PORTALS", ids: ["farm-jersey", "virdaris", "mortgage-shop"] },
+];
+
+function WorkTabs() {
+  const [active, setActive] = React.useState(0);
+  const cards = WORK_TABS[active].ids.map(window.ES_GET_CS);
+  const segPos = [
+    { left: "0%", transform: "translateX(0)" },
+    { left: "50%", transform: "translateX(-50%)" },
+    { left: "100%", transform: "translateX(-100%)" },
+  ][active];
+  return (
+    <React.Fragment>
+      <div style={{ padding: "0 40px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0" }}>
+          {WORK_TABS.map((t, i) => (
+            <button
+              key={t.label}
+              onClick={() => setActive(i)}
+              className={i === active ? "work-tab active" : "work-tab"}
+              style={{
+                appearance: "none", background: "none", border: "none", padding: 0, cursor: "pointer",
+                fontFamily: "var(--font-pixel)", fontWeight: 400, fontSize: "var(--text-pixel-label)",
+                lineHeight: "var(--leading-none)", letterSpacing: "var(--tracking-pixel)", whiteSpace: "nowrap",
+                color: "var(--text-primary)", opacity: i === active ? 1 : 0.35, transition: "opacity 0.25s ease",
+              }}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+        <div style={{ position: "relative", height: 6 }}>
+          <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 1, background: "var(--rule-hairline)" }}></div>
+          <div style={{ position: "absolute", bottom: 0, width: 77, height: 6, background: "var(--rule-strong)", transition: "left 0.35s cubic-bezier(0.2, 0.6, 0.2, 1), transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1)", ...segPos }}></div>
+        </div>
+      </div>
+      <div key={active} className="hover-zoom tab-grid" style={{ padding: "24px 40px 24px 40px", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+        {cards.map((c) => (
+          <WorkCard
+            key={c.id}
+            src={c.cardImage}
+            title={c.title}
+            subtitle={c.subtitle}
+            showArrow={true}
+            size="auto"
+            href={"Case Study.html?cs=" + c.id}
+            style={{ aspectRatio: "1", width: "auto" }}
+          ></WorkCard>
+        ))}
+      </div>
+    </React.Fragment>
+  );
+}
+
+function HomePage() {
+  return (
+    <div data-screen-label="Home" style={{ background: "var(--surface-page)", minHeight: "100vh" }}>
+      <SiteNav></SiteNav>
+
+      <div className="hero-fix" style={{ padding: "10px 40px 64px 40px" }}>
+        <HeroSlideshow headline="Sheep by name. Not by nature."></HeroSlideshow>
+      </div>
+
+      <WorkTabs></WorkTabs>
+
+      <div className="px-hover" style={{ padding: "0 40px 64px 40px", display: "flex", justifyContent: "flex-end" }}>
+        <PixelLink href="Work.html" color="var(--text-primary)">View all work</PixelLink>
+      </div>
+
+      <ServicesMarquee></ServicesMarquee>
+
+      <div className="px-hover" style={{ padding: "64px 40px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        {testimonials.map((c) => (
+          <TestimonialCard
+            key={c.id}
+            src={c.cardImage}
+            quote={c.quote.text}
+            linkText={"View " + c.title + " Case Study"}
+            href={"Case Study.html?cs=" + c.id}
+          ></TestimonialCard>
+        ))}
+      </div>
+
+      <div data-theme="dark" style={{ backgroundColor: "#101010", padding: "64px 40px", display: "grid", gridTemplateColumns: "460px 1fr", gap: 4 }}>
+        <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel>
+        <span style={{ fontFamily: "var(--font-sans)", fontWeight: 400, fontSize: "var(--text-statement)", lineHeight: "var(--leading-body)", color: "var(--es-cream)", whiteSpace: "pre-line" }}>{"We don’t know. But we’re probably close to finding out.\nFounded in 2023, Electric Sheep sits at the intersection of technology and humanity. We design & build digital tools that are automated by AI, but driven by people."}</span>
+      </div>
+
+      <div className="hover-zoom px-hover" style={{ padding: "64px 40px" }}>
+        <FeatureCard src="assets/images/toby.jpg" headline="Big nose, bigger ideas." linkText="Meet Toby" href="Contact.html"></FeatureCard>
+      </div>
+
+      <SiteFooterStd></SiteFooterStd>
+    </div>
+  );
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<HomePage></HomePage>);
+</script>
+</body>
+</html>
