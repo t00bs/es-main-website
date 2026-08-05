@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
-import SectionRule from '../../components/SectionRule.astro';
 import WorkCard from '../../components/WorkCard.astro';
 import caseStudies from '../../data/case-studies.json';
 
@@ -19,37 +18,19 @@ const cardTags = (item: (typeof caseStudies)[number]) => [
   ...item.services,
 ];
 ---
-
 <Layout title="Electric Sheep — Work">
   <div class="section-grid intro">
     <SectionLabel highlight="Work worth staring at." />
-    <span class="statement"
-      >Portals, automations, brands and the occasional machine that learns. Every project below
-      shipped, and every client is still speaking to us.</span
-    >
+    <span class="statement">Portals, automations, brands and the occasional machine that learns. Every project below shipped, and every client is still speaking to us.</span>
   </div>
-
-  <div class="rule-wrap">
-    <SectionRule />
-  </div>
-
   <div class="hover-zoom work-grid">
     {
       sorted.map((item) => (
-        <WorkCard
-          src={item.cardImage}
-          title={item.title}
-          subtitle={item.subtitle}
-          showArrow
-          href={`/work/${item.id}`}
-          tags={cardTags(item)}
-        />
+        <WorkCard src={item.cardImage} title={item.title} subtitle={item.subtitle} showArrow href={`/work/${item.id}`} tags={cardTags(item)} />
       ))
     }
-    <WorkCard title="Your project here." subtitle="Say hello and we'll talk" showArrow href="/contact" />
   </div>
 </Layout>
-
 <style>
   .intro {
     padding-bottom: 48px;

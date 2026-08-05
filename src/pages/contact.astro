@@ -1,43 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SectionLabel from '../components/SectionLabel.astro';
-import TickerRow from '../components/TickerRow.astro';
-import SectionRule from '../components/SectionRule.astro';
 import PixelLink from '../components/PixelLink.astro';
 ---
-
 <Layout title="Electric Sheep — Contact">
   <div class="section-grid intro">
     <SectionLabel highlight="Start a conversation." />
     <div class="intro__content">
-      <span class="statement"
-        >Tell us what's slowing you down. We'll tell you honestly whether a robot can do it — and
-        design the tool if one can.</span
-      >
+      <span class="statement">Tell us what's slowing you down. We'll tell you honestly whether a robot can do it — and design the tool if one can.</span>
       <div class="px-hover">
-        <PixelLink href="mailto:hello@electricsheep.design" color="var(--text-primary)" fontSize={24}>
-          hello@electricsheep.design
-        </PixelLink>
+        <PixelLink href="mailto:hello@electricsheep.design" color="var(--text-primary)" fontSize={24}>hello@electricsheep.design</PixelLink>
       </div>
     </div>
   </div>
-
-  <div class="rule-wrap">
-    <TickerRow />
-    <SectionRule />
-  </div>
-
   <div class="find-us">
     <div class="find-us__map">
       <img src="/assets/images/jersey-map.svg" alt="Map of Jersey" />
     </div>
-    <div class="find-us__details">
-      <span class="find-us__address">{'Find us at\n10 Minden Street\nSt Helier, Jersey\nJE2 4WR'}</span>
-      <span class="find-us__aside">Coffee is good. Toby accepts visitors by appointment.</span>
-    </div>
+    <div class="find-us__details"><span class="find-us__address">{'Find us at\n10 Minden Street\nSt Helier, Jersey\nJE2 4WR'}</span><span class="find-us__aside">Coffee is good. Toby accepts visitors by appointment.</span></div>
   </div>
 </Layout>
-
 <style>
   .intro {
     padding-bottom: 48px;
