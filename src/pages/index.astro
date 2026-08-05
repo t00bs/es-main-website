@@ -22,7 +22,14 @@ const heroSlides = [
 
 <Layout title="Electric Sheep — Home">
   <div class="hero-wrap">
-    <HeroSlideshow headline="Sheep by name. Not by nature." slides={heroSlides} />
+    <!-- Hero timing: intervalMs = how long each slide holds, transitionMs =
+         pixelation/glitch speed. Tweak here. -->
+    <HeroSlideshow
+      headline="Sheep by name. Not by nature."
+      slides={heroSlides}
+      intervalMs={3500}
+      transitionMs={700}
+    />
   </div>
 
   <WorkTabs />

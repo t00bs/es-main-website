@@ -5,15 +5,26 @@
 interface Props {
   headline?: string;
   slides?: string[];
+  /** How long each slide holds before transitioning, in ms. */
+  intervalMs?: number;
+  /** Duration of the pixelation transition (and headline glitch), in ms. */
+  transitionMs?: number;
 }
 
 const {
   headline = 'Sheep by name. Not by nature.',
   slides = ['/assets/images/hero-sheep.png', '/assets/images/toby.jpg'],
+  intervalMs = 3500,
+  transitionMs = 700,
 } = Astro.props;
 ---
 
-<div class="hero" data-slides={JSON.stringify(slides)}>
+<div
+  class="hero"
+  data-slides={JSON.stringify(slides)}
+  data-interval={intervalMs}
+  data-transition={transitionMs}
+>
   <canvas></canvas>
   <h1>
     {headline.split('').map((ch) => <span>{ch}</span>)}
@@ -62,6 +73,8 @@ const {
     const canvas = hero.querySelector('canvas')!;
     const spans = hero.querySelectorAll('h1 span');
     const slides: string[] = JSON.parse(hero.dataset.slides || '[]');
+    const INTERVAL = Number(hero.dataset.interval) || 3500;
+    const DURATION = Number(hero.dataset.transition) || 700;
     const ctx = canvas.getContext('2d')!;
     const buf = document.createElement('canvas');
     const bctx = buf.getContext('2d')!;
@@ -124,10 +137,10 @@ const {
     function transition() {
       const nxt = (cur + 1) % imgs.length;
       if (!imgs[nxt].naturalWidth) return;
-      const D = 1100;
+      const D = DURATION;
       const maxPx = 42 * dpr;
       const start = performance.now();
-      glitchBurst(1100);
+      glitchBurst(DURATION);
       function step(now: number) {
         const t = Math.min(1, (now - start) / D);
         if (t < 0.5) drawFrame(imgs[cur], 1 + (t / 0.5) * maxPx);
@@ -159,7 +172,7 @@ const {
     if (!REDUCED) {
       spans.forEach((s) => s.classList.add('glx'));
       glitchBurst(900);
-      setInterval(transition, 5000);
+      setInterval(transition, INTERVAL);
     }
   });
 </script>
