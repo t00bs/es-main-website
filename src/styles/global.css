@@ -54,12 +54,6 @@ a.px-hover:hover {
   opacity: 0.6;
 }
 
-/* Page-level section labels: in dark theme the highlight block and its cream
-   text both resolve to cream — force ink text so labels stay readable. */
-[data-theme="dark"] .label-readable .section-label__highlight {
-  color: var(--es-ink);
-}
-
 /* Brand rule: italicised text in headlines renders in Neue Pixel instead */
 em,
 i {

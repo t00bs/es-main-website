@@ -43,6 +43,7 @@
   --text-on-dark: var(--es-cream);
   --text-on-image: var(--es-cream);
   --highlight-block: var(--es-ink);
+  --highlight-text: var(--es-cream); /* always reverses out of the block */
   --rule-strong: var(--es-black);
   --rule-hairline: rgba(0, 0, 0, 0.5);
 
@@ -98,6 +99,7 @@
   --surface-page: var(--es-ink);
   --text-primary: var(--es-white);
   --highlight-block: var(--es-cream);
+  --highlight-text: var(--es-ink);
   --rule-strong: var(--es-white);
   --rule-hairline: rgba(255, 255, 255, 0.5);
 }

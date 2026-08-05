@@ -54,9 +54,7 @@ const { cs, next } = Astro.props;
         </div>
       ) : (
         <div class="section-grid text-section">
-          <div class="label-readable">
-            <SectionLabel highlight={section.label} />
-          </div>
+          <SectionLabel highlight={section.label} />
           <span class="text-section__body">{section.body}</span>
         </div>
       )
