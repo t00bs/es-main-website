@@ -1,53 +1,73 @@
 ---
 // Home work section: three pixel-label tabs, the rule segment slides to the
 // active tab, and each tab reveals its own 3-card grid with a crossfade.
-// A case study appears under every tab listed in its `tags` frontmatter.
+// A case study appears under every tab listed in its `tags` field. Each grid
+// maps its own collection-derived array directly so visual editors can trace
+// the loops back to the caseStudies collection.
 import { getCollection } from 'astro:content';
 import WorkCard from './WorkCard.astro';
 
-const all = (await getCollection('caseStudies')).sort((a, b) => a.data.order - b.data.order);
+const caseStudies = (await getCollection('caseStudies')).sort((a, b) => a.data.order - b.data.order);
 
-const TABS = [
-  { label: 'DESIGN', tag: 'design' },
-  { label: 'AUTOMATION', tag: 'automation' },
-  { label: 'PORTALS', tag: 'portals' },
-].map((tab) => ({
-  ...tab,
-  entries: all.filter((e) => e.data.tags.includes(tab.tag as any)).slice(0, 3),
-}));
+const designWork = caseStudies.filter((item) => item.data.tags.includes('design')).slice(0, 3);
+const automationWork = caseStudies.filter((item) => item.data.tags.includes('automation')).slice(0, 3);
+const portalsWork = caseStudies.filter((item) => item.data.tags.includes('portals')).slice(0, 3);
 ---
 
 <div class="work-tabs">
   <div class="work-tabs__bar">
     <div class="work-tabs__labels">
-      {
-        TABS.map((tab, i) => (
-          <button type="button" class:list={['work-tab', { active: i === 0 }]} data-tab={i}>
-            {tab.label}
-          </button>
-        ))
-      }
+      <button type="button" class="work-tab active" data-tab="0">DESIGN</button>
+      <button type="button" class="work-tab" data-tab="1">AUTOMATION</button>
+      <button type="button" class="work-tab" data-tab="2">PORTALS</button>
     </div>
     <div class="work-tabs__rule">
       <div class="work-tabs__hairline"></div>
       <div class="work-tabs__segment" data-segment></div>
     </div>
   </div>
-  {
-    TABS.map((tab, i) => (
-      <div class="hover-zoom tab-grid" data-grid={i} hidden={i !== 0}>
-        {tab.entries.map((e) => (
-          <WorkCard
-            src={e.data.cardImage}
-            title={e.data.title}
-            subtitle={e.data.subtitle}
-            showArrow
-            href={`/work/${e.id}`}
-          />
-        ))}
-      </div>
-    ))
-  }
+
+  <div class="hover-zoom tab-grid" data-grid="0">
+    {
+      designWork.map((item) => (
+        <WorkCard
+          src={item.data.cardImage}
+          title={item.data.title}
+          subtitle={item.data.subtitle}
+          showArrow
+          href={`/work/${item.id}`}
+        />
+      ))
+    }
+  </div>
+
+  <div class="hover-zoom tab-grid" data-grid="1" hidden>
+    {
+      automationWork.map((item) => (
+        <WorkCard
+          src={item.data.cardImage}
+          title={item.data.title}
+          subtitle={item.data.subtitle}
+          showArrow
+          href={`/work/${item.id}`}
+        />
+      ))
+    }
+  </div>
+
+  <div class="hover-zoom tab-grid" data-grid="2" hidden>
+    {
+      portalsWork.map((item) => (
+        <WorkCard
+          src={item.data.cardImage}
+          title={item.data.title}
+          subtitle={item.data.subtitle}
+          showArrow
+          href={`/work/${item.id}`}
+        />
+      ))
+    }
+  </div>
 </div>
 
 <style>
