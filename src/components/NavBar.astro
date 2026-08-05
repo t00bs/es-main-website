@@ -1,5 +1,7 @@
 ---
 // Site header: logo lockup left, text links right, theme toggle last.
+// Links sit on the logo's baseline; the toggle is an icon switcher
+// (moon in light mode, sun in dark).
 ---
 
 <header class="nav-bar">
@@ -10,7 +12,39 @@
   <nav>
     <a href="/work">Work</a>
     <a href="/contact">Contact</a>
-    <button type="button" data-theme-toggle>Dark mode</button>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to dark mode">
+      <svg
+        class="icon-moon"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </svg>
+      <svg
+        class="icon-sun"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <circle cx="12" cy="12" r="4.5"></circle>
+        <line x1="12" y1="1.5" x2="12" y2="4"></line>
+        <line x1="12" y1="20" x2="12" y2="22.5"></line>
+        <line x1="1.5" y1="12" x2="4" y2="12"></line>
+        <line x1="20" y1="12" x2="22.5" y2="12"></line>
+        <line x1="4.9" y1="4.9" x2="6.7" y2="6.7"></line>
+        <line x1="17.3" y1="17.3" x2="19.1" y2="19.1"></line>
+        <line x1="4.9" y1="19.1" x2="6.7" y2="17.3"></line>
+        <line x1="17.3" y1="6.7" x2="19.1" y2="4.9"></line>
+      </svg>
+    </button>
   </nav>
 </header>
 
@@ -18,8 +52,8 @@
   .nav-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: var(--page-margin) var(--page-margin) 8px var(--page-margin);
+    align-items: flex-end;
+    padding: 24px var(--page-margin) 8px var(--page-margin);
     gap: 24px;
     flex-wrap: wrap;
   }
@@ -32,22 +66,21 @@
     height: auto;
     display: block;
   }
-  .logo-cream {
+  .nav-bar__logo .logo-cream {
     display: none;
   }
-  :global([data-theme='dark']) .logo-dark {
+  :global([data-theme='dark']) .nav-bar__logo .logo-dark {
     display: none;
   }
-  :global([data-theme='dark']) .logo-cream {
+  :global([data-theme='dark']) .nav-bar__logo .logo-cream {
     display: block;
   }
   nav {
     display: flex;
     gap: var(--nav-gap);
-    align-items: center;
+    align-items: baseline;
   }
-  nav a,
-  nav button {
+  nav a {
     font-family: var(--font-sans);
     font-weight: 400;
     font-size: var(--text-body);
@@ -55,15 +88,33 @@
     color: var(--text-primary);
     text-decoration: none;
     white-space: nowrap;
+  }
+  .theme-toggle {
     appearance: none;
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
+    color: var(--text-primary);
+    display: flex;
+    align-self: center;
+    transform: translateY(4px);
     transition: opacity 0.2s ease;
   }
-  nav button:hover {
+  .theme-toggle:hover {
     opacity: 0.55;
+  }
+  .theme-toggle svg {
+    display: block;
+  }
+  .theme-toggle .icon-sun {
+    display: none;
+  }
+  :global([data-theme='dark']) .theme-toggle .icon-moon {
+    display: none;
+  }
+  :global([data-theme='dark']) .theme-toggle .icon-sun {
+    display: block;
   }
   @media (max-width: 720px) {
     .nav-bar__logo {
@@ -78,7 +129,10 @@
   }
 
   function updateLabel(button: HTMLButtonElement) {
-    button.textContent = currentTheme() === 'dark' ? 'Light mode' : 'Dark mode';
+    button.setAttribute(
+      'aria-label',
+      currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+    );
   }
 
   document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((button) => {
