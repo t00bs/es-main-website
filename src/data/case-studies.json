@@ -42,7 +42,8 @@
         "body": "Custom Rural Support Scheme portal with application tracking and an admin dashboard • Knowledge Hub resource library, industry events and producer showcases • Warm, photographic design that reflects the island's landscape and community"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "mortgage-shop",
@@ -89,7 +90,8 @@
     "quote": {
       "text": "“A massive thank you for delivering this project early, and on-budget.”",
       "author": "Mortgage Shop"
-    }
+    },
+    "testimonialImage": ""
   },
   {
     "id": "virdaris",
@@ -136,7 +138,8 @@
     "quote": {
       "text": "“I can’t thank or endorse you enough for the amazing process throughout (you can print that!)”",
       "author": "Virdaris"
-    }
+    },
+    "testimonialImage": "/assets/images/testimonial-mortgage-shop.jpg"
   },
   {
     "id": "chapter-2",
@@ -181,7 +184,8 @@
         "body": "Headline client results: offers accepted up 22 percent, cost per hire down 72 percent, 2m dollars of agency spend removed • Animated globe hero and staggered text reveals that bring the brand to life • CMS-driven case studies, events and team profiles built for a growing business"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "policy-futures",
@@ -224,7 +228,8 @@
         "body": "Clear applicant journey: programme, eligibility and how to apply in three steps • Key facts given visual weight: 30k salary, one-year paid programme, three host think tanks • Approachable identity that deliberately avoids the usual think tank formality"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "foxdocs",
@@ -268,7 +273,8 @@
         "body": "Product-first storytelling with genuine app UI throughout • Feature narrative covering AI reviews, integrations and regulator expectations • Striking dark identity with a distinctive green accent"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "steedman-planning",
@@ -311,7 +317,8 @@
         "body": "Portfolio carousel showcasing landmark Jersey projects • Service architecture covering planning, environment, community and EIA work • Full-bleed island photography that roots the practice in place"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "bcr-law",
@@ -355,7 +362,8 @@
         "body": "Three-brand hub landing with full-screen video panels • Reading Room CMS for legal insight articles across practice areas • Legal 500 client testimonials and clear speak to an expert journeys"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "allens-caravans",
@@ -399,7 +407,8 @@
         "body": "Home finder with location, condition and budget filters • Parks CMS with aerial photography for every location • Heritage-forward brand story with modern enquiry and booking journeys"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "normans",
@@ -442,7 +451,8 @@
         "body": "Branch finder with live map and open now status for all three yards • Sixty-second trade account sign-up and pay an invoice journeys • WhatsApp ordering straight to the branch"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "great-green-systems",
@@ -485,7 +495,8 @@
         "body": "Shop by aim and by living space navigation that mirrors how people actually choose • Regulations explainer content tied to the Simpler Recycling changes • Consumer store and commercial wholesale store in one build"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "team-monaco",
@@ -528,7 +539,8 @@
         "body": "Race news and video highlights alongside team and pilot profiles • Protect Our Ocean sustainability storytelling with the Prince Albert II Foundation quote • 98 Collection merchandise store integrated into the main site"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   },
   {
     "id": "execta-social",
@@ -571,6 +583,7 @@
         "body": "Characterful space-themed brand world with animated type • Member testimonial wall featuring 1,200 plus global Heads of TA • Application-based membership and partner journeys with a global chapter map"
       }
     ],
-    "quote": null
+    "quote": null,
+    "testimonialImage": ""
   }
 ]
