@@ -18,6 +18,9 @@ const caseStudies = defineCollection({
     year: z.string().optional(),
     heroImage: z.string(),
     cardImage: z.string(),
+    /* Background of the homepage testimonial card; falls back to cardImage
+       when empty. */
+    testimonialImage: z.string().optional(),
     services: z.array(z.string()),
     tags: z.array(z.enum(WORK_TAGS)),
     order: z.number().default(99),
