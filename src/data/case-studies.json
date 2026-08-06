@@ -4,8 +4,8 @@
     "title": "Farm Jersey",
     "subtitle": "Government and rural economy",
     "client": "Farm Jersey",
-    "heroImage": "/assets/images/case-studies/farm-jersey-desktop.jpg",
-    "cardImage": "/assets/images/case-studies/farm-jersey-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/fj hero-1.jpg",
+    "cardImage": "/assets/images/case-studies/fj hero-1.jpg",
     "services": [
       "Web design",
       "Webflow development",
@@ -49,8 +49,8 @@
     "title": "The Mortgage Shop",
     "subtitle": "Financial services",
     "client": "The Mortgage Shop (Henley Offshore Financial Services)",
-    "heroImage": "/assets/images/case-studies/mortgage-shop-desktop.jpg",
-    "cardImage": "/assets/images/case-studies/mortgage-shop-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/tms hero.jpg",
+    "cardImage": "/assets/images/case-studies/tms hero.jpg",
     "services": [
       "Web design",
       "Webflow development",
@@ -96,8 +96,8 @@
     "title": "Virdaris",
     "subtitle": "Private wealth and family office",
     "client": "Virdaris Limited",
-    "heroImage": "/assets/images/case-studies/virdaris-desktop.jpg",
-    "cardImage": "/assets/images/case-studies/virdaris-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/virdaris hero.jpg",
+    "cardImage": "/assets/images/case-studies/virdaris hero.jpg",
     "services": [
       "Brand-led web design",
       "Webflow development",
