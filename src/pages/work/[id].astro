@@ -17,6 +17,12 @@ export function getStaticPaths() {
 }
 
 const { cs, next } = Astro.props;
+
+// Skip half-filled section rows from the visual editor: an image row needs a
+// src, a text row needs some copy.
+const sections = cs.sections.filter((s) =>
+  s.type === 'image' ? s.src : s.type === 'text' && (s.label || s.body)
+);
 ---
 
 <Layout title={`Electric Sheep — ${cs.title}`} description={cs.summary}>
@@ -43,7 +49,7 @@ const { cs, next } = Astro.props;
   </div>
 
   {
-    cs.sections.map((section) =>
+    sections.map((section) =>
       section.type === 'image' ? (
         <div class="image-section">
           <div class="image-section__frame">
@@ -100,7 +106,7 @@ const { cs, next } = Astro.props;
   }
   .meta__client {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 24px;
   }
   .meta__client span {

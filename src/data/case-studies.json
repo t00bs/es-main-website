@@ -653,8 +653,29 @@
     "liveUrl": "https://ourhouseofchampions.com/",
     "liveLabel": "Visit ourhouseofchampions.com",
     "summary": "",
-    "sections": [],
-    "quote": "",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": ""
+      },
+      {
+        "type": "image",
+        "src": "",
+        "caption": ""
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": ""
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": ""
+      }
+    ],
+    "quote": null,
     "testimonialImage": "",
     "featured": false,
     "clientLogoNew": "/assets/client logos/6a399914ee23973f26f07d72_wordmark-white.png",

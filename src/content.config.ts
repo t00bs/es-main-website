@@ -34,13 +34,22 @@ const caseStudies = defineCollection({
     liveUrl: z.string().url(),
     liveLabel: z.string(),
     summary: z.string(),
+    /* Sections are validated loosely so half-filled rows from the visual
+       editor don't fail the build — the page skips rows without a valid type
+       and content. type is 'text' or 'image' when complete. */
     sections: z.array(
-      z.discriminatedUnion('type', [
-        z.object({ type: z.literal('text'), label: z.string(), body: z.string() }),
-        z.object({ type: z.literal('image'), src: z.string(), caption: z.string().optional() }),
-      ])
+      z.object({
+        type: z.string(),
+        label: z.string().optional(),
+        body: z.string().optional(),
+        src: z.string().optional(),
+        caption: z.string().optional(),
+      })
     ),
-    quote: z.object({ text: z.string(), author: z.string() }).nullable().default(null),
+    /* Object when set; empty string (editor draft) and null both mean none. */
+    quote: z
+      .union([z.object({ text: z.string(), author: z.string() }), z.literal(''), z.null()])
+      .default(null),
   }),
 });
 
