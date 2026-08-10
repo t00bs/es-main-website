@@ -43,7 +43,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "mortgage-shop",
@@ -91,7 +93,9 @@
       "text": "“A massive thank you for delivering this project early, and on-budget.”",
       "author": "Mortgage Shop"
     },
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "virdaris",
@@ -139,7 +143,9 @@
       "text": "“I can’t thank or endorse you enough for the amazing process throughout (you can print that!)”",
       "author": "Virdaris"
     },
-    "testimonialImage": "/assets/images/testimonial-mortgage-shop.jpg"
+    "testimonialImage": "/assets/images/testimonial-mortgage-shop.jpg",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "chapter-2",
@@ -185,7 +191,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "policy-futures",
@@ -229,7 +237,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "foxdocs",
@@ -274,7 +284,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "steedman-planning",
@@ -318,7 +330,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "bcr-law",
@@ -363,7 +377,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "allens-caravans",
@@ -408,7 +424,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "normans",
@@ -452,7 +470,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "great-green-systems",
@@ -496,7 +516,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "team-monaco",
@@ -540,7 +562,9 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   },
   {
     "id": "execta-social",
@@ -584,6 +608,8 @@
       }
     ],
     "quote": null,
-    "testimonialImage": ""
+    "testimonialImage": "",
+    "clientLogo": "",
+    "featured": false
   }
 ]

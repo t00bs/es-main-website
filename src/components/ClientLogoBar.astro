@@ -1,12 +1,25 @@
 ---
-// "Trusted by" bar: pixel label + client names between hairlines.
+// "Trusted by" bar between hairlines. Case studies that are `featured` and
+// carry a `clientLogo` render their logo here; while none qualify, the bar
+// falls back to the text names in client-logos.json.
+import caseStudies from '../data/case-studies.json';
 import clientLogos from '../data/client-logos.json';
+
+const featuredLogos = [...caseStudies]
+  .sort((a, b) => a.order - b.order)
+  .filter((item) => item.featured && item.clientLogo);
 ---
 
 <div class="logo-bar">
   <div class="logo-bar__row">
     <span class="logo-bar__label">Trusted by:</span>
-    {clientLogos.map((item) => <span class="logo-bar__name">{item.name}</span>)}
+    {
+      featuredLogos.length > 0
+        ? featuredLogos.map((item) => (
+            <img class="logo-bar__logo" src={item.clientLogo} alt={item.client} loading="lazy" />
+          ))
+        : clientLogos.map((item) => <span class="logo-bar__name">{item.name}</span>)
+    }
   </div>
 </div>
 
@@ -16,7 +29,7 @@ import clientLogos from '../data/client-logos.json';
   }
   .logo-bar__row {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 40px;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -38,5 +51,17 @@ import clientLogos from '../data/client-logos.json';
     color: var(--text-primary);
     opacity: 0.5;
     white-space: nowrap;
+  }
+  /* Logos render monochrome at the same half-strength as the text names:
+     flattened to ink in light mode, inverted to cream in dark. */
+  .logo-bar__logo {
+    height: 32px;
+    width: auto;
+    display: block;
+    opacity: 0.5;
+    filter: brightness(0);
+  }
+  :global([data-theme='dark']) .logo-bar__logo {
+    filter: brightness(0) invert(1);
   }
 </style>
