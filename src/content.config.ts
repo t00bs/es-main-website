@@ -21,9 +21,9 @@ const caseStudies = defineCollection({
     /* Background of the homepage testimonial card; falls back to cardImage
        when empty. */
     testimonialImage: z.string().optional(),
-    /* Client logo image; shown in the homepage logo bar when `featured` is
-       also on. */
-    clientLogo: z.string().optional(),
+    /* Client logo image (Stacki image picker); shown in the homepage logo bar
+       when `featured` is also on. */
+    clientLogoNew: z.string().optional(),
     featured: z.boolean().default(false),
     services: z.array(z.string()),
     tags: z.array(z.enum(WORK_TAGS)),
