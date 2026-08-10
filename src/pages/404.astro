@@ -1,0 +1,52 @@
+---
+// Custom 404. Builds to /404.html, which Vercel serves with a 404 status for
+// any unmatched URL on a static deploy.
+import Layout from '../layouts/Layout.astro';
+import SectionLabel from '../components/SectionLabel.astro';
+import PixelLink from '../components/PixelLink.astro';
+---
+
+<Layout title="Electric Sheep — Page not found" description="This page wandered off.">
+  <div class="section-grid intro">
+    <div class="label-on-light"><SectionLabel highlight="This page has wandered off." /></div>
+    <div class="intro__content">
+      <span class="not-found__code" aria-hidden="true">404</span>
+      <span class="statement">Sheep escape sometimes. Whatever you were looking for isn't here — it may have moved, or it may never have existed. We're probably close to finding out.</span>
+      <div class="px-hover not-found__links">
+        <PixelLink href="/" color="var(--text-primary)" fontSize={24}>Back to the flock</PixelLink>
+        <PixelLink href="/work" color="var(--text-primary)" fontSize={24}>View our work</PixelLink>
+        <PixelLink href="/contact" color="var(--text-primary)" fontSize={24}>
+          Tell us what you were after
+        </PixelLink>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .intro {
+    min-height: 55vh;
+  }
+  .intro__content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: flex-start;
+  }
+  .not-found__code {
+    font-family: var(--font-pixel);
+    font-size: clamp(80px, 12vw, 160px);
+    line-height: var(--leading-none);
+    letter-spacing: var(--tracking-pixel);
+    color: var(--text-primary);
+  }
+  .statement {
+    max-width: 720px;
+  }
+  .not-found__links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+</style>
