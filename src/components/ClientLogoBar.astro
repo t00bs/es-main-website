@@ -23,7 +23,7 @@ const featuredLogos = [...caseStudies]
               src={item.clientLogoNew}
               alt={item.client}
               loading="lazy"
-              style={item.clientLogoWidth ? `width: ${item.clientLogoWidth}px; height: auto;` : undefined}
+              style={item.clientLogoWidth ? `--logo-w: ${item.clientLogoWidth}px;` : undefined}
             />
           ))
         : clientLogos.map((item) => <span class="logo-bar__name">{item.name}</span>)
@@ -60,7 +60,8 @@ const featuredLogos = [...caseStudies]
     white-space: nowrap;
   }
   /* Logos render monochrome at the same half-strength as the text names:
-     flattened to ink in light mode, inverted to cream in dark. */
+     flattened to ink in light mode, inverted to cream in dark. Per-logo
+     widths arrive as --logo-w so breakpoints can scale them proportionally. */
   .logo-bar__logo {
     height: 32px;
     width: auto;
@@ -68,7 +69,42 @@ const featuredLogos = [...caseStudies]
     opacity: 0.5;
     filter: brightness(0);
   }
+  .logo-bar__logo[style] {
+    width: var(--logo-w);
+    height: auto;
+  }
   :global([data-theme='dark']) .logo-bar__logo {
     filter: brightness(0) invert(1);
+  }
+
+  /* Tablet: label on its own line, logos at 75% in centred rows — a partial
+     final row centres itself instead of stranding a logo in the corner. */
+  @media (max-width: 960px) {
+    .logo-bar__row {
+      justify-content: center;
+      gap: 32px 48px;
+    }
+    .logo-bar__label {
+      flex-basis: 100%;
+    }
+    .logo-bar__logo[style] {
+      width: calc(var(--logo-w) * 0.75);
+    }
+    .logo-bar__logo:not([style]) {
+      height: 26px;
+    }
+  }
+
+  /* Phone: same centred rows, logos at 60%. */
+  @media (max-width: 720px) {
+    .logo-bar__row {
+      gap: 28px 36px;
+    }
+    .logo-bar__logo[style] {
+      width: calc(var(--logo-w) * 0.6);
+    }
+    .logo-bar__logo:not([style]) {
+      height: 22px;
+    }
   }
 </style>
