@@ -94,10 +94,10 @@
       "text": "“A massive thank you for delivering this project early, and on-budget.”",
       "author": "Mortgage Shop"
     },
-    "testimonialImage": "",
-    "featured": false,
-    "clientLogoNew": "",
-    "clientLogoWidth": 0
+    "testimonialImage": "/assets/images/testimonial-mortgage-shop.jpg",
+    "featured": true,
+    "clientLogoNew": "/assets/client logos/6847ffab8a8eb190ad87a6b1_TMS Stacked.svg",
+    "clientLogoWidth": 140
   },
   {
     "id": "virdaris",
@@ -145,7 +145,7 @@
       "text": "“I can’t thank or endorse you enough for the amazing process throughout (you can print that!)”",
       "author": "Virdaris"
     },
-    "testimonialImage": "/assets/images/testimonial-mortgage-shop.jpg",
+    "testimonialImage": "/assets/images/testimonial-virdaris.png",
     "featured": false,
     "clientLogoNew": "",
     "clientLogoWidth": 0
@@ -197,7 +197,7 @@
     "testimonialImage": "",
     "featured": true,
     "clientLogoNew": "/assets/client logos/6847fde43b132293918b2d8b_c2logo 1.svg",
-    "clientLogoWidth": 240
+    "clientLogoWidth": 180
   },
   {
     "id": "policy-futures",
@@ -435,7 +435,7 @@
     "testimonialImage": "",
     "featured": true,
     "clientLogoNew": "/assets/client logos/69f89d14fda206735c99f839_Theme=Dark.svg",
-    "clientLogoWidth": 110
+    "clientLogoWidth": 140
   },
   {
     "id": "normans",

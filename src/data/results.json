@@ -1,6 +1,22 @@
 [
-  { "id": "farm-jersey-decisions", "figure": "6 wks → 1 day", "caption": "Grant application decisions at Farm Jersey" },
-  { "id": "foxdocs-drafting", "figure": "Hrs → mins", "caption": "Document drafting time at Foxdocs" },
-  { "id": "bcr-onboarding", "figure": "−66%", "caption": "Client onboarding time at BCR Law" },
-  { "id": "rekeying", "figure": "0", "caption": "Details re-keyed. Anywhere. Ever." }
+  {
+    "id": "farm-jersey-decisions",
+    "figure": "6 wks → 2 wks",
+    "caption": "Grant application decisions at Farm Jersey"
+  },
+  {
+    "id": "foxdocs-drafting",
+    "figure": "Hrs → mins",
+    "caption": "Document drafting time at Foxdocs"
+  },
+  {
+    "id": "bcr-marketing",
+    "figure": "+23%",
+    "caption": "More traffic averaged at BCR"
+  },
+  {
+    "id": "rekeying",
+    "figure": "0",
+    "caption": "Details re-keyed. Anywhere. Ever."
+  }
 ]

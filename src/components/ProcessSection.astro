@@ -1,24 +1,21 @@
 ---
-// "How we work": four numbered steps in ruled columns.
 import SectionLabel from './SectionLabel.astro';
 import processSteps from '../data/process-steps.json';
----
 
+// "How we work": four numbered steps in ruled columns.
+---
 <div class="process">
-  <div class="label-on-light"><SectionLabel highlight="we work">How</SectionLabel></div>
+  <div class="label-on-light">
+    <SectionLabel highlight="How We Work">How</SectionLabel>
+  </div>
   <div class="process__grid">
     {
       processSteps.map((item) => (
-        <div class="step">
-          <span class="step__number">{item.number}</span>
-          <span class="step__title">{item.title}</span>
-          <span class="step__body">{item.body}</span>
-        </div>
+        <div class="step"><span class="step__number">{item.number}</span><span class="step__title">{item.title}</span><span class="step__body">{item.body}</span></div>
       ))
     }
   </div>
 </div>
-
 <style>
   .process {
     padding: var(--section-pad) var(--page-margin);
