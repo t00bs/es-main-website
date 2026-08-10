@@ -45,7 +45,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": false,
-    "clientLogoNew": "/assets/client logos/6847fde41996349f7ff8a19c_BCR.svg"
+    "clientLogoNew": "/assets/client logos/6847fde41996349f7ff8a19c_BCR.svg",
+    "clientLogoWidth": 0
   },
   {
     "id": "mortgage-shop",
@@ -95,7 +96,8 @@
     },
     "testimonialImage": "",
     "featured": false,
-    "clientLogoNew": ""
+    "clientLogoNew": "",
+    "clientLogoWidth": 0
   },
   {
     "id": "virdaris",
@@ -145,7 +147,8 @@
     },
     "testimonialImage": "/assets/images/testimonial-mortgage-shop.jpg",
     "featured": false,
-    "clientLogoNew": ""
+    "clientLogoNew": "",
+    "clientLogoWidth": 0
   },
   {
     "id": "chapter-2",
@@ -193,7 +196,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": true,
-    "clientLogoNew": "/assets/client logos/6847fde43b132293918b2d8b_c2logo 1.svg"
+    "clientLogoNew": "/assets/client logos/6847fde43b132293918b2d8b_c2logo 1.svg",
+    "clientLogoWidth": 240
   },
   {
     "id": "policy-futures",
@@ -239,7 +243,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": false,
-    "clientLogoNew": ""
+    "clientLogoNew": "",
+    "clientLogoWidth": 0
   },
   {
     "id": "foxdocs",
@@ -286,7 +291,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": false,
-    "clientLogoNew": ""
+    "clientLogoNew": "",
+    "clientLogoWidth": 0
   },
   {
     "id": "steedman-planning",
@@ -332,7 +338,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": false,
-    "clientLogoNew": ""
+    "clientLogoNew": "",
+    "clientLogoWidth": 0
   },
   {
     "id": "bcr-law",
@@ -379,7 +386,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": true,
-    "clientLogoNew": "/assets/client logos/6847fde41996349f7ff8a19c_BCR.svg"
+    "clientLogoNew": "/assets/client logos/6847fde41996349f7ff8a19c_BCR.svg",
+    "clientLogoWidth": 72
   },
   {
     "id": "allens-caravans",
@@ -426,7 +434,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": true,
-    "clientLogoNew": "/assets/client logos/69f89d14fda206735c99f839_Theme=Dark.svg"
+    "clientLogoNew": "/assets/client logos/69f89d14fda206735c99f839_Theme=Dark.svg",
+    "clientLogoWidth": 110
   },
   {
     "id": "normans",
@@ -472,7 +481,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": true,
-    "clientLogoNew": "/assets/client logos/6a3bd92fc3478eb81d50ece6_Normans Logo White.svg"
+    "clientLogoNew": "/assets/client logos/6a3bd92fc3478eb81d50ece6_Normans Logo White.svg",
+    "clientLogoWidth": 200
   },
   {
     "id": "great-green-systems",
@@ -518,7 +528,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": false,
-    "clientLogoNew": ""
+    "clientLogoNew": "",
+    "clientLogoWidth": 0
   },
   {
     "id": "team-monaco",
@@ -564,7 +575,8 @@
     "quote": null,
     "testimonialImage": "",
     "featured": false,
-    "clientLogoNew": ""
+    "clientLogoNew": "",
+    "clientLogoWidth": 0
   },
   {
     "id": "execta-social",
@@ -610,6 +622,7 @@
     "quote": null,
     "testimonialImage": "",
     "featured": false,
-    "clientLogoNew": ""
+    "clientLogoNew": "",
+    "clientLogoWidth": 0
   }
 ]

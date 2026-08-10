@@ -18,7 +18,13 @@ const featuredLogos = [...caseStudies]
     {
       featuredLogos.length > 0
         ? featuredLogos.map((item) => (
-            <img class="logo-bar__logo" src={item.clientLogoNew} alt={item.client} loading="lazy" />
+            <img
+              class="logo-bar__logo"
+              src={item.clientLogoNew}
+              alt={item.client}
+              loading="lazy"
+              style={item.clientLogoWidth ? `width: ${item.clientLogoWidth}px; height: auto;` : undefined}
+            />
           ))
         : clientLogos.map((item) => <span class="logo-bar__name">{item.name}</span>)
     }

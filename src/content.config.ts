@@ -24,6 +24,9 @@ const caseStudies = defineCollection({
     /* Client logo image (Stacki image picker); shown in the homepage logo bar
        when `featured` is also on. */
     clientLogoNew: z.string().optional(),
+    /* Rendered width of the logo in the bar, in px; 0 or unset falls back to
+       the default 32px-height sizing. */
+    clientLogoWidth: z.number().optional(),
     featured: z.boolean().default(false),
     services: z.array(z.string()),
     tags: z.array(z.enum(WORK_TAGS)),
