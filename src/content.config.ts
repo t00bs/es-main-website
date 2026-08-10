@@ -52,11 +52,12 @@ const services = defineCollection({
   }),
 });
 
-// Client names in the homepage "Trusted by" bar.
-const clientLogos = defineCollection({
-  loader: file('src/data/client-logos.json'),
-  schema: z.object({ name: z.string() }),
+// Homepage hero slideshow images, in rotation order.
+const heroSlides = defineCollection({
+  loader: file('src/data/hero-slides.json'),
+  schema: z.object({ image: z.string() }),
 });
+
 
 // The three service pillars on the homepage.
 const servicePillars = defineCollection({
@@ -82,4 +83,4 @@ const processSteps = defineCollection({
   schema: z.object({ number: z.string(), title: z.string(), body: z.string() }),
 });
 
-export const collections = { caseStudies, services, clientLogos, servicePillars, results, processSteps };
+export const collections = { caseStudies, services, heroSlides, servicePillars, results, processSteps };

@@ -12,22 +12,19 @@ import TestimonialCard from '../components/TestimonialCard.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import FeatureCard from '../components/FeatureCard.astro';
 import caseStudies from '../data/case-studies.json';
+import heroSlidesData from '../data/hero-slides.json';
 
 const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
 const testimonials = sorted.filter((item) => item.quote);
 
-// Hero rotation: brand imagery bookends the top case study's card image.
-const heroSlides = [
-  '/assets/images/hero-sheep.png',
-  ...(sorted.length ? [sorted[0].cardImage] : []),
-  '/assets/images/toby.jpg',
-];
+// Hero rotation comes from the hero-slides collection, in file order.
+const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
 ---
 <Layout title="Electric Sheep — Home">
   <div class="hero-wrap">
     <!-- Hero timing: intervalMs = how long each slide holds, transitionMs =
          pixelation/glitch speed. Tweak here. -->
-    <HeroSlideshow headline="Sheep by name. Not by nature." slides={heroSlides} intervalMs={3500} transitionMs={700} />
+    <HeroSlideshow headline="Sheep by name. Not by nature." slides={slides} intervalMs={3500} transitionMs={700} />
   </div>
   <ClientLogoBar />
   <WorkTabs />
