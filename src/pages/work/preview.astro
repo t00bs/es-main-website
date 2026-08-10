@@ -1,0 +1,15 @@
+---
+// Design preview for the case-study template — a real URL the visual editor
+// can open (the [id] route only exists per entry). Renders the first fully
+// populated case study; edits made here land in CaseStudyPage.astro and apply
+// to every case study.
+import CaseStudyPage from '../../components/CaseStudyPage.astro';
+import caseStudies from '../../data/case-studies.json';
+
+const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
+const sample =
+  sorted.find((cs) => cs.quote && cs.heroImage && cs.sections.length > 0) ?? sorted[0];
+const next = sorted[(sorted.indexOf(sample) + 1) % sorted.length];
+---
+
+<CaseStudyPage cs={sample} next={next} />
