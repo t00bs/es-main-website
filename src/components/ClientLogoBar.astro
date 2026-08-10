@@ -1,28 +1,29 @@
 ---
+import caseStudies from '../data/case-studies.json';
+import clientLogos from '../data/client-logos.json';
+
 // "Trusted by" bar between hairlines. Case studies that are `featured` and
 // carry a `clientLogo` render their logo here; while none qualify, the bar
 // falls back to the text names in client-logos.json.
-import caseStudies from '../data/case-studies.json';
-import clientLogos from '../data/client-logos.json';
+
+
 
 const featuredLogos = [...caseStudies]
   .sort((a, b) => a.order - b.order)
   .filter((item) => item.featured && item.clientLogo);
 ---
-
 <div class="logo-bar">
   <div class="logo-bar__row">
     <span class="logo-bar__label">Trusted by:</span>
     {
       featuredLogos.length > 0
         ? featuredLogos.map((item) => (
-            <img class="logo-bar__logo" src={item.clientLogo} alt={item.client} loading="lazy" />
+            <img class="logo-bar__logo" src={item.clientLogoNew} alt={item.client} loading="lazy" />
           ))
         : clientLogos.map((item) => <span class="logo-bar__name">{item.name}</span>)
     }
   </div>
 </div>
-
 <style>
   .logo-bar {
     padding: 0 var(--page-margin) var(--section-pad) var(--page-margin);

@@ -1,7 +1,27 @@
 [
-  { "id": "farm-jersey", "name": "Farm Jersey" },
-  { "id": "bcr-law", "name": "BCR Law LLP" },
-  { "id": "foxdocs", "name": "Foxdocs" },
-  { "id": "virdaris", "name": "Virdaris" },
-  { "id": "mortgage-shop", "name": "Mortgage Shop" }
+  {
+    "id": "farm-jersey",
+    "name": "Farm Jersey",
+    "logo": ""
+  },
+  {
+    "id": "bcr-law",
+    "name": "BCR Law LLP",
+    "logo": "/assets/client logos/6847fde41996349f7ff8a19c_BCR.svg"
+  },
+  {
+    "id": "foxdocs",
+    "name": "Foxdocs",
+    "logo": ""
+  },
+  {
+    "id": "virdaris",
+    "name": "Virdaris",
+    "logo": ""
+  },
+  {
+    "id": "mortgage-shop",
+    "name": "Mortgage Shop",
+    "logo": ""
+  }
 ]

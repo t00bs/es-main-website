@@ -1,5 +1,9 @@
 {
   "data/case-studies.json": {
-    "testimonialImage": "image"
+    "testimonialImage": "image",
+    "clientLogoNew": "image"
+  },
+  "data/client-logos.json": {
+    "logo": "image"
   }
 }
