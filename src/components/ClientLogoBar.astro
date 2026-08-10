@@ -77,34 +77,33 @@ const featuredLogos = [...caseStudies]
     filter: brightness(0) invert(1);
   }
 
-  /* Tablet: label on its own line, logos at 75% in centred rows — a partial
-     final row centres itself instead of stranding a logo in the corner. */
+  /* Below desktop the per-logo widths give way to uniform boxes: every logo
+     is contained in the same footprint so heavy wordmarks and delicate marks
+     read at even weight, in centred rows. The label takes its own line. */
   @media (max-width: 960px) {
     .logo-bar__row {
       justify-content: center;
-      gap: 32px 48px;
+      gap: 28px 44px;
     }
     .logo-bar__label {
       flex-basis: 100%;
     }
+    .logo-bar__logo,
     .logo-bar__logo[style] {
-      width: calc(var(--logo-w) * 0.75);
-    }
-    .logo-bar__logo:not([style]) {
-      height: 26px;
+      width: 128px;
+      height: 44px;
+      object-fit: contain;
     }
   }
 
-  /* Phone: same centred rows, logos at 60%. */
   @media (max-width: 720px) {
     .logo-bar__row {
-      gap: 28px 36px;
+      gap: 20px 32px;
     }
+    .logo-bar__logo,
     .logo-bar__logo[style] {
-      width: calc(var(--logo-w) * 0.6);
-    }
-    .logo-bar__logo:not([style]) {
-      height: 22px;
+      width: 104px;
+      height: 40px;
     }
   }
 </style>
