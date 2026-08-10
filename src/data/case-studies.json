@@ -62,7 +62,8 @@
       "Copy structure"
     ],
     "tags": [
-      "design"
+      "design",
+      "portals"
     ],
     "order": 2,
     "liveUrl": "https://www.mortgageshop.je/",
@@ -164,8 +165,7 @@
       "Motion design"
     ],
     "tags": [
-      "design",
-      "automation"
+      "design"
     ],
     "order": 4,
     "liveUrl": "https://www.chapter2.group/",
@@ -212,7 +212,8 @@
       "Content structure"
     ],
     "tags": [
-      "design"
+      "design",
+      "automation"
     ],
     "order": 5,
     "liveUrl": "https://www.policyfutures.org.uk/",
@@ -403,6 +404,7 @@
       "Search and filtering"
     ],
     "tags": [
+      "automation",
       "design"
     ],
     "order": 9,
@@ -582,7 +584,7 @@
     "id": "execta-social",
     "title": "ExecTA Social",
     "subtitle": "Professional community and membership",
-    "client": "Exec TA Social",
+    "client": "ExecTA Social",
     "heroImage": "/assets/images/case-studies/execta-desktop.jpg",
     "cardImage": "/assets/images/case-studies/execta-desktop.jpg",
     "services": [
@@ -591,7 +593,7 @@
       "Motion design"
     ],
     "tags": [
-      "design"
+      "automation"
     ],
     "order": 13,
     "liveUrl": "https://www.execta.social/",
@@ -617,12 +619,45 @@
         "type": "text",
         "label": "Highlights",
         "body": "Characterful space-themed brand world with animated type • Member testimonial wall featuring 1,200 plus global Heads of TA • Application-based membership and partner journeys with a global chapter map"
+      },
+      {
+        "type": "",
+        "label": "",
+        "body": "",
+        "src": "",
+        "caption": ""
       }
     ],
     "quote": null,
     "testimonialImage": "",
     "featured": false,
     "clientLogoNew": "",
+    "clientLogoWidth": 0
+  },
+  {
+    "id": "house-of-champions",
+    "title": "House of Champions",
+    "subtitle": "A powerful engine to power the Champions community",
+    "client": "House of Champions",
+    "heroImage": "",
+    "cardImage": "",
+    "services": [
+      "Marketing Site",
+      "Business Tool",
+      "Portal"
+    ],
+    "tags": [
+      "portals"
+    ],
+    "order": 0,
+    "liveUrl": "https://ourhouseofchampions.com/",
+    "liveLabel": "Visit ourhouseofchampions.com",
+    "summary": "",
+    "sections": [],
+    "quote": "",
+    "testimonialImage": "",
+    "featured": false,
+    "clientLogoNew": "/assets/client logos/6a399914ee23973f26f07d72_wordmark-white.png",
     "clientLogoWidth": 0
   }
 ]
