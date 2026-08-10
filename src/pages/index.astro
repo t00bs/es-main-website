@@ -23,67 +23,38 @@ const heroSlides = [
   '/assets/images/toby.jpg',
 ];
 ---
-
 <Layout title="Electric Sheep — Home">
   <div class="hero-wrap">
     <!-- Hero timing: intervalMs = how long each slide holds, transitionMs =
          pixelation/glitch speed. Tweak here. -->
-    <HeroSlideshow
-      headline="Sheep by name. Not by nature."
-      slides={heroSlides}
-      intervalMs={3500}
-      transitionMs={700}
-    />
+    <HeroSlideshow headline="Sheep by name. Not by nature." slides={heroSlides} intervalMs={3500} transitionMs={700} />
   </div>
-
   <ClientLogoBar />
-
   <WorkTabs />
-
   <div class="px-hover view-all">
     <PixelLink href="/work" color="var(--text-primary)">View all work</PixelLink>
   </div>
-
   <ServicesMarquee />
-
   <ServicesBreakdown />
-
   <ResultsStrip />
-
   <ProcessSection />
-
   <div class="px-hover testimonials">
     {
       testimonials.map((item) => (
-        <TestimonialCard
-          src={item.testimonialImage || item.cardImage}
-          quote={item.quote!.text}
-          linkText={`View ${item.title} Case Study`}
-          href={`/work/${item.id}`}
-        />
+        <TestimonialCard src={item.testimonialImage || item.cardImage} quote={item.quote!.text} linkText={`View ${item.title} Case Study`} href={`/work/${item.id}`} />
       ))
     }
   </div>
-
   <div class="inverse-section section-grid about">
     <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel>
-    <span class="statement about__body"
-      >{
+    <span class="statement about__body">{
         'We don’t know. But we’re probably close to finding out.\nFounded in 2023, Electric Sheep sits at the intersection of technology and humanity. We design & build digital tools that are automated by AI, but driven by people.'
-      }</span
-    >
+      }</span>
   </div>
-
   <div class="hover-zoom px-hover feature">
-    <FeatureCard
-      src="/assets/images/toby.jpg"
-      headline="Big nose, bigger ideas."
-      linkText="Meet Toby"
-      href="/about"
-    />
+    <FeatureCard src="/assets/images/toby.jpg" headline="Big nose, bigger ideas." linkText="Meet Toby" href="/about" />
   </div>
 </Layout>
-
 <style>
   .hero-wrap {
     padding: 10px var(--page-margin) var(--section-pad) var(--page-margin);
