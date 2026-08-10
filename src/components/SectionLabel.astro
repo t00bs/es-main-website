@@ -12,7 +12,6 @@ const { highlight } = Astro.props;
 const hasChildren = Astro.slots.has('default');
 ---
 <span class="section-label">
-  <slot />
   {
     highlight && (
       <>

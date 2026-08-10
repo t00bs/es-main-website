@@ -1,12 +1,14 @@
 ---
-// "What we actually do": three service pillars in ruled columns.
 import SectionLabel from './SectionLabel.astro';
 import PixelLink from './PixelLink.astro';
 import servicePillars from '../data/service-pillars.json';
----
 
+// "What we actually do": three service pillars in ruled columns.
+---
 <div class="services-breakdown">
-  <div class="label-on-light"><SectionLabel highlight="we actually do">What</SectionLabel></div>
+  <div class="label-on-light">
+    <SectionLabel highlight="What we do"><br /></SectionLabel>
+  </div>
   <div class="px-hover services-breakdown__grid">
     {
       servicePillars.map((item) => (
@@ -15,16 +17,13 @@ import servicePillars from '../data/service-pillars.json';
           <span class="pillar__title">{item.title}</span>
           <span class="pillar__body">{item.body}</span>
           <div class="pillar__link">
-            <PixelLink href={item.href} color="var(--text-primary)">
-              {item.linkText}
-            </PixelLink>
+            <PixelLink href={item.href} color="var(--text-primary)">{item.linkText}</PixelLink>
           </div>
         </div>
       ))
     }
   </div>
 </div>
-
 <style>
   .services-breakdown {
     padding: var(--section-pad) var(--page-margin);
