@@ -34,6 +34,7 @@ const portalsWork = sorted.filter((item) => item.tags.includes('portals')).slice
           subtitle={item.subtitle}
           showArrow
           href={`/work/${item.id}`}
+          eager
         />
       ))
     }

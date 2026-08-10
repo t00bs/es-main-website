@@ -44,11 +44,11 @@ function revealGroup(group: HTMLElement) {
   gsap.from(items, {
     opacity: 0,
     y: 24,
-    duration: 0.7,
+    duration: 0.55,
     ease: EASE,
-    stagger: 0.08,
+    stagger: 0.06,
     clearProps: 'opacity,transform',
-    scrollTrigger: { trigger: group, start: 'top 88%', once: true },
+    scrollTrigger: { trigger: group, start: 'top 92%', once: true },
   });
 }
 
@@ -58,10 +58,10 @@ function revealBlock(block: HTMLElement) {
   gsap.from(block, {
     opacity: 0,
     y: 24,
-    duration: 0.7,
+    duration: 0.6,
     ease: EASE,
     clearProps: 'opacity,transform',
-    scrollTrigger: { trigger: block, start: 'top 88%', once: true },
+    scrollTrigger: { trigger: block, start: 'top 92%', once: true },
   });
 }
 
