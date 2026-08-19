@@ -27,7 +27,11 @@ const {
 >
   <canvas></canvas>
   <h1>
-    {headline.split('').map((ch) => <span>{ch}</span>)}
+    {
+      headline.split(' ').map((word) => (
+        <span class="hero-word">{word.split('').map((ch) => <span>{ch}</span>)}</span>
+      ))
+    }
   </h1>
 </div>
 
@@ -57,6 +61,12 @@ const {
     font-size: var(--text-hero);
     line-height: var(--leading-tight);
     color: var(--es-cream-warm);
+    /* Words are flex items with a column-gap instead of literal spaces, so the
+       headline survives renderers that collapse whitespace-only nodes, and the
+       gap never counts at line edges. */
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 0.26em;
   }
   @media (max-width: 720px) {
     h1 {
@@ -71,7 +81,7 @@ const {
 
   document.querySelectorAll<HTMLElement>('.hero').forEach((hero) => {
     const canvas = hero.querySelector('canvas')!;
-    const spans = hero.querySelectorAll('h1 span');
+    const spans = hero.querySelectorAll('h1 .hero-word span');
     const slides: string[] = JSON.parse(hero.dataset.slides || '[]');
     const INTERVAL = Number(hero.dataset.interval) || 3500;
     const DURATION = Number(hero.dataset.transition) || 700;
