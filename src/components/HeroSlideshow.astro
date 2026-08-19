@@ -26,13 +26,7 @@ const {
   data-transition={transitionMs}
 >
   <canvas></canvas>
-  <h1>
-    {
-      headline.split(' ').map((word) => (
-        <span class="hero-word">{word.split('').map((ch) => <span>{ch}</span>)}</span>
-      ))
-    }
-  </h1>
+  <h1>{headline}</h1>
 </div>
 
 <style>
@@ -61,12 +55,6 @@ const {
     font-size: var(--text-hero);
     line-height: var(--leading-tight);
     color: var(--es-cream-warm);
-    /* Words are flex items with a column-gap instead of literal spaces, so the
-       headline survives renderers that collapse whitespace-only nodes, and the
-       gap never counts at line edges. */
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 0.26em;
   }
   @media (max-width: 720px) {
     h1 {
@@ -81,7 +69,24 @@ const {
 
   document.querySelectorAll<HTMLElement>('.hero').forEach((hero) => {
     const canvas = hero.querySelector('canvas')!;
-    const spans = hero.querySelectorAll('h1 .hero-word span');
+
+    // The headline ships as plain text (span markup gets mangled by some
+    // HTML-processing environments); the glitch's per-character spans are
+    // built here at runtime, words kept whole with real spaces between them.
+    const h1 = hero.querySelector('h1')!;
+    const words = (h1.textContent || '').trim().split(/\s+/);
+    h1.textContent = '';
+    words.forEach((word, i) => {
+      if (i > 0) h1.append(' ');
+      const wordSpan = document.createElement('span');
+      for (const ch of word) {
+        const charSpan = document.createElement('span');
+        charSpan.textContent = ch;
+        wordSpan.append(charSpan);
+      }
+      h1.append(wordSpan);
+    });
+    const spans = h1.querySelectorAll('span span');
     const slides: string[] = JSON.parse(hero.dataset.slides || '[]');
     const INTERVAL = Number(hero.dataset.interval) || 3500;
     const DURATION = Number(hero.dataset.transition) || 700;
