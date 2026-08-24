@@ -1,0 +1,100 @@
+---
+import Section from "@/components/Wrapper/Section.astro";
+import caseStudies from "../../data/case-studies.json";
+
+// "Trusted by" bar between hairlines. Case studies that are `featured` and
+// carry a client logo render it here.
+const featuredLogos = [...caseStudies]
+  .sort((a, b) => a.order - b.order)
+  .filter((item) => item.featured && item.clientLogoNew);
+---
+
+<Section paddingTop="none" render={featuredLogos.length > 0}>
+  <div class="logo-bar__row width-full reveal-group">
+    <span class="logo-bar__label">Trusted by:</span>
+    {
+      featuredLogos.map((item) => (
+        <img
+          class="logo-bar__logo"
+          src={item.clientLogoNew}
+          alt={item.client}
+          loading="lazy"
+          style={
+            item.clientLogoWidth
+              ? `--logo-w: ${item.clientLogoWidth}px;`
+              : undefined
+          }
+        />
+      ))
+    }
+  </div>
+</Section>
+
+<style>
+  @layer components {
+    .logo-bar__row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: var(--space-4) 0;
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+      border-bottom: var(--rule-thin) solid var(--rule-hairline);
+    }
+    .logo-bar__label {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+      text-align: center;
+    }
+    /* Logos render monochrome at half strength: flattened to ink on the light
+       theme, inverted to cream on the dark one. Per-logo widths arrive as
+       --logo-w so breakpoints can scale them proportionally. */
+    .logo-bar__logo {
+      height: 2rem;
+      width: auto;
+      display: block;
+      opacity: 0.5;
+      filter: brightness(0);
+    }
+    .logo-bar__logo[style] {
+      width: var(--logo-w);
+      height: auto;
+    }
+    :global(.theme-dark) .logo-bar__logo {
+      filter: brightness(0) invert(1);
+    }
+
+    /* Below desktop the per-logo widths give way to uniform boxes: every logo
+       is contained in the same footprint so heavy wordmarks and delicate marks
+       read at even weight, in centred rows. The label takes its own line. */
+    @media (width < 60rem) {
+      .logo-bar__row {
+        justify-content: center;
+        gap: var(--space-5) var(--space-7);
+      }
+      .logo-bar__label {
+        flex-basis: 100%;
+      }
+      .logo-bar__logo,
+      .logo-bar__logo[style] {
+        width: 8rem;
+        height: 2.75rem;
+        object-fit: contain;
+      }
+    }
+
+    @media (width < 45rem) {
+      .logo-bar__row {
+        gap: var(--space-4) var(--space-6);
+      }
+      .logo-bar__logo,
+      .logo-bar__logo[style] {
+        width: 6.5rem;
+        height: 2.5rem;
+      }
+    }
+  }
+</style>

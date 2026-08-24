@@ -2,37 +2,18 @@
 // Grids stagger their children; standalone blocks reveal as one. The hero,
 // nav, marquee, and footer are deliberately left alone — they have their own
 // motion or none by design.
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Grids whose children stagger in.
-const GROUPS = [
-  '.logo-bar__row',
-  '.tab-grid',
-  '.work-grid',
-  '.services-breakdown__grid',
-  '.results-strip__grid',
-  '.process__grid',
-  '.testimonials',
-];
+// Grids whose children stagger in, and blocks that reveal as one. Both are
+// opt-in markers rather than layout class names, so restyling a section can't
+// silently drop it out of the motion.
+const GROUPS = [".reveal-group"];
+const BLOCKS = [".reveal-block"];
 
-// Blocks that reveal as one.
-const BLOCKS = [
-  '.section-grid',
-  '.summary',
-  '.image-section',
-  '.portrait',
-  '.quote',
-  '.feature',
-  '.next',
-  '.view-all',
-  '.find-us',
-  '.links',
-];
-
-const EASE = 'power2.out';
+const EASE = "power2.out";
 const revealed = new Set<Element>();
 
 function revealGroup(group: HTMLElement) {
@@ -47,8 +28,8 @@ function revealGroup(group: HTMLElement) {
     duration: 0.55,
     ease: EASE,
     stagger: 0.06,
-    clearProps: 'opacity,transform',
-    scrollTrigger: { trigger: group, start: 'top 92%', once: true },
+    clearProps: "opacity,transform",
+    scrollTrigger: { trigger: group, start: "top 92%", once: true },
   });
 }
 
@@ -60,15 +41,15 @@ function revealBlock(block: HTMLElement) {
     y: 24,
     duration: 0.6,
     ease: EASE,
-    clearProps: 'opacity,transform',
-    scrollTrigger: { trigger: block, start: 'top 92%', once: true },
+    clearProps: "opacity,transform",
+    scrollTrigger: { trigger: block, start: "top 92%", once: true },
   });
 }
 
-if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll<HTMLElement>(GROUPS.join(',')).forEach(revealGroup);
-  document.querySelectorAll<HTMLElement>(BLOCKS.join(',')).forEach(revealBlock);
+if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  document.querySelectorAll<HTMLElement>(GROUPS.join(",")).forEach(revealGroup);
+  document.querySelectorAll<HTMLElement>(BLOCKS.join(",")).forEach(revealBlock);
 
   // Section heights shift as images load; re-measure the trigger points.
-  window.addEventListener('load', () => ScrollTrigger.refresh());
+  window.addEventListener("load", () => ScrollTrigger.refresh());
 }

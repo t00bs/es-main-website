@@ -1,0 +1,53 @@
+---
+// "Numbers, not vibes": inverted strip of headline results. `theme-invert`
+// flips against whatever the page is using, so the band is ink on the light
+// theme and cream on the dark one without knowing which is active.
+import Section from "@/components/Wrapper/Section.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import SectionLabel from "./SectionLabel.astro";
+import results from "../../data/results.json";
+---
+
+<Section class="theme-invert">
+  <SectionLabel highlight="not vibes">Numbers,</SectionLabel>
+  <Grid variant="autofit" minColumnWidth={17.5} class="width-full reveal-group">
+    {
+      results.map((item) => (
+        <div class="result">
+          <span class="result__figure">{item.figure}</span>
+          <span class="result__caption">{item.caption}</span>
+        </div>
+      ))
+    }
+  </Grid>
+</Section>
+
+<style>
+  @layer components {
+    .result {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+      padding-top: var(--space-4);
+    }
+    .result__figure {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      /* Sized so the longest figure fits a 4-up column without wrapping. */
+      font-size: clamp(2.125rem, 3.1vw, 3.25rem);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .result__caption {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      letter-spacing: var(--tracking-pixel);
+      line-height: var(--line-height-large);
+      color: var(--text);
+      opacity: 0.7;
+      text-wrap: pretty;
+    }
+  }
+</style>

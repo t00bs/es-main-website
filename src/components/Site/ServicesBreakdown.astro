@@ -1,0 +1,67 @@
+---
+import Section from "@/components/Wrapper/Section.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import SectionLabel from "./SectionLabel.astro";
+import PixelLink from "./PixelLink.astro";
+import servicePillars from "../../data/service-pillars.json";
+
+// "What we actually do": three service pillars in ruled columns.
+---
+
+<Section>
+  <SectionLabel highlight="What we do" />
+  <Grid xsmall={1} large={3} class="px-hover width-full reveal-group">
+    {
+      servicePillars.map((item) => (
+        <div class="pillar">
+          <span class="pillar__label">{item.label}</span>
+          <span class="pillar__title">{item.title}</span>
+          <span class="pillar__body">{item.body}</span>
+          <div class="pillar__link">
+            <PixelLink href={item.href} color="var(--text)">
+              {item.linkText}
+            </PixelLink>
+          </div>
+        </div>
+      ))
+    }
+  </Grid>
+</Section>
+
+<style>
+  @layer components {
+    .pillar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+      padding-top: var(--space-4);
+    }
+    .pillar__label {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+    }
+    .pillar__title {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h3);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .pillar__body {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+      text-wrap: pretty;
+    }
+    /* Pushes every link to the same baseline however long the copy runs. */
+    .pillar__link {
+      margin-top: auto;
+      padding-top: var(--space-1);
+    }
+  }
+</style>

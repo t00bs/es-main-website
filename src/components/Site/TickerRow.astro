@@ -1,0 +1,33 @@
+---
+// Full-width row of Neue Pixel ticker labels, space-between.
+interface Props {
+  items?: string[];
+}
+
+const { items = ["Design", "AUTOMATION", "PORTALS"] } = Astro.props;
+---
+
+<div class="ticker-row">
+  {items.map((label) => <span>{label}</span>)}
+</div>
+
+<style>
+  @layer components {
+    .ticker-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 8px 0;
+    }
+    .ticker-row span {
+      font-family: var(--font-pixel);
+      font-weight: 400;
+      font-size: var(--h5);
+      line-height: var(--line-height-small);
+      letter-spacing: var(--tracking-pixel);
+      white-space: nowrap;
+      color: var(--text);
+    }
+  }
+</style>

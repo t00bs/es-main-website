@@ -1,0 +1,36 @@
+/* Electric Sheep — brand patterns.
+ *
+ * Two multi-property rules that recur across pages and so, by the Lumos rule
+ * of thumb, have earned a name. Imported into layer(patterns) after Lumos's
+ * own patterns.css, so these win where the names collide. */
+
+/* The page's signature split: a fixed label column beside the content. Applied
+ * to a Section's inner container via `containerClass`, replacing the default
+ * vertical flex stack. */
+.section-split {
+  display: grid;
+  grid-template-columns: 28.75rem 1fr;
+  gap: var(--space-1);
+  align-items: start;
+  width: var(--site-width);
+  max-width: var(--max-width-main);
+  margin-inline: auto;
+}
+
+@media (width < 60rem) {
+  .section-split {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+/* The brand's statement voice: body copy set at headline size, breaking where
+ * the writer put the breaks rather than where the browser would. */
+.statement {
+  font-family: var(--primary-family);
+  font-weight: var(--primary-regular);
+  font-size: var(--h2);
+  line-height: var(--line-height-huge);
+  color: var(--text);
+  white-space: pre-line;
+}

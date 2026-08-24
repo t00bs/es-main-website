@@ -1,0 +1,112 @@
+---
+import services from "../../data/services.json";
+
+// Dark services strip: "We offer:" pixel label pinned left, 36px list scrolling
+// behind an edge fade. Statements come from the services collection.
+
+interface Props {
+  label?: string;
+}
+
+const { label = "We offer:" } = Astro.props;
+const text = services.map((item) => item.text).join(" ");
+---
+
+<div class="marquee">
+  <div class="marquee__offset">
+    <div class="marquee__track">
+      <span>{text}</span><span aria-hidden="true">{text}</span>
+    </div>
+  </div>
+  <div class="marquee__fade"></div>
+  <div class="marquee__label"><span>{label}</span></div>
+</div>
+<style>
+  @layer components {
+    .marquee {
+      position: relative;
+      background-color: var(--dark-900);
+      height: 4rem;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding-top: 0.5rem;
+    }
+    /* Explicit stacking: the animated transform promotes the track to its own
+     compositing layer, which some renderers paint above z-index-less siblings
+     — so the cover layers declare their order outright. The label offset
+     lives on this static wrapper: the animated track below must be exactly
+     two copies wide, or the -50% loop point misses the copy boundary and the
+     cycle shows a gap. */
+    .marquee__offset {
+      position: relative;
+      z-index: 1;
+      padding-left: 393px;
+    }
+    .marquee__track {
+      display: flex;
+      white-space: nowrap;
+      width: max-content;
+      animation: es-marquee 120s linear infinite;
+    }
+    @keyframes es-marquee {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .marquee__track {
+        animation: none;
+      }
+    }
+    .marquee__track span {
+      font-family: var(--primary-family);
+      font-weight: 400;
+      font-size: var(--h2);
+      line-height: var(--leading-marquee);
+      white-space: nowrap;
+      color: var(--text-on-image);
+      /* Seam gap between copies — matches the word spacing inside the list so
+       the loop point is indistinguishable. */
+      padding-right: 0.3em;
+    }
+    .marquee__fade {
+      position: absolute;
+      z-index: 2;
+      left: 133px;
+      top: 0;
+      bottom: 0;
+      width: 249px;
+      background: linear-gradient(
+        270deg,
+        rgba(16, 16, 16, 0) 0%,
+        rgb(16, 16, 16) 86.06%
+      );
+    }
+    /* Solid cover from the page edge through the label so the scrolling text
+     never shows to the left of it; the fade takes over from there. */
+    .marquee__label {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      padding-left: var(--site-margin);
+      background-color: var(--dark-900);
+      display: flex;
+      align-items: center;
+      padding-right: 0.5rem;
+    }
+    .marquee__label span {
+      font-family: var(--font-pixel);
+      font-weight: 400;
+      font-size: var(--h4);
+      line-height: var(--line-height-large);
+      white-space: nowrap;
+      color: var(--text-on-image);
+    }
+  }
+</style>

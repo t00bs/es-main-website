@@ -1,0 +1,214 @@
+/* Electric Sheep — brand layer.
+ *
+ * Overrides Lumos's default tokens with the Electric Sheep design system.
+ * Imported into layer(base) immediately after Lumos's base.css, so equal
+ * selectors here win. Keeping the overrides in their own file means base.css
+ * stays a pristine copy of the framework and can be replaced wholesale when
+ * Lumos updates. */
+
+/* --------------------------------------------------------------- Tokens -- */
+
+:root {
+  /* Swatches. Lumos reads --light-300 as the page background and --dark-900 as
+     its dark counterpart, so the cream and ink sit in those slots. */
+  --light-100: #f7f0de; /* cream-warm — highest raised surface */
+  --light-200: #f6f1e2; /* cream-soft — raised surface */
+  --light-300: #f7eed5; /* cream — the page */
+  --dark-700: #262626;
+  --dark-800: #1a1a1a;
+  --dark-900: #101010; /* ink — the page, inverted */
+
+  /* Electric Sheep has no accent hue: the brand moment is ink-on-cream
+     reversed out, so `theme-brand` resolves to the inverse band. */
+  --brand-500: #101010;
+  --brand-text: #f7eed5;
+
+  /* Families. The --font-es-* variables come from the `fonts` block in
+     astro.config.mjs, which emits the @font-face rules and their fallbacks. */
+  --primary-family: var(--font-es-sans);
+  --font-pixel: var(--font-es-pixel);
+  --font-serif-quote: var(--font-es-serif);
+  /* The hero wordmark is set in whatever bold grotesque the reader has, by
+     design — it is drawn heavier than the licensed roman. */
+  --font-hero: "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* Line height. Electric Sheep sets copy far tighter than the Lumos default:
+     body text runs at 1.25, not 1.5. */
+  --line-height-small: 1;
+  --line-height-medium: 1.1;
+  --line-height-large: 1.2;
+  --line-height-huge: 1.25;
+  --leading-marquee: 0.9;
+
+  /* Tracking. Helvetica Neue is set at its natural width — only the pixel
+     face is tracked out. */
+  --letter-spacing-tight: 0em;
+  --tracking-pixel: 0.075em;
+
+  /* Type scale. Each pair is the size at a 320px viewport and at 1440px; Lumos
+     interpolates between them, replacing the old fixed px + 720px breakpoint.
+       display  62 — page display headlines
+       h1       58 — hero headline
+       h2       36 — statement / marquee copy
+       h3       32 — card title
+       h4       24 — section label
+       h5       20 — pixel label
+       h6       18 — body */
+  --display-min: 44;
+  --display-max: 62;
+  --h1-min: 40;
+  --h1-max: 58;
+  --h2-min: 28;
+  --h2-max: 36;
+  --h3-min: 24;
+  --h3-max: 32;
+  --h4-min: 20;
+  --h4-max: 24;
+  --h5-min: 18;
+  --h5-max: 20;
+  --h6-min: 16;
+  --h6-max: 18;
+  --text-large-min: 18;
+  --text-large-max: 20;
+  --text-main-min: 16;
+  --text-main-max: 18;
+  --text-small-min: 14;
+  --text-small-max: 16;
+
+  /* Every heading is regular weight and untracked — the brand's headline voice
+     is plain Helvetica, with emphasis carried by the pixel face instead. */
+  --display-font-weight: var(--primary-regular);
+  --h1-font-weight: var(--primary-regular);
+  --h2-font-weight: var(--primary-regular);
+  --h3-font-weight: var(--primary-regular);
+  --h4-font-weight: var(--primary-regular);
+  --h5-font-weight: var(--primary-regular);
+  --h6-font-weight: var(--primary-regular);
+
+  --display-line-height: var(--line-height-medium);
+  --h1-line-height: var(--line-height-medium);
+  --h2-line-height: var(--line-height-huge);
+  --h3-line-height: var(--line-height-medium);
+  --h4-line-height: var(--line-height-large);
+  --h5-line-height: var(--line-height-small);
+  --h6-line-height: var(--line-height-medium);
+
+  /* Headlines break where the writer put the break, not where balancing wants
+     them — the hero and section labels are set as written. */
+  --display-text-wrap: pretty;
+  --h1-text-wrap: pretty;
+  --h2-text-wrap: pretty;
+
+  /* Site layout. --page-margin 40/20 and --grid-gap 20 become fluid. */
+  --site-margin-min: 20;
+  --site-margin-max: 40;
+  --site-gutter-min: 16;
+  --site-gutter-max: 20;
+
+  /* Section rhythm, from the old --section-pad of 64 desktop / 48 mobile. */
+  --section-space-small-min: 32;
+  --section-space-small-max: 48;
+  --section-space-medium-min: 48;
+  --section-space-medium-max: 64;
+  --section-space-large-min: 64;
+  --section-space-large-max: 96;
+
+  /* The design is edge-to-edge: sections are held in by the site margin
+     alone, not by a centred measure. */
+  --max-width-main: 100%;
+  --max-width-small: 70rem;
+
+  /* Radius. Corners are square apart from the redaction mark's 3px and the
+     fully-round tag pills. */
+  --radius-small: 0.1875rem;
+  --radius-main: 0.1875rem;
+  --radius-round: 100vw;
+
+  /* Rules */
+  --rule-thick: 6px;
+  --rule-thin: var(--border-width);
+
+  /* Nav */
+  --nav-height: 5rem;
+  --nav-gap: 28px;
+  --card-pad: 20px;
+}
+
+/* ----------------------------------------------------- Per-theme tokens -- */
+
+/* Declared on every theme selector, not just :root, because a custom property
+   holding var(--text) resolves where it is declared — a single :root copy
+   would freeze the light theme's values and never invert. Expressing them in
+   terms of --text and --background means they follow theme-light, theme-dark,
+   theme-brand and theme-invert for free. */
+:root,
+[class*="theme-"] {
+  /* The redaction mark: a solid block of the text colour, with the words
+     inside reversed out of it. */
+  --highlight-block: var(--text);
+  --highlight-text: var(--background);
+
+  /* Rules. The hairline is heavier than Lumos's default --border. */
+  --rule-strong: var(--text);
+  --rule-hairline: color-mix(in lab, var(--text) 50%, transparent);
+
+  /* Empty image wells */
+  --surface-placeholder: color-mix(in lab, var(--text) 15%, var(--background));
+}
+
+/* The protection gradient under every image caption is a fixed black scrim —
+   it sits over photography, not over a themed surface, so it does not invert. */
+:root {
+  --overlay-protect: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 50%);
+  --text-on-image: #f7eed5;
+}
+
+/* ---------------------------------------------------- Brand base styles -- */
+
+/* Italic in a headline is the cue for the pixel face — the brand never sets
+   true italics. */
+em,
+i {
+  font-family: var(--font-pixel);
+  font-style: normal;
+}
+
+/* Hero headline glitch: individual characters flip to Neue Pixel at runtime. */
+h1 span.glx {
+  font-family: var(--font-pixel);
+  font-weight: 400;
+}
+
+/* Slow zoom on image cards, with the arrow nudging north-east. Work cards own
+   their own arrow motion (fade + rise), so they opt out of the arrow rule. */
+.hover-zoom a img,
+a.hover-zoom img {
+  transition: transform 0.7s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.hover-zoom a:hover img,
+a.hover-zoom:hover img {
+  transform: scale(1.04);
+}
+.hover-zoom a:not(.work-card) svg,
+a.hover-zoom svg {
+  transition: transform 0.25s ease;
+}
+.hover-zoom a:not(.work-card):hover svg,
+a.hover-zoom:hover svg {
+  transform: translate(4px, -4px);
+}
+
+/* Pixel links fade rather than underline. */
+.px-hover a:hover,
+a.px-hover:hover {
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-zoom a img,
+  a.hover-zoom img,
+  .hover-zoom a svg,
+  a.hover-zoom svg {
+    transition-duration: 0s;
+  }
+}

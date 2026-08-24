@@ -1,0 +1,203 @@
+---
+// The case-study page template. Rendered by /work/[id] for every entry and by
+// /work/preview with sample content so the visual editor has a real URL to
+// open. Edit the template here — never rename or edit the [id] route file.
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import HeroBanner from "./HeroBanner.astro";
+import SectionLabel from "./SectionLabel.astro";
+import PillBadge from "./PillBadge.astro";
+import PixelLink from "./PixelLink.astro";
+import FeatureCard from "./FeatureCard.astro";
+import type caseStudies from "../../data/case-studies.json";
+
+// The JSON import types each entry by the keys it actually has, so an optional
+// field that some entries omit is absent from the union. `year` is optional in
+// the collection schema, so it is declared here to match.
+type CaseStudy = (typeof caseStudies)[number] & { year?: string };
+
+interface Props {
+  cs: CaseStudy;
+  next: CaseStudy;
+}
+
+const { cs, next } = Astro.props;
+
+// Skip half-filled section rows from the visual editor: an image row needs a
+// src, a text row needs some copy.
+const sections = cs.sections.filter((s) =>
+  s.type === "image" ? s.src : s.type === "text" && (s.label || s.body),
+);
+---
+
+<Layout title={cs.title} description={cs.summary}>
+  <Section paddingTop="even" paddingBottom="none">
+    <HeroBanner src={cs.heroImage} headline={`${cs.title}. ${cs.subtitle}.`} />
+  </Section>
+
+  <Section paddingTop="small" paddingBottom="none">
+    <div class="meta width-full">
+      <div class="meta__services">
+        {cs.services.map((s) => <PillBadge color="var(--text)">{s}</PillBadge>)}
+      </div>
+      <div class="px-hover meta__client">
+        <span>{cs.client}{cs.year ? ` · ${cs.year}` : ""}</span>
+        <PixelLink href={cs.liveUrl} color="var(--text)"
+          >{cs.liveLabel}</PixelLink
+        >
+      </div>
+    </div>
+  </Section>
+
+  <Section paddingTop="small" paddingBottom="none">
+    <div class="summary width-full reveal-block">
+      <hr />
+      <p>{cs.summary}</p>
+    </div>
+  </Section>
+
+  {
+    sections.map((section) =>
+      section.type === "image" ? (
+        <Section paddingTop="small" paddingBottom="none">
+          <div class="image-section__frame width-full">
+            <img src={section.src} alt="" loading="lazy" />
+            <div class="image-section__overlay" />
+            <span class="image-section__caption">{section.caption}</span>
+          </div>
+        </Section>
+      ) : (
+        <Section
+          paddingTop="small"
+          paddingBottom="none"
+          containerClass="section-split reveal-block"
+        >
+          <SectionLabel highlight={section.label} />
+          <p class="text-section__body">{section.body}</p>
+        </Section>
+      ),
+    )
+  }
+
+  <Section
+    render={!!cs.quote}
+    class="theme-invert"
+    containerClass="reveal-block gap-6"
+  >
+    <PillBadge color="var(--text)">Customer Stories</PillBadge>
+    <p class="quote__text">{cs.quote ? cs.quote.text : ""}</p>
+    <span class="quote__author">{cs.quote ? cs.quote.author : ""}</span>
+  </Section>
+
+  <Section containerClass="hover-zoom px-hover reveal-block">
+    <FeatureCard
+      src={next.cardImage}
+      headline={`Next: ${next.title}.`}
+      linkText="View case study"
+      href={`/work/${next.id}`}
+    />
+  </Section>
+</Layout>
+
+<style>
+  @layer components {
+    .meta {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--site-gutter);
+      flex-wrap: wrap;
+    }
+    .meta__services {
+      display: flex;
+      gap: var(--space-1);
+      flex-wrap: wrap;
+    }
+    .meta__client {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-4);
+    }
+    .meta__client span {
+      font-family: var(--primary-family);
+      font-size: var(--text-main);
+      line-height: var(--line-height-small);
+      color: var(--text);
+    }
+
+    .summary {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-7);
+    }
+    /* The heavy rule that opens the summary. */
+    .summary hr {
+      width: 100%;
+      height: var(--rule-thick);
+      border: 0;
+      background: var(--rule-strong);
+      margin: 0;
+    }
+    .summary p {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h2);
+      line-height: var(--line-height-huge);
+      color: var(--text);
+      max-width: 60ch;
+    }
+
+    .text-section__body {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h4);
+      line-height: var(--line-height-huge);
+      color: var(--text);
+      max-width: 60ch;
+    }
+
+    .image-section__frame {
+      position: relative;
+      height: 32rem;
+      overflow: hidden;
+      background-color: var(--surface-placeholder);
+    }
+    .image-section__frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .image-section__overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--overlay-protect);
+    }
+    .image-section__caption {
+      position: absolute;
+      left: var(--card-pad);
+      bottom: var(--space-3);
+      font-family: var(--primary-family);
+      font-size: var(--text-small);
+      line-height: var(--line-height-medium);
+      color: var(--text-on-image);
+    }
+
+    .quote__text {
+      font-family: var(--font-serif-quote);
+      font-style: italic;
+      font-size: var(--h3);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+      max-width: 50ch;
+    }
+    .quote__author {
+      font-family: var(--primary-family);
+      font-size: var(--text-main);
+      line-height: var(--line-height-small);
+      color: var(--text);
+    }
+  }
+</style>

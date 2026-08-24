@@ -1,0 +1,10 @@
+dist
+.astro
+node_modules
+
+# Exported from Claude Design — the design source of truth, kept byte-for-byte
+# as exported so re-exports diff cleanly.
+design-reference
+
+# Written by Stacki. Reformatting these fights the editor and churns the diff.
+src/data

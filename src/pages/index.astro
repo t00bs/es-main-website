@@ -1,18 +1,20 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import HeroSlideshow from '../components/HeroSlideshow.astro';
-import ClientLogoBar from '../components/ClientLogoBar.astro';
-import ServicesBreakdown from '../components/ServicesBreakdown.astro';
-import ResultsStrip from '../components/ResultsStrip.astro';
-import ProcessSection from '../components/ProcessSection.astro';
-import WorkTabs from '../components/WorkTabs.astro';
-import PixelLink from '../components/PixelLink.astro';
-import ServicesMarquee from '../components/ServicesMarquee.astro';
-import TestimonialCard from '../components/TestimonialCard.astro';
-import SectionLabel from '../components/SectionLabel.astro';
-import FeatureCard from '../components/FeatureCard.astro';
-import caseStudies from '../data/case-studies.json';
-import heroSlidesData from '../data/hero-slides.json';
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import HeroSlideshow from "@/components/Site/HeroSlideshow.astro";
+import ClientLogoBar from "@/components/Site/ClientLogoBar.astro";
+import ServicesBreakdown from "@/components/Site/ServicesBreakdown.astro";
+import ResultsStrip from "@/components/Site/ResultsStrip.astro";
+import ProcessSection from "@/components/Site/ProcessSection.astro";
+import WorkTabs from "@/components/Site/WorkTabs.astro";
+import PixelLink from "@/components/Site/PixelLink.astro";
+import ServicesMarquee from "@/components/Site/ServicesMarquee.astro";
+import TestimonialCard from "@/components/Site/TestimonialCard.astro";
+import SectionLabel from "@/components/Site/SectionLabel.astro";
+import FeatureCard from "@/components/Site/FeatureCard.astro";
+import caseStudies from "../data/case-studies.json";
+import heroSlidesData from "../data/hero-slides.json";
 
 const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
 const testimonials = sorted.filter((item) => item.quote);
@@ -20,62 +22,75 @@ const testimonials = sorted.filter((item) => item.quote);
 // Hero rotation comes from the hero-slides collection, in file order.
 const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
 ---
-<Layout title="Electric Sheep — Home">
-  <div class="hero-wrap">
-    <!-- Hero timing: intervalMs = how long each slide holds, transitionMs =
-         pixelation/glitch speed. Tweak here. -->
-    <HeroSlideshow headline="Sheep by name. Not by nature." slides={slides} intervalMs={3500} transitionMs={700} />
-  </div>
+
+<Layout>
+  {
+    /* Hero timing: intervalMs = how long each slide holds, transitionMs =
+      pixelation/glitch speed. Tweak here. */
+  }
+  <Section paddingTop="even">
+    <HeroSlideshow
+      headline="Sheep by name. Not by nature."
+      slides={slides}
+      intervalMs={3500}
+      transitionMs={700}
+    />
+  </Section>
+
   <ClientLogoBar />
+
   <WorkTabs />
-  <div class="px-hover view-all">
-    <PixelLink href="/work" color="var(--text-primary)">View all work</PixelLink>
-  </div>
+
+  <Section paddingTop="small" align="end" containerClass="reveal-block">
+    <div class="px-hover">
+      <PixelLink href="/work" color="var(--text)">View all work</PixelLink>
+    </div>
+  </Section>
+
   <ServicesMarquee />
+
   <ServicesBreakdown />
+
   <ResultsStrip />
+
   <ProcessSection />
-  <div class="px-hover testimonials">
-    {
-      testimonials.map((item) => (
-        <TestimonialCard src={item.testimonialImage || item.cardImage} quote={item.quote!.text} linkText={`View ${item.title} Case Study`} href={`/work/${item.id}`} />
-      ))
-    }
-  </div>
-  <div class="inverse-section section-grid about">
-    <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel>
-    <span class="statement about__body">{
-        'We don’t know. But we’re probably close to finding out. Founded in 2023, Electric Sheep sits at the intersection of technology and humanity. We design & build digital tools that are automated by AI, but driven by people.'
-      }</span>
-  </div>
-  <div class="hover-zoom px-hover feature">
-    <FeatureCard src="/assets/images/toby.jpg" headline="Big nose, bigger ideas." linkText="Meet Toby" href="/about" />
-  </div>
+
+  <Section>
+    <Grid
+      xsmall={1}
+      medium={2}
+      class="px-hover testimonials width-full reveal-group"
+    >
+      {
+        testimonials.map((item) => (
+          <TestimonialCard
+            src={item.testimonialImage || item.cardImage}
+            quote={item.quote!.text}
+            linkText={`View ${item.title} Case Study`}
+            href={`/work/${item.id}`}
+          />
+        ))
+      }
+    </Grid>
+  </Section>
+
+  <Section class="theme-invert" containerClass="section-split reveal-block">
+    <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel
+    >
+    <p class="statement">
+      We don’t know. But we’re probably close to finding out. Founded in 2023,
+      Electric Sheep sits at the intersection of technology and humanity. We
+      design & build digital tools that are automated by AI, but driven by
+      people.
+    </p>
+  </Section>
+
+  <Section containerClass="hover-zoom px-hover reveal-block">
+    <FeatureCard
+      src="/assets/images/toby.jpg"
+      headline="Big nose, bigger ideas."
+      linkText="Meet Toby"
+      href="/about"
+    />
+  </Section>
 </Layout>
-<style>
-  .hero-wrap {
-    padding: 10px var(--page-margin) var(--section-pad) var(--page-margin);
-  }
-  .view-all {
-    padding: 0 var(--page-margin) var(--section-pad) var(--page-margin);
-    display: flex;
-    justify-content: flex-end;
-  }
-  .testimonials {
-    padding: var(--section-pad) var(--page-margin);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--grid-gap);
-  }
-  .about__body {
-    color: var(--text-on-inverse);
-  }
-  .feature {
-    padding: var(--section-pad) var(--page-margin);
-  }
-  @media (max-width: 960px) {
-    .testimonials {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

@@ -2,8 +2,8 @@
 // Dynamic route: one page per case study. The template itself lives in
 // components/CaseStudyPage.astro — edit it there, and do not rename this file
 // (the [id] brackets are what make the route dynamic).
-import CaseStudyPage from '../../components/CaseStudyPage.astro';
-import caseStudies from '../../data/case-studies.json';
+import CaseStudyPage from "@/components/Site/CaseStudyPage.astro";
+import caseStudies from "../../data/case-studies.json";
 
 export function getStaticPaths() {
   const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
