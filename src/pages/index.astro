@@ -35,23 +35,21 @@ const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
   <ServicesBreakdown />
   <ResultsStrip />
   <ProcessSection />
-  <div class="stories">
-    <div class="px-hover testimonials">
-      {
-        testimonials.map((item) => (
-          <TestimonialCard src={item.testimonialImage || item.cardImage} quote={item.quote!.text} linkText={`View ${item.title} Case Study`} href={`/work/${item.id}`} />
-        ))
-      }
-    </div>
-    <div class="hover-zoom px-hover feature">
-      <FeatureCard src="/assets/images/toby.jpg" headline="Big nose, bigger ideas." linkText="Meet Toby" href="/about" />
-    </div>
+  <div class="px-hover testimonials">
+    {
+      testimonials.map((item) => (
+        <TestimonialCard src={item.testimonialImage || item.cardImage} quote={item.quote!.text} linkText={`View ${item.title} Case Study`} href={`/work/${item.id}`} />
+      ))
+    }
   </div>
   <div class="inverse-section section-grid about">
     <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel>
     <span class="statement about__body">{
         'We don’t know. But we’re probably close to finding out. Founded in 2023, Electric Sheep sits at the intersection of technology and humanity. We design & build digital tools that are automated by AI, but driven by people.'
       }</span>
+  </div>
+  <div class="hover-zoom px-hover feature">
+    <FeatureCard src="/assets/images/toby.jpg" headline="Big nose, bigger ideas." linkText="Meet Toby" href="/about" />
   </div>
 </Layout>
 <style>
@@ -63,21 +61,17 @@ const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
     display: flex;
     justify-content: flex-end;
   }
-  /* Testimonials and the Meet Toby card share one section. The card stays a
-     separate block so it gets its own scroll reveal. */
-  .stories {
-    padding: var(--section-pad) var(--page-margin);
-    display: flex;
-    flex-direction: column;
-    gap: var(--grid-gap);
-  }
   .testimonials {
+    padding: var(--section-pad) var(--page-margin);
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--grid-gap);
   }
   .about__body {
     color: var(--text-on-inverse);
+  }
+  .feature {
+    padding: var(--section-pad) var(--page-margin);
   }
   @media (max-width: 960px) {
     .testimonials {
