@@ -35,8 +35,10 @@ const caseStudies = defineCollection({
     services: z.array(z.string()),
     tags: z.array(z.enum(WORK_TAGS)),
     order: z.number().default(99),
-    liveUrl: z.string().url(),
-    liveLabel: z.string(),
+    /* The live site, when there is one: the case-study hero shows its button
+       only when both are set. An empty url (editor draft) means none. */
+    liveUrl: z.union([z.string().url(), z.literal("")]).optional(),
+    liveLabel: z.string().optional(),
     summary: z.string(),
     /* Sections are validated loosely so half-filled rows from the visual
        editor don't fail the build — the page skips rows without a valid type

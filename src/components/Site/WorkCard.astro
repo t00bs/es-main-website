@@ -129,6 +129,19 @@ const ARROW_PATH =
       flex-wrap: wrap;
       gap: 8px;
     }
+    /* Pills a size down from the page's, so service names fit across a
+       narrow portrait card. Padding keeps the pill's optical centring, scaled
+       with the type. One too long for the card ends in an ellipsis rather
+       than running off the edge — inline-block, because a flex box can't
+       take one. */
+    .work-card__tags :global(.pill-badge) {
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: var(--text-small);
+      padding: 9px 10px 7px;
+    }
     .work-card__caption {
       position: absolute;
       left: var(--card-pad);

@@ -34,7 +34,17 @@ const cardTags = (item: (typeof caseStudies)[number]) => [
   </Section>
 
   <Section paddingTop="none" containerClass="hover-zoom">
-    <Grid xsmall={1} medium={3} class="work-grid width-full reveal-group">
+    {
+      /* 9:16 cards like the homepage rows, four across at most so every card
+        stays wide enough for its longest tag. */
+    }
+    <Grid
+      xsmall={1}
+      small={2}
+      medium={3}
+      large={4}
+      class="work-grid width-full reveal-group"
+    >
       {
         sorted.map((item) => (
           <WorkCard
@@ -44,6 +54,7 @@ const cardTags = (item: (typeof caseStudies)[number]) => [
             showArrow
             href={`/work/${item.id}`}
             tags={cardTags(item)}
+            portrait
           />
         ))
       }

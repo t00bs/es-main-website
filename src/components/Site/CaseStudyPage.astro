@@ -11,9 +11,14 @@ import WorkCard from "./WorkCard.astro";
 import caseStudies from "../../data/case-studies.json";
 
 // The JSON import types each entry by the keys it actually has, so an optional
-// field that some entries omit is absent from the union. `year` is optional in
-// the collection schema, so it is declared here to match.
-type CaseStudy = (typeof caseStudies)[number] & { year?: string };
+// field that some entries omit is absent from the union. `year` and the live
+// link are optional in the collection schema, so they are declared here to
+// match.
+type CaseStudy = (typeof caseStudies)[number] & {
+  year?: string;
+  liveUrl?: string;
+  liveLabel?: string;
+};
 
 interface Props {
   cs: CaseStudy;
@@ -23,9 +28,20 @@ interface Props {
 
 const { cs } = Astro.props;
 
+// A section row as the collection schema describes it. The JSON import types
+// each entry's rows by what that entry holds, so one with only text rows would
+// have no src or caption at all — read every entry's rows as this shape.
+type Section = {
+  type: string;
+  label?: string;
+  body?: string;
+  src?: string;
+  caption?: string;
+};
+
 // Skip half-filled section rows from the visual editor: an image row needs a
 // src, a text row needs some copy.
-const sections = cs.sections.filter((s) =>
+const sections = (cs.sections as Section[]).filter((s) =>
   s.type === "image" ? s.src : s.type === "text" && (s.label || s.body),
 );
 
@@ -66,11 +82,15 @@ const relatedWork = [
               ))
             }
           </div>
-          <div class="cs-hero__cta">
-            <Button element="link" href={cs.liveUrl} class="radius-small">
-              {cs.liveLabel}
-            </Button>
-          </div>
+          {
+            cs.liveUrl && cs.liveLabel && (
+              <div class="cs-hero__cta">
+                <Button element="link" href={cs.liveUrl} class="radius-small">
+                  {cs.liveLabel}
+                </Button>
+              </div>
+            )
+          }
         </div>
       </div>
       <div class="cs-hero__images">

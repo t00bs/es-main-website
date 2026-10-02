@@ -235,10 +235,10 @@
     "title": "Foxdocs",
     "subtitle": "SaaS and compliance technology",
     "client": "Foxdocs Limited",
-    "heroImage": "/assets/images/case-studies/foxdocs-desktop.jpg",
-    "heroSquareTop": "",
-    "heroSquareBottom": "",
-    "cardImage": "/assets/images/case-studies/foxdocs-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/fd hero.jpg",
+    "heroSquareTop": "/assets/images/case-studies/fd hero 2.jpg",
+    "heroSquareBottom": "/assets/images/case-studies/fd hero 3.jpg",
+    "cardImage": "/assets/images/case-studies/fd hero.jpg",
     "services": [
       "Product marketing site",
       "Web design",
@@ -257,11 +257,6 @@
         "type": "text",
         "label": "The brief",
         "body": "Foxdocs is a new product in a serious category. The site needed to explain a novel idea quickly, look credible to compliance-minded buyers, and show the real product rather than abstract promises."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/case-studies/foxdocs-desktop-2.jpg",
-        "caption": "Foxdocs — Webflow."
       },
       {
         "type": "text",
@@ -285,10 +280,10 @@
     "title": "Steedman Planning",
     "subtitle": "Planning and design consultancy",
     "client": "Steedman Planning Limited",
-    "heroImage": "/assets/images/case-studies/steedman-desktop.jpg",
-    "heroSquareTop": "",
-    "heroSquareBottom": "",
-    "cardImage": "/assets/images/case-studies/steedman-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/steedman hero.jpg",
+    "heroSquareTop": "/assets/images/case-studies/steedman hero 2.jpg",
+    "heroSquareBottom": "/assets/images/case-studies/steedman hero 3.jpg",
+    "cardImage": "/assets/images/case-studies/steedman hero.jpg",
     "services": [
       "Web design",
       "Webflow development",
@@ -306,11 +301,6 @@
         "type": "text",
         "label": "The brief",
         "body": "Steedman Planning needed its projects to do the persuading: a small consultancy with an outsized portfolio, from 200 affordable homes to National Park golf course realignment, and a people-first ethos that had to come through."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/case-studies/steedman-desktop-2.jpg",
-        "caption": "Steedman Planning — Webflow."
       },
       {
         "type": "text",
@@ -332,12 +322,12 @@
   {
     "id": "bcr-law",
     "title": "BCR Law",
-    "subtitle": "Legal services",
+    "subtitle": "Legal, tax and trust services",
     "client": "BCR Law LLP",
-    "heroImage": "/assets/images/case-studies/bcr-law-desktop.jpg",
-    "heroSquareTop": "",
-    "heroSquareBottom": "",
-    "cardImage": "/assets/images/case-studies/bcr-law-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/bcr hero.jpg",
+    "heroSquareTop": "/assets/images/case-studies/bcr hero 2.jpg",
+    "heroSquareBottom": "/assets/images/case-studies/bcr hero 3.jpg",
+    "cardImage": "/assets/images/case-studies/bcr hero.jpg",
     "services": [
       "Multi-brand site architecture",
       "Web design",
@@ -356,11 +346,6 @@
         "type": "text",
         "label": "The brief",
         "body": "BCR operates three distinct offerings: private client tax (Pro), the full-service law firm (Law) and executor and attorney support (EDA). The site had to give each brand room to breathe while keeping one coherent architecture and a shared backbone of people, articles and contact journeys."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/case-studies/bcr-law-desktop-2.jpg",
-        "caption": "BCR Law — Webflow."
       },
       {
         "type": "text",
@@ -384,10 +369,10 @@
     "title": "Allens Caravans",
     "subtitle": "Holiday and residential parks",
     "client": "Allens Caravans Estates Limited",
-    "heroImage": "/assets/images/case-studies/allens-desktop.jpg",
-    "heroSquareTop": "",
-    "heroSquareBottom": "",
-    "cardImage": "/assets/images/case-studies/allens-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/allens hero.jpg",
+    "heroSquareTop": "/assets/images/case-studies/allens hero 2.jpg",
+    "heroSquareBottom": "/assets/images/case-studies/allenss hero 3.jpg",
+    "cardImage": "/assets/images/case-studies/allens hero.jpg",
     "services": [
       "Web design",
       "Webflow development",
@@ -529,48 +514,21 @@
     "clientLogoWidth": 0
   },
   {
-    "id": "team-monaco",
-    "title": "Team Monaco",
-    "subtitle": "Sport and sustainability",
-    "client": "Team Monaco (UIM E1 World Championship)",
-    "heroImage": "/assets/images/case-studies/team-monaco-desktop.jpg",
+    "id": "labour",
+    "title": "Labour",
+    "subtitle": "Government and Recruitment",
+    "client": "Parliamentary Labour Party",
+    "heroImage": "",
     "heroSquareTop": "",
     "heroSquareBottom": "",
-    "cardImage": "/assets/images/case-studies/team-monaco-desktop.jpg",
-    "services": [
-      "Web design",
-      "Shopify build",
-      "Merchandise store"
-    ],
-    "tags": [
-      "design"
-    ],
+    "cardImage": "",
+    "services": [],
+    "tags": [],
     "order": 12,
-    "liveUrl": "https://www.teammonaco.com/",
-    "liveLabel": "Visit teammonaco.com",
-    "summary": "The official home of Monaco's electric raceboat team in the UIM E1 World Championship, blending race news, ocean advocacy and the 98 Collection merchandise store.",
-    "sections": [
-      {
-        "type": "text",
-        "label": "The brief",
-        "body": "Team Monaco competes at the intersection of elite sport and ocean protection, with the backing of H.S.H. Prince Albert II. The site had to carry race news and team stories, champion the sustainability mission and sell merchandise, all under one brand."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/case-studies/team-monaco-desktop-2.jpg",
-        "caption": "Team Monaco — Shopify."
-      },
-      {
-        "type": "text",
-        "label": "What we built",
-        "body": "A fast, editorial Shopify build that leads with race highlights and team storytelling, backed by the Protect Our Ocean sustainability platform and heritage stats reaching back to 1862. The 98 Collection brings team merchandise into the same home."
-      },
-      {
-        "type": "text",
-        "label": "Highlights",
-        "body": "Race news and video highlights alongside team and pilot profiles • Protect Our Ocean sustainability storytelling with the Prince Albert II Foundation quote • 98 Collection merchandise store integrated into the main site"
-      }
-    ],
+    "liveUrl": "",
+    "liveLabel": "",
+    "summary": "",
+    "sections": [],
     "quote": null,
     "testimonialImage": "",
     "featured": false,
@@ -644,8 +602,7 @@
     "cardImage": "",
     "services": [
       "Marketing Site",
-      "Business Tool",
-      "Portal"
+      "Business Tool"
     ],
     "tags": [
       "portals"
