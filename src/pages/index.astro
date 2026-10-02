@@ -72,18 +72,19 @@ const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
     </Grid>
   </Section>
 
-  <Section class="theme-invert" containerClass="section-split reveal-block">
-    <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel
-    >
-    <p class="statement"> We don’t know. But we’re probably close to finding out. Founded in 2023, Electric Sheep sits at the intersection of technology and humanity. We design &amp; build digital tools that are automated by AI, but driven by people. </p>
-  </Section>
-
-  <Section containerClass="hover-zoom px-hover reveal-block">
-    <FeatureCard
-      src="/assets/images/toby.jpg"
-      headline="Big nose, bigger ideas."
-      linkText="Meet Toby"
-      href="/about"
-    />
+  <Section class="theme-invert">
+    <div class="hover-zoom px-hover width-full reveal-block">
+      <FeatureCard
+        src="/assets/images/toby.jpg"
+        headline="Big nose, bigger ideas."
+        linkText="Meet Toby"
+        href="/about"
+      />
+    </div>
+    <div class="section-split width-full reveal-block">
+      <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel
+      >
+      <p class="statement"> We don’t know. But we’re probably close to finding out. Founded in 2023, Electric Sheep sits at the intersection of technology and humanity. We design &amp; build digital tools that are automated by AI, but driven by people. </p>
+    </div>
   </Section>
 </Layout>
