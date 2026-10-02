@@ -1,49 +1,29 @@
 ---
-import NavBar from '../components/NavBar.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-import '../styles/tokens.css';
-import '../styles/global.css';
+// Every page's shell. Wraps the Lumos BaseLayout (which renders BaseHead, the
+// skip link, Nav, <main> and Footer) with the two things that are ours: the
+// theme bootstrap that restores the reader's light/dark choice before first
+// paint, and the scroll-reveal motion.
+import BaseLayout from "./BaseLayout.astro";
+import type { SeoProps } from "@/types.ts";
 
-interface Props {
-  title?: string;
-  description?: string;
-}
-
-const {
-  title = 'Electric Sheep',
-  description = 'We design & build digital tools that are automated by AI, but driven by people.',
-} = Astro.props;
+type Props = SeoProps;
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <link
-      rel="preload"
-      href="/fonts/HelveticaNeueLTStd-55Roman.otf"
-      as="font"
-      type="font/otf"
-      crossorigin
-    />
-    <link rel="preload" href="/fonts/NeuePixel-Regular.otf" as="font" type="font/otf" crossorigin />
-    <title>{title}</title>
+<BaseLayout theme="light" {...Astro.props}>
+  <Fragment slot="head">
+    {/* Runs before the body paints, so a dark-mode reader never sees cream. */}
     <script is:inline>
       try {
-        document.documentElement.dataset.theme = localStorage.getItem('es-theme') || 'light';
+        if (localStorage.getItem("es-theme") === "dark") {
+          document.documentElement.classList.remove("theme-light");
+          document.documentElement.classList.add("theme-dark");
+        }
       } catch (e) {}
     </script>
-  </head>
-  <body>
-    <NavBar />
-    <slot />
-    <SiteFooter />
     <script>
-      import '../scripts/reveal';
+      import "@/scripts/reveal";
     </script>
-  </body>
-</html>
+  </Fragment>
+
+  <slot />
+</BaseLayout>

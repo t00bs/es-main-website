@@ -1,0 +1,56 @@
+---
+import { Font } from "astro:assets";
+import { SITE_NAME, SITE_DESCRIPTION } from "@/consts.ts";
+import { isNoindexRoute } from "@/utils/seo.ts";
+import type { SeoProps } from "@/types.ts";
+
+type Props = SeoProps;
+
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  // TODO: replace with a purpose-made 1200x630 social card. This is a stand-in
+  // so og:image points at a real file rather than 404-ing on every page.
+  image = "/assets/images/hero-sheep.png",
+  type = "website",
+  noindex,
+} = Astro.props;
+
+const isNoindex = noindex ?? isNoindexRoute(Astro.url.pathname);
+
+const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site);
+---
+
+<meta charset="utf-8" />
+<style is:inline>
+  @layer base, patterns, components, utilities;
+</style>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+{
+  /* The two faces that appear above the fold are preloaded; the quote serif
+    only shows further down a case study, so it loads on demand. */
+}
+<Font cssVariable="--font-es-sans" preload />
+<Font cssVariable="--font-es-pixel" preload />
+<Font cssVariable="--font-es-serif" />
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+{isNoindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={socialImage} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImage} />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />

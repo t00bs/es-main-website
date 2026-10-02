@@ -1,0 +1,56 @@
+---
+import Section from "@/components/Wrapper/Section.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import SectionLabel from "./SectionLabel.astro";
+import processSteps from "../../data/process-steps.json";
+
+// "How we work": four numbered steps in ruled columns.
+---
+
+<Section>
+  <SectionLabel highlight="How We Work" />
+  <Grid xsmall={1} small={2} large={4} class="width-full reveal-group">
+    {
+      processSteps.map((item) => (
+        <div class="step">
+          <span class="step__number">{item.number}</span>
+          <span class="step__title">{item.title}</span>
+          <span class="step__body">{item.body}</span>
+        </div>
+      ))
+    }
+  </Grid>
+</Section>
+
+<style>
+  @layer components {
+    .step {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+      padding-top: var(--space-4);
+    }
+    .step__number {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+    }
+    .step__title {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h3);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .step__body {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+      text-wrap: pretty;
+    }
+  }
+</style>

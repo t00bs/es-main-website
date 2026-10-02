@@ -1,8 +1,8 @@
-import { defineCollection, z } from 'astro:content';
-import { file } from 'astro/loaders';
+import { defineCollection, z } from "astro:content";
+import { file } from "astro/loaders";
 
 // Homepage tab keys — a case study appears under every tab listed in its `tags`.
-export const WORK_TAGS = ['design', 'automation', 'portals'] as const;
+export const WORK_TAGS = ["design", "automation", "portals"] as const;
 
 // One collection, one file: every case study is an item in the array, keyed by
 // its `id` (which is also the /work/<id> slug). Pages and components import
@@ -10,7 +10,7 @@ export const WORK_TAGS = ['design', 'automation', 'portals'] as const;
 // import); this collection exists so the JSON is still schema-validated on
 // every build — a malformed entry fails the build instead of rendering wrong.
 const caseStudies = defineCollection({
-  loader: file('src/data/case-studies.json'),
+  loader: file("src/data/case-studies.json"),
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
@@ -44,18 +44,22 @@ const caseStudies = defineCollection({
         body: z.string().optional(),
         src: z.string().optional(),
         caption: z.string().optional(),
-      })
+      }),
     ),
     /* Object when set; empty string (editor draft) and null both mean none. */
     quote: z
-      .union([z.object({ text: z.string(), author: z.string() }), z.literal(''), z.null()])
+      .union([
+        z.object({ text: z.string(), author: z.string() }),
+        z.literal(""),
+        z.null(),
+      ])
       .default(null),
   }),
 });
 
 // Statements shown in the homepage services marquee, in display order.
 const services = defineCollection({
-  loader: file('src/data/services.json'),
+  loader: file("src/data/services.json"),
   schema: z.object({
     text: z.string(),
   }),
@@ -63,14 +67,13 @@ const services = defineCollection({
 
 // Homepage hero slideshow images, in rotation order.
 const heroSlides = defineCollection({
-  loader: file('src/data/hero-slides.json'),
+  loader: file("src/data/hero-slides.json"),
   schema: z.object({ image: z.string() }),
 });
 
-
 // The three service pillars on the homepage.
 const servicePillars = defineCollection({
-  loader: file('src/data/service-pillars.json'),
+  loader: file("src/data/service-pillars.json"),
   schema: z.object({
     label: z.string(),
     title: z.string(),
@@ -82,14 +85,21 @@ const servicePillars = defineCollection({
 
 // Headline results in the homepage stats strip.
 const results = defineCollection({
-  loader: file('src/data/results.json'),
+  loader: file("src/data/results.json"),
   schema: z.object({ figure: z.string(), caption: z.string() }),
 });
 
 // Numbered steps in the homepage process section.
 const processSteps = defineCollection({
-  loader: file('src/data/process-steps.json'),
+  loader: file("src/data/process-steps.json"),
   schema: z.object({ number: z.string(), title: z.string(), body: z.string() }),
 });
 
-export const collections = { caseStudies, services, heroSlides, servicePillars, results, processSteps };
+export const collections = {
+  caseStudies,
+  services,
+  heroSlides,
+  servicePillars,
+  results,
+  processSteps,
+};

@@ -1,0 +1,94 @@
+---
+// Black footer: giant full-bleed logotype, then contact rows in cream.
+// The Lumos Footer slot, rewritten for Electric Sheep. Rendered by BaseLayout.
+import { SITE_NAME } from "@/consts.ts";
+
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /** Studio address, shown bottom-left. */
+  address?: string;
+  /** Contact address, rendered as a mailto link. */
+  email?: string;
+  /** Copyright line. Newlines are preserved. */
+  legal?: string;
+}
+
+const {
+  render = true,
+  address = "10 Minden Street, St Helier, JE2 4WR",
+  email = "hello@electricsheep.design",
+  legal = "© 2026 Electric Sheep Limited.\nAll rights reserved.",
+} = Astro.props;
+---
+
+{
+  render && (
+    <footer class="site_footer theme-dark">
+      <img
+        src="/assets/logo/es-logo-cream.svg"
+        alt={SITE_NAME}
+        loading="lazy"
+      />
+      <div class="site_footer_rows">
+        <span>{address}</span>
+        <a href={`mailto:${email}`}>{email}</a>
+        <div class="site_footer_legal">
+          <a href="/privacy">Privacy</a>
+          <span>{legal}</span>
+        </div>
+      </div>
+    </footer>
+  )
+}
+
+<style is:global>
+  @layer components {
+    .site_footer {
+      /* The footer is the one surface that goes to true black rather than the
+         ink used by the dark theme — it reads as the end of the page. */
+      --background: #000000;
+
+      background-color: var(--background);
+      color: var(--text);
+      padding: var(--space-7) var(--site-margin) var(--site-margin);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+
+      & > img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+
+    .site_footer_rows {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+
+      & span,
+      & a {
+        font-size: var(--text-main);
+        line-height: var(--line-height-small);
+        color: var(--text);
+        white-space: pre-line;
+        transition: opacity var(--hover-duration) var(--hover-ease);
+      }
+      & a:hover {
+        opacity: 0.6;
+      }
+    }
+
+    .site_footer_legal {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: var(--space-2);
+      text-align: right;
+    }
+  }
+</style>

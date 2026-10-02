@@ -1,0 +1,216 @@
+---
+// Square work-grid tile: image, protection gradient, title (+ optional subtitle & arrow).
+// Optional `tags` render as outline pills top-left, matching the case-study page.
+import PillBadge from "./PillBadge.astro";
+
+interface Props {
+  src?: string;
+  title: string;
+  subtitle?: string;
+  showArrow?: boolean;
+  href?: string;
+  tags?: string[];
+  /** Load the image immediately instead of lazily — for cards near the fold. */
+  eager?: boolean;
+}
+
+const {
+  src,
+  title,
+  subtitle,
+  showArrow = false,
+  href = "#",
+  tags = [],
+  eager = false,
+} = Astro.props;
+
+const ARROW_PATH =
+  "M 27 19.286 L 23.143 19.286 L 23.143 3.857 L 7.714 3.857 L 7.714 0 L 27 0 L 27 19.286 Z M 0 27 L 0 23.143 L 3.857 23.143 L 3.857 27 L 0 27 Z M 3.857 23.143 L 3.857 19.286 L 7.714 19.286 L 7.714 23.143 L 3.857 23.143 Z M 7.714 19.286 L 7.714 15.429 L 11.571 15.429 L 11.571 19.286 L 7.714 19.286 Z M 11.571 15.429 L 11.571 11.571 L 15.429 11.571 L 15.429 15.429 L 11.571 15.429 Z M 15.429 11.571 L 15.429 7.714 L 19.286 7.714 L 19.286 11.571 L 15.429 11.571 Z";
+---
+
+<a href={href} class="work-card">
+  {
+    src && (
+      <img
+        src={src}
+        alt=""
+        loading={eager ? "eager" : "lazy"}
+        fetchpriority={eager ? "high" : "auto"}
+      />
+    )
+  }
+  <div class="work-card__overlay"></div>
+  {tags.length > 0 && <div class="work-card__tags-protect" />}
+  {
+    tags.length > 0 && (
+      <div class="work-card__tags">
+        {tags.map((tag) => (
+          <PillBadge>{tag}</PillBadge>
+        ))}
+      </div>
+    )
+  }
+  <div class="work-card__caption" style={`bottom: ${subtitle ? 16 : 11}px;`}>
+    <div class="work-card__text">
+      <span class="work-card__title">{title}</span>
+      {
+        subtitle && (
+          <span class="work-card__reveal">
+            <span class="work-card__subtitle">{subtitle}</span>
+          </span>
+        )
+      }
+    </div>
+    {
+      showArrow && (
+        <svg
+          class="work-card__arrow"
+          width="27"
+          height="27"
+          viewBox="0 0 27 27"
+          fill="var(--text-on-image)"
+          aria-hidden="true"
+        >
+          <path d={ARROW_PATH} fill-rule="nonzero" />
+        </svg>
+      )
+    }
+  </div>
+</a>
+
+<style>
+  @layer components {
+    .work-card {
+      position: relative;
+      display: block;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background-color: var(--surface-placeholder);
+      text-decoration: none;
+    }
+    .work-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .work-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--overlay-protect);
+    }
+    /* Top counterpart of the bottom protection gradient so the tag pills stay
+     legible on light imagery. */
+    .work-card__tags-protect {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0) 45%
+      );
+    }
+    .work-card__tags {
+      position: absolute;
+      left: var(--card-pad);
+      right: var(--card-pad);
+      top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .work-card__caption {
+      position: absolute;
+      left: var(--card-pad);
+      right: var(--card-pad);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .work-card__text {
+      display: flex;
+      flex-direction: column;
+    }
+    /* The subtitle's row collapses via the 0fr grid trick so its reveal can
+     animate height and push the title up. Its 8px gap to the title lives as
+     padding inside the clipped row so the collapsed state is exactly
+     title-only. */
+    .work-card__reveal {
+      display: grid;
+      grid-template-rows: 1fr;
+    }
+    .work-card__title {
+      font-family: var(--primary-family);
+      font-weight: 400;
+      font-size: var(--h3);
+      line-height: var(--line-height-medium);
+      white-space: nowrap;
+      color: var(--text-on-image);
+    }
+    .work-card__subtitle {
+      font-family: var(--primary-family);
+      font-weight: 400;
+      font-size: var(--text-small);
+      line-height: var(--line-height-medium);
+      white-space: nowrap;
+      color: var(--text-on-image);
+      min-height: 0;
+      overflow: hidden;
+      padding-top: 8px;
+    }
+    .work-card svg {
+      flex-shrink: 0;
+    }
+
+    /* Desktop hover: only the title shows at rest; the subtitle and arrow fade
+     in and rise, the subtitle's expanding row pushing the title up. */
+    @media (hover: hover) and (pointer: fine) {
+      .work-card__reveal {
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+      }
+      /* padding-top collapses with the row — even at 0fr it would keep an 8px
+       floor under the title otherwise. */
+      .work-card__subtitle {
+        opacity: 0;
+        padding-top: 0;
+        transform: translateY(6px);
+        transition:
+          opacity 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+          padding-top 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+          transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+      }
+      .work-card__arrow {
+        opacity: 0;
+        transform: translateY(10px);
+        transition:
+          opacity 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+          transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+      }
+      .work-card:hover .work-card__reveal,
+      .work-card:focus-visible .work-card__reveal {
+        grid-template-rows: 1fr;
+      }
+      .work-card:hover .work-card__subtitle,
+      .work-card:focus-visible .work-card__subtitle,
+      .work-card:hover .work-card__arrow,
+      .work-card:focus-visible .work-card__arrow {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .work-card:hover .work-card__subtitle,
+      .work-card:focus-visible .work-card__subtitle {
+        padding-top: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .work-card__reveal,
+      .work-card__subtitle,
+      .work-card__arrow {
+        transition-duration: 0s;
+      }
+    }
+  }
+</style>

@@ -1,92 +1,130 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import SectionLabel from '../components/SectionLabel.astro';
-import PixelLink from '../components/PixelLink.astro';
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import SectionLabel from "@/components/Site/SectionLabel.astro";
+import PixelLink from "@/components/Site/PixelLink.astro";
 ---
-<Layout title="Electric Sheep — About" description="Meet Toby Balderson, the human behind Electric Sheep.">
-  <div class="section-grid intro">
+
+<Layout
+  title="About"
+  description="Meet Toby Balderson, the human behind Electric Sheep."
+>
+  <Section containerClass="section-split reveal-block" paddingBottom="small">
     <SectionLabel highlight="The human behind the sheep." />
-    <span class="statement">Toby Balderson founded Electric Sheep in 2023 on a simple idea: technology should be built around people, not the other way round. The tools and automations he creates free his clients to do more of what they're best at.</span>
-  </div>
-  <div class="portrait">
-    <div class="portrait__frame">
+    <p class="statement">
+      Toby Balderson founded Electric Sheep in 2023 on a simple idea: technology
+      should be built around people, not the other way round. The tools and
+      automations he creates free his clients to do more of what they're best
+      at.
+    </p>
+  </Section>
+
+  <Section
+    paddingTop="none"
+    paddingBottom="small"
+    containerClass="portrait reveal-block"
+  >
+    <div class="portrait__frame width-full">
       <img src="/assets/images/toby.jpg" alt="Toby Balderson" />
-      <div class="portrait__overlay">
-      </div>
+      <div class="portrait__overlay"></div>
       <span class="portrait__caption">Big nose, bigger ideas.</span>
     </div>
-  </div>
-  <div class="section-grid text-section">
+  </Section>
+
+  {
+    /* Three literal sections rather than a loop over a local array: the visual
+      editor edits copy in place, and an array in the frontmatter would put this
+      text out of its reach. */
+  }
+  <Section
+    containerClass="section-split reveal-block"
+    paddingTop="small"
+    paddingBottom="none"
+  >
     <SectionLabel highlight="What he does" />
-    <span class="text-section__body">Strategy, brand, UX and the plumbing behind them. Most studios do the pretty part or the technical part. Electric Sheep does both, because a brand that doesn't function is just decoration. If a robot can do the boring part, Toby will build the robot. The judgement stays human.</span>
-  </div>
-  <div class="section-grid text-section">
+    <p class="note">
+      Strategy, brand, UX and the plumbing behind them. Most studios do the
+      pretty part or the technical part. Electric Sheep does both, because a
+      brand that doesn't function is just decoration. If a robot can do the
+      boring part, Toby will build the robot. The judgement stays human.
+    </p>
+  </Section>
+
+  <Section
+    containerClass="section-split reveal-block"
+    paddingTop="small"
+    paddingBottom="none"
+  >
     <SectionLabel highlight="Why sheep?" />
-    <span class="text-section__body">Do Androids Dream of Electric Sheep? Nobody knows. But naming a studio after the question felt honest. It's a reminder that the interesting part of technology was never the machines. It's what they free people up to do. Sheep by name. Not by nature.</span>
-  </div>
-  <div class="section-grid text-section">
+    <p class="note">
+      Do Androids Dream of Electric Sheep? Nobody knows. But naming a studio
+      after the question felt honest. It's a reminder that the interesting part
+      of technology was never the machines. It's what they free people up to do.
+      Sheep by name. Not by nature.
+    </p>
+  </Section>
+
+  <Section
+    containerClass="section-split reveal-block"
+    paddingTop="small"
+    paddingBottom="none"
+  >
     <SectionLabel highlight="The studio" />
-    <span class="text-section__body">10 Minden Street, St Helier, Jersey. The coffee is good. Toby accepts visitors by appointment.</span>
-  </div>
-  <div class="px-hover links">
-    <PixelLink href="https://www.linkedin.com/in/toby-balderson-69b752164/" color="var(--text-primary)" fontSize={24}>Find Toby on LinkedIn</PixelLink>
-    <PixelLink href="/contact" color="var(--text-primary)" fontSize={24}>Start a conversation</PixelLink>
-  </div>
+    <p class="note">
+      10 Minden Street, St Helier, Jersey. The coffee is good. Toby accepts
+      visitors by appointment.
+    </p>
+  </Section>
+
+  <Section containerClass="px-hover reveal-block gap-3">
+    <PixelLink
+      href="https://www.linkedin.com/in/toby-balderson-69b752164/"
+      color="var(--text)"
+      fontSize={24}>Find Toby on LinkedIn</PixelLink
+    >
+    <PixelLink href="/contact" color="var(--text)" fontSize={24}
+      >Start a conversation</PixelLink
+    >
+  </Section>
 </Layout>
+
 <style>
-  .intro {
-    padding-bottom: 48px;
-  }
-  .rule-wrap {
-    padding: 0 var(--page-margin);
-  }
-  .portrait {
-    padding: 24px var(--page-margin) 16px var(--page-margin);
-  }
-  .portrait__frame {
-    position: relative;
-    height: 515px;
-    overflow: hidden;
-    background-color: var(--surface-placeholder);
-  }
-  .portrait__frame img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .portrait__overlay {
-    position: absolute;
-    inset: 0;
-    background: var(--overlay-protect);
-  }
-  .portrait__caption {
-    position: absolute;
-    left: var(--card-pad);
-    bottom: 16px;
-    font-family: var(--font-sans);
-    font-size: var(--text-caption);
-    line-height: var(--leading-tight);
-    color: var(--es-cream);
-  }
-  .text-section {
-    padding-top: 48px;
-    padding-bottom: 0;
-  }
-  .text-section__body {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: var(--text-section-label);
-    line-height: var(--leading-body);
-    color: var(--text-primary);
-    max-width: 760px;
-  }
-  .links {
-    padding: var(--section-pad) var(--page-margin);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
+  @layer components {
+    .portrait__frame {
+      position: relative;
+      height: 32rem;
+      overflow: hidden;
+      background-color: var(--surface-placeholder);
+    }
+    .portrait__frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .portrait__overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--overlay-protect);
+    }
+    .portrait__caption {
+      position: absolute;
+      left: var(--card-pad);
+      bottom: var(--space-3);
+      font-family: var(--primary-family);
+      font-size: var(--text-small);
+      line-height: var(--line-height-medium);
+      color: var(--text-on-image);
+    }
+
+    .note {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h4);
+      line-height: var(--line-height-huge);
+      color: var(--text);
+      max-width: 60ch;
+    }
   }
 </style>

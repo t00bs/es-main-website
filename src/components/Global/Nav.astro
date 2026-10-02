@@ -1,0 +1,388 @@
+---
+// Site header: logo lockup left, text links right, theme toggle last.
+// Links sit on the logo's baseline; the toggle is an icon switcher
+// (moon in light mode, sun in dark). On mobile the links live in a
+// full-screen menu behind an animated burger.
+//
+// This is the Lumos Nav slot, rewritten for Electric Sheep — the framework
+// expects this component to be edited rather than configured. Rendered by
+// BaseLayout, so pages never reference it directly.
+import { SITE_NAME } from "@/consts.ts";
+
+interface Props {
+  /** Set to `false` to skip rendering this component and its children. */
+  render?: boolean;
+  /**
+   * Fix the nav over the page rather than letting it sit in flow, so the
+   * first section starts underneath it. Give that section
+   * `paddingTop="navoverlap"` to clear the bar.
+   */
+  overlap?: boolean;
+}
+
+const { render = true, overlap = false } = Astro.props;
+
+// Trailing slashes are equivalent: /about and /about/ are the same route.
+const here = `/${Astro.url.pathname.replace(/^\/+|\/+$/g, "")}`;
+const current = (href: string) => (here === href ? "page" : undefined);
+---
+
+{
+  render && (
+    <header class:list={["nav_wrap", overlap && "overlap"]}>
+      <a href="/" aria-label={`${SITE_NAME} home`} class="nav_logo">
+        <img
+          class="nav_logo_dark"
+          src="/assets/logo/es-logo-dark.svg"
+          alt={SITE_NAME}
+        />
+        <img
+          class="nav_logo_cream"
+          src="/assets/logo/es-logo-cream.svg"
+          alt={SITE_NAME}
+        />
+      </a>
+
+      <nav class="nav_menu" id="nav-menu" aria-label="Main">
+        {/* Written out rather than looped so the visual editor can add, rename
+            and reorder links directly on the canvas. */}
+        <a href="/work" aria-current={current("/work")}>
+          Work
+        </a>
+        <a href="/about" aria-current={current("/about")}>
+          About
+        </a>
+        <a href="/contact" aria-current={current("/contact")}>
+          Contact
+        </a>
+
+        <button
+          type="button"
+          class="nav_theme"
+          data-theme-toggle
+          aria-label="Switch to dark mode"
+        >
+          <svg
+            class="nav_icon_moon"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <svg
+            class="nav_icon_sun"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4.5" />
+            <line x1="12" y1="1.5" x2="12" y2="4" />
+            <line x1="12" y1="20" x2="12" y2="22.5" />
+            <line x1="1.5" y1="12" x2="4" y2="12" />
+            <line x1="20" y1="12" x2="22.5" y2="12" />
+            <line x1="4.9" y1="4.9" x2="6.7" y2="6.7" />
+            <line x1="17.3" y1="17.3" x2="19.1" y2="19.1" />
+            <line x1="4.9" y1="19.1" x2="6.7" y2="17.3" />
+            <line x1="17.3" y1="6.7" x2="19.1" y2="4.9" />
+          </svg>
+        </button>
+      </nav>
+
+      <button
+        type="button"
+        class="nav_burger"
+        data-menu-toggle
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+    </header>
+  )
+}
+
+{/* No-JS fallback: the menu is always open on narrow screens. */}
+<noscript>
+  <style>
+    .nav_burger {
+      display: none !important;
+    }
+    @media (width < 45rem) {
+      .nav_menu {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</noscript>
+
+<style is:global>
+  @layer components {
+    .nav_wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      padding: var(--space-4) var(--site-margin) var(--space-1);
+      background-color: var(--background);
+      color: var(--text);
+
+      &.overlap {
+        position: fixed;
+        inset-inline: 0;
+        top: 0;
+        z-index: 100;
+      }
+    }
+
+    .nav_logo {
+      display: block;
+      width: 16rem;
+      max-width: 45vw;
+
+      & img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+    }
+
+    /* One logotype per theme, swapped by the theme class rather than by
+       filtering a single file — the cream and ink marks are drawn, not tinted. */
+    .nav_logo_cream {
+      display: none;
+    }
+    .theme-dark .nav_logo_dark {
+      display: none;
+    }
+    .theme-dark .nav_logo_cream {
+      display: block;
+    }
+
+    .nav_menu {
+      display: flex;
+      gap: var(--nav-gap);
+      align-items: center;
+
+      & a {
+        font-size: var(--text-main);
+        line-height: var(--line-height-small);
+        color: var(--text);
+        /* Lumos underlines any classless <a>; the nav is a link list, not
+           running copy. */
+        text-decoration: none;
+        white-space: nowrap;
+        transition: opacity var(--hover-duration) var(--hover-ease);
+      }
+      & a:hover {
+        opacity: 0.55;
+      }
+      & a[aria-current="page"] {
+        opacity: 0.55;
+      }
+    }
+
+    .nav_theme {
+      appearance: none;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: var(--text);
+      display: flex;
+      transition: opacity var(--hover-duration) var(--hover-ease);
+
+      &:hover {
+        opacity: 0.55;
+      }
+      & svg {
+        display: block;
+      }
+    }
+
+    /* Matched to `.nav_theme svg` above, which would otherwise win on
+       specificity and show both icons at once. */
+    .nav_theme .nav_icon_sun {
+      display: none;
+    }
+    .theme-dark .nav_theme .nav_icon_moon {
+      display: none;
+    }
+    .theme-dark .nav_theme .nav_icon_sun {
+      display: block;
+    }
+
+    /* Burger: hidden on desktop, three lines folding into an X when open. */
+    .nav_burger {
+      display: none;
+      appearance: none;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      position: relative;
+      z-index: 60;
+      width: 1.75rem;
+      height: 1.5rem;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 5px;
+      color: var(--text);
+
+      & span {
+        display: block;
+        width: 1.5rem;
+        height: 2px;
+        background: currentcolor;
+        transition:
+          transform 0.3s cubic-bezier(0.2, 0.6, 0.2, 1),
+          opacity var(--hover-duration) var(--hover-ease);
+      }
+    }
+
+    .nav_wrap.open .nav_burger span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .nav_wrap.open .nav_burger span:nth-child(2) {
+      opacity: 0;
+    }
+    .nav_wrap.open .nav_burger span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    @media (width < 45rem) {
+      .nav_burger {
+        display: flex;
+      }
+
+      /* The nav becomes a full-screen menu that fades and rises in. */
+      .nav_menu {
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: var(--space-6);
+        padding: 0 var(--site-margin);
+        background: var(--background);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-12px);
+        transition:
+          opacity 0.3s ease,
+          transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
+          visibility 0s linear 0.35s;
+
+        & a {
+          font-size: var(--h3);
+        }
+      }
+
+      .nav_wrap.open .nav_menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition:
+          opacity 0.3s ease,
+          transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nav_burger span,
+      .nav_menu {
+        transition: none;
+      }
+    }
+  }
+</style>
+
+<script>
+  const THEME_KEY = "es-theme";
+
+  function currentTheme(): "light" | "dark" {
+    return document.documentElement.classList.contains("theme-dark")
+      ? "dark"
+      : "light";
+  }
+
+  function applyTheme(next: "light" | "dark") {
+    const root = document.documentElement;
+    root.classList.toggle("theme-dark", next === "dark");
+    root.classList.toggle("theme-light", next === "light");
+  }
+
+  function updateLabel(button: HTMLButtonElement) {
+    button.setAttribute(
+      "aria-label",
+      currentTheme() === "dark"
+        ? "Switch to light mode"
+        : "Switch to dark mode",
+    );
+  }
+
+  document
+    .querySelectorAll<HTMLButtonElement>("[data-theme-toggle]")
+    .forEach((button) => {
+      updateLabel(button);
+      button.addEventListener("click", () => {
+        const next = currentTheme() === "dark" ? "light" : "dark";
+        applyTheme(next);
+        try {
+          localStorage.setItem(THEME_KEY, next);
+        } catch {
+          /* private browsing */
+        }
+        updateLabel(button);
+      });
+    });
+
+  const bar = document.querySelector<HTMLElement>(".nav_wrap");
+  const burger = bar?.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+
+  if (bar && burger) {
+    const setOpen = (open: boolean) => {
+      bar.classList.toggle("open", open);
+      burger.setAttribute("aria-expanded", String(open));
+      burger.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      document.body.style.overflow = open ? "hidden" : "";
+    };
+
+    burger.addEventListener("click", () =>
+      setOpen(!bar.classList.contains("open")),
+    );
+
+    bar.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setOpen(false));
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && bar.classList.contains("open")) {
+        setOpen(false);
+        burger.focus();
+      }
+    });
+
+    window
+      .matchMedia("(width >= 45rem)")
+      .addEventListener("change", (event) => {
+        if (event.matches) setOpen(false);
+      });
+  }
+</script>

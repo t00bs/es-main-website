@@ -1,52 +1,52 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import SectionLabel from '../../components/SectionLabel.astro';
-import WorkCard from '../../components/WorkCard.astro';
-import caseStudies from '../../data/case-studies.json';
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import SectionLabel from "@/components/Site/SectionLabel.astro";
+import WorkCard from "@/components/Site/WorkCard.astro";
+import caseStudies from "../../data/case-studies.json";
 
 const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
 
 // Category tags (capitalised) followed by the service tags shown on the
 // case-study pages.
 const TAG_LABELS: Record<string, string> = {
-  design: 'Design',
-  automation: 'Automation',
-  portals: 'Portals',
+  design: "Design",
+  automation: "Automation",
+  portals: "Portals",
 };
 const cardTags = (item: (typeof caseStudies)[number]) => [
   ...item.tags.map((tag) => TAG_LABELS[tag] ?? tag),
   ...item.services,
 ];
 ---
-<Layout title="Electric Sheep — Work">
-  <div class="section-grid intro">
+
+<Layout
+  title="Work"
+  description="Portals, automations, brands and the occasional machine that learns."
+>
+  <Section containerClass="section-split reveal-block" paddingBottom="small">
     <SectionLabel highlight="Work worth staring at." />
-    <span class="statement">Portals, automations, brands and the occasional machine that learns. Every project below shipped, and every client is still speaking to us.</span>
-  </div>
-  <div class="hover-zoom work-grid">
-    {
-      sorted.map((item) => (
-        <WorkCard src={item.cardImage} title={item.title} subtitle={item.subtitle} showArrow href={`/work/${item.id}`} tags={cardTags(item)} />
-      ))
-    }
-  </div>
+    <p class="statement">
+      Portals, automations, brands and the occasional machine that learns. Every
+      project below shipped, and every client is still speaking to us.
+    </p>
+  </Section>
+
+  <Section paddingTop="none" containerClass="hover-zoom">
+    <Grid xsmall={1} medium={3} class="work-grid width-full reveal-group">
+      {
+        sorted.map((item) => (
+          <WorkCard
+            src={item.cardImage}
+            title={item.title}
+            subtitle={item.subtitle}
+            showArrow
+            href={`/work/${item.id}`}
+            tags={cardTags(item)}
+          />
+        ))
+      }
+    </Grid>
+  </Section>
 </Layout>
-<style>
-  .intro {
-    padding-bottom: 48px;
-  }
-  .rule-wrap {
-    padding: 0 var(--page-margin);
-  }
-  .work-grid {
-    padding: 24px var(--page-margin) var(--section-pad) var(--page-margin);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--grid-gap);
-  }
-  @media (max-width: 960px) {
-    .work-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>
