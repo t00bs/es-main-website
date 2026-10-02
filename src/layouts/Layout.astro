@@ -1,25 +1,16 @@
 ---
 // Every page's shell. Wraps the Lumos BaseLayout (which renders BaseHead, the
-// skip link, Nav, <main> and Footer) with the two things that are ours: the
-// theme bootstrap that restores the reader's light/dark choice before first
-// paint, and the scroll-reveal motion.
+// skip link, Nav, <main> and Footer) with the scroll-reveal motion. The site
+// is dark: `theme-dark` goes on <html> at build time, so there is no toggle
+// and nothing to restore before first paint.
 import BaseLayout from "./BaseLayout.astro";
 import type { SeoProps } from "@/types.ts";
 
 type Props = SeoProps;
 ---
 
-<BaseLayout theme="light" {...Astro.props}>
+<BaseLayout theme="dark" {...Astro.props}>
   <Fragment slot="head">
-    {/* Runs before the body paints, so a dark-mode reader never sees cream. */}
-    <script is:inline>
-      try {
-        if (localStorage.getItem("es-theme") === "dark") {
-          document.documentElement.classList.remove("theme-light");
-          document.documentElement.classList.add("theme-dark");
-        }
-      } catch (e) {}
-    </script>
     <script>
       import "@/scripts/reveal";
     </script>

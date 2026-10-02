@@ -1,0 +1,65 @@
+---
+// Home work section: three Netflix-style rows — Design, Automation, Portals —
+// of 9:16 work cards (see WorkRow for the row itself). A case study appears
+// in every row listed in its `tags` field. The JSON collection is imported
+// directly so visual editors can bind the loops to it.
+import Section from "@/components/Wrapper/Section.astro";
+import WorkRow from "./WorkRow.astro";
+import WorkCard from "./WorkCard.astro";
+import caseStudies from "../../data/case-studies.json";
+
+const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
+const designWork = sorted.filter((item) => item.tags.includes("design"));
+const automationWork = sorted.filter((item) =>
+  item.tags.includes("automation"),
+);
+const portalsWork = sorted.filter((item) => item.tags.includes("portals"));
+---
+
+<Section paddingTop="none" paddingBottom="none" gap="7">
+  <WorkRow label="Design">
+    {
+      designWork.map((item, index) => (
+        <WorkCard
+          src={item.cardImage}
+          title={item.title}
+          subtitle={item.subtitle}
+          showArrow
+          href={`/work/${item.id}`}
+          portrait
+          eager={index < 5}
+        />
+      ))
+    }
+  </WorkRow>
+
+  <WorkRow label="Automation">
+    {
+      automationWork.map((item) => (
+        <WorkCard
+          src={item.cardImage}
+          title={item.title}
+          subtitle={item.subtitle}
+          showArrow
+          href={`/work/${item.id}`}
+          portrait
+        />
+      ))
+    }
+  </WorkRow>
+
+  <WorkRow label="Portals">
+    {
+      portalsWork.map((item) => (
+        <WorkCard
+          src={item.cardImage}
+          title={item.title}
+          subtitle={item.subtitle}
+          showArrow
+          href={`/work/${item.id}`}
+          portrait
+        />
+      ))
+    }
+  </WorkRow>
+</Section>

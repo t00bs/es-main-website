@@ -1,6 +1,11 @@
 ---
 // Square work-grid tile: image, protection gradient, title (+ optional subtitle & arrow).
+// The title is visually hidden — the client's name or logo is in the image —
+// but stays in the markup as the link's text for search engines and screen
+// readers.
 // Optional `tags` render as outline pills top-left, matching the case-study page.
+// `portrait` makes it a 9:16 tile with a smaller title, for the homepage
+// carousels.
 import PillBadge from "./PillBadge.astro";
 
 interface Props {
@@ -12,6 +17,8 @@ interface Props {
   tags?: string[];
   /** Load the image immediately instead of lazily — for cards near the fold. */
   eager?: boolean;
+  /** 9:16 portrait tile instead of a square, with a smaller title. */
+  portrait?: boolean;
 }
 
 const {
@@ -22,13 +29,14 @@ const {
   href = "#",
   tags = [],
   eager = false,
+  portrait = false,
 } = Astro.props;
 
 const ARROW_PATH =
   "M 27 19.286 L 23.143 19.286 L 23.143 3.857 L 7.714 3.857 L 7.714 0 L 27 0 L 27 19.286 Z M 0 27 L 0 23.143 L 3.857 23.143 L 3.857 27 L 0 27 Z M 3.857 23.143 L 3.857 19.286 L 7.714 19.286 L 7.714 23.143 L 3.857 23.143 Z M 7.714 19.286 L 7.714 15.429 L 11.571 15.429 L 11.571 19.286 L 7.714 19.286 Z M 11.571 15.429 L 11.571 11.571 L 15.429 11.571 L 15.429 15.429 L 11.571 15.429 Z M 15.429 11.571 L 15.429 7.714 L 19.286 7.714 L 19.286 11.571 L 15.429 11.571 Z";
 ---
 
-<a href={href} class="work-card">
+<a href={href} class:list={["work-card", portrait && "work-card--portrait"]}>
   {
     src && (
       <img
@@ -52,7 +60,7 @@ const ARROW_PATH =
   }
   <div class="work-card__caption" style={`bottom: ${subtitle ? 16 : 11}px;`}>
     <div class="work-card__text">
-      <span class="work-card__title">{title}</span>
+      <span class="work-card__title sr-only">{title}</span>
       {
         subtitle && (
           <span class="work-card__reveal">
@@ -85,6 +93,7 @@ const ARROW_PATH =
       display: block;
       aspect-ratio: 1;
       overflow: hidden;
+      border-radius: var(--radius-small);
       background-color: var(--surface-placeholder);
       text-decoration: none;
     }
@@ -163,9 +172,36 @@ const ARROW_PATH =
       flex-shrink: 0;
     }
 
+    /* Portrait tiles run five to a row, so the title steps down a size and
+     both lines may wrap rather than run under the arrow. */
+    .work-card--portrait {
+      aspect-ratio: 9 / 16;
+    }
+    .work-card--portrait .work-card__caption {
+      gap: var(--space-3);
+    }
+    .work-card--portrait .work-card__title {
+      font-size: var(--h5);
+      white-space: normal;
+    }
+    .work-card--portrait .work-card__subtitle {
+      white-space: normal;
+    }
+
     /* Desktop hover: only the title shows at rest; the subtitle and arrow fade
      in and rise, the subtitle's expanding row pushing the title up. */
     @media (hover: hover) and (pointer: fine) {
+      /* Nothing sits on the image at rest, so the protection gradient waits
+         for the hover that brings the subtitle and arrow in — it would only
+         darken the client's name in the image. */
+      .work-card__overlay {
+        opacity: 0;
+        transition: opacity 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+      }
+      .work-card:hover .work-card__overlay,
+      .work-card:focus-visible .work-card__overlay {
+        opacity: 1;
+      }
       .work-card__reveal {
         grid-template-rows: 0fr;
         transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
@@ -206,6 +242,7 @@ const ARROW_PATH =
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .work-card__overlay,
       .work-card__reveal,
       .work-card__subtitle,
       .work-card__arrow {

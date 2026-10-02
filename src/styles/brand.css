@@ -106,20 +106,22 @@
   --site-gutter-max: 20;
 
   /* Section rhythm, from the old --section-pad of 64 desktop / 48 mobile. */
-  --section-space-small-min: 32;
-  --section-space-small-max: 48;
+  --section-space-small-min: 24;
+  --section-space-small-max: 40;
   --section-space-medium-min: 48;
   --section-space-medium-max: 64;
   --section-space-large-min: 64;
   --section-space-large-max: 96;
 
-  /* The design is edge-to-edge: sections are held in by the site margin
-     alone, not by a centred measure. */
-  --max-width-main: 100%;
+  /* Section backgrounds run edge to edge, but their content stops widening
+     at 90rem (1440px) — where the fluid type and spacing stop growing — and
+     centres beyond it, so images don't keep scaling on wide screens. The nav
+     and footer pad to the same line. */
+  --max-width-main: 90rem;
   --max-width-small: 70rem;
 
-  /* Radius. Corners are square apart from the redaction mark's 3px and the
-     fully-round tag pills. */
+  /* Radius. The redaction mark, buttons and every image frame share the
+     small 3px corner; tag pills are fully round. */
   --radius-small: 0.1875rem;
   --radius-main: 0.1875rem;
   --radius-round: 100vw;
@@ -154,6 +156,17 @@
 
   /* Empty image wells */
   --surface-placeholder: color-mix(in lab, var(--text) 15%, var(--background));
+
+  /* Primary buttons are the redaction mark again: a solid block of the text
+     colour with the label reversed out, so they hold in every theme. Lumos
+     fills them with --brand-500, which is ink here — invisible on the dark
+     page. Hover drops the fill to an outline. */
+  --button-background: var(--text);
+  --button-border: var(--text);
+  --button-text: var(--background);
+  --button-background-hover: transparent;
+  --button-border-hover: var(--text);
+  --button-text-hover: var(--text);
 }
 
 /* The protection gradient under every image caption is a fixed black scrim —
@@ -196,6 +209,17 @@ a.hover-zoom svg {
 .hover-zoom a:not(.work-card):hover svg,
 a.hover-zoom:hover svg {
   transform: translate(4px, -4px);
+}
+
+/* Button labels trim to Helvetica's cap height and baseline, so the capitals
+   sit dead centre between equal padding. Lumos's default trims (0.4em top,
+   0.38em bottom) are measured for its own face and left the label ~0.13em
+   high. From Helvetica Neue's metrics — ascent 0.715, descent 0.285, cap
+   height 0.714 — top = cap + (descent − ascent) / 2, bottom = (ascent −
+   descent) / 2. */
+.button_wrap {
+  --_trim-top: 0.499em;
+  --_trim-bottom: 0.215em;
 }
 
 /* Pixel links fade rather than underline. */

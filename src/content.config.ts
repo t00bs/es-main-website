@@ -17,6 +17,10 @@ const caseStudies = defineCollection({
     client: z.string(),
     year: z.string().optional(),
     heroImage: z.string(),
+    /* The two square images stacked beside the hero on the case-study page
+       (Stacki image picker); an empty one shows as a blank well. */
+    heroSquareTop: z.string().optional(),
+    heroSquareBottom: z.string().optional(),
     cardImage: z.string(),
     /* Background of the homepage testimonial card; falls back to cardImage
        when empty. */

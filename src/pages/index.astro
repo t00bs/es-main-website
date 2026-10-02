@@ -7,9 +7,8 @@ import ClientLogoBar from "@/components/Site/ClientLogoBar.astro";
 import ServicesBreakdown from "@/components/Site/ServicesBreakdown.astro";
 import ResultsStrip from "@/components/Site/ResultsStrip.astro";
 import ProcessSection from "@/components/Site/ProcessSection.astro";
-import WorkTabs from "@/components/Site/WorkTabs.astro";
+import WorkCarousels from "@/components/Site/WorkCarousels.astro";
 import PixelLink from "@/components/Site/PixelLink.astro";
-import ServicesMarquee from "@/components/Site/ServicesMarquee.astro";
 import TestimonialCard from "@/components/Site/TestimonialCard.astro";
 import SectionLabel from "@/components/Site/SectionLabel.astro";
 import FeatureCard from "@/components/Site/FeatureCard.astro";
@@ -37,7 +36,7 @@ const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
 
   <ClientLogoBar />
 
-  <WorkTabs />
+  <WorkCarousels />
 
   <Section paddingTop="small" align="end" containerClass="reveal-block">
     <div class="px-hover">
@@ -45,13 +44,9 @@ const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
     </div>
   </Section>
 
-  <ServicesMarquee />
-
-  <ServicesBreakdown />
-
   <ResultsStrip />
 
-  <ProcessSection />
+  <ServicesBreakdown />
 
   <Section>
     <Grid
@@ -72,7 +67,14 @@ const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
     </Grid>
   </Section>
 
+  <ProcessSection />
+
   <Section class="theme-invert">
+    <div class="section-split width-full reveal-block">
+      <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel
+      >
+      <p class="statement"> We don’t know. But we’re probably close to finding out. Founded in 2023, Electric Sheep sits at the intersection of technology and humanity. We design &amp; build digital tools that are automated by AI, but driven by people. </p>
+    </div>
     <div class="hover-zoom px-hover width-full reveal-block">
       <FeatureCard
         src="/assets/images/toby.jpg"
@@ -80,11 +82,6 @@ const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
         linkText="Meet Toby"
         href="/about"
       />
-    </div>
-    <div class="section-split width-full reveal-block">
-      <SectionLabel highlight="Electric Sheep?">Do Androids dream of</SectionLabel
-      >
-      <p class="statement"> We don’t know. But we’re probably close to finding out. Founded in 2023, Electric Sheep sits at the intersection of technology and humanity. We design &amp; build digital tools that are automated by AI, but driven by people. </p>
     </div>
   </Section>
 </Layout>

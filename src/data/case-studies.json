@@ -5,6 +5,7 @@
     "subtitle": "Government and rural economy",
     "client": "Farm Jersey",
     "heroImage": "/assets/images/case-studies/fj hero-1.jpg",
+    "heroSquareTop": "/assets/images/case-studies/fj image 4.jpg",
     "cardImage": "/assets/images/case-studies/fj hero-1.jpg",
     "services": [
       "Web design",
@@ -13,7 +14,6 @@
       "CMS build"
     ],
     "tags": [
-      "design",
       "portals"
     ],
     "order": 1,
@@ -25,11 +25,6 @@
         "type": "text",
         "label": "The brief",
         "body": "Farm Jersey supports the island's farmers and fishers, so the site had to do far more than tell a story. Islanders needed one place to find business support, funding routes, events and resources, and the annual Rural Support Scheme needed to move from paperwork to a modern online application process."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/case-studies/farm-jersey-rss-desktop.jpg",
-        "caption": "Farm Jersey — Webflow site + custom grant portal."
       },
       {
         "type": "text",
@@ -46,7 +41,8 @@
     "testimonialImage": "",
     "featured": false,
     "clientLogoNew": "/assets/client logos/6847fde41996349f7ff8a19c_BCR.svg",
-    "clientLogoWidth": 0
+    "clientLogoWidth": 0,
+    "heroSquareBottom": "/assets/images/case-studies/695d65b285a4d49e82244e6a_Phil Le Mastre. - Master Farms.00_00_08_01.Still088 (1).avif"
   },
   {
     "id": "mortgage-shop",
@@ -54,6 +50,8 @@
     "subtitle": "Financial services",
     "client": "The Mortgage Shop (Henley Offshore Financial Services)",
     "heroImage": "/assets/images/case-studies/tms hero.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/tms hero.jpg",
     "services": [
       "Web design",
@@ -62,8 +60,7 @@
       "Copy structure"
     ],
     "tags": [
-      "design",
-      "portals"
+      "design"
     ],
     "order": 2,
     "liveUrl": "https://www.mortgageshop.je/",
@@ -76,11 +73,6 @@
         "body": "The Mortgage Shop has matched Jersey home hunters with lenders since 1990, but needed a site that felt as approachable as its advisers, guided each type of buyer to the right service, and let people act there and then."
       },
       {
-        "type": "image",
-        "src": "/assets/images/case-studies/mortgage-shop-desktop-2.jpg",
-        "caption": "The Mortgage Shop — Webflow."
-      },
-      {
         "type": "text",
         "label": "What we built",
         "body": "A bold, characterful design built around clear buyer journeys for first-time buyers, remortgaging, buy to let and moving house. An interactive mortgage calculator estimates monthly repayments, legal fees and stamp duty with first-time buyer logic built in, and appointment booking sits one click away throughout."
@@ -88,7 +80,7 @@
       {
         "type": "text",
         "label": "Highlights",
-        "body": "Custom mortgage calculator covering repayments, legal fees and stamp duty • Distinctive 3D character illustrations and a strong green identity • Client testimonials, rate newsletter sign-up and appointment booking throughout"
+        "body": "Custom mortgage calculator covering repayments, legal fees and stamp duty • Client testimonials, rate newsletter sign-up and appointment booking throughout"
       }
     ],
     "quote": {
@@ -106,6 +98,8 @@
     "subtitle": "Private wealth and family office",
     "client": "Virdaris Limited",
     "heroImage": "/assets/images/case-studies/virdaris hero.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/virdaris hero.jpg",
     "services": [
       "Brand-led web design",
@@ -124,12 +118,7 @@
       {
         "type": "text",
         "label": "The brief",
-        "body": "Virdaris offers discreet, best in class family office and fiduciary services to a small number of significant wealth holders. The site had to feel as considered and exclusive as the service itself, building trust without ever shouting."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/case-studies/virdaris-desktop-2.jpg",
-        "caption": "Virdaris — Webflow."
+        "body": "Virdaris offers a best in class multi-family office and fiduciary services to a small number of significant wealth holders. Trust is at the heart of what they do, and that's what we set out to achieve with the launch of their new site."
       },
       {
         "type": "text",
@@ -156,8 +145,10 @@
     "title": "Chapter 2",
     "subtitle": "Talent and recruitment (RPO)",
     "client": "Chapter 2 Group",
-    "heroImage": "/assets/images/case-studies/chapter2-desktop.jpg",
-    "cardImage": "/assets/images/case-studies/chapter2-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/c2 hero case study.jpg",
+    "heroSquareTop": "/assets/images/case-studies/c2 hero case study 3.jpg",
+    "heroSquareBottom": "/assets/images/case-studies/c2 geri case study 4.jpg",
+    "cardImage": "/assets/images/case-studies/c2 hero case study.jpg",
     "services": [
       "Web design",
       "Webflow development",
@@ -178,11 +169,6 @@
         "body": "Chapter 2 blends embedded talent teams with its own AI technology and needed a site that could carry that story to global enterprise clients, showcase measurable results and keep pace with a fast-growing team, event calendar and case study library."
       },
       {
-        "type": "image",
-        "src": "/assets/images/case-studies/chapter2-desktop-2.jpg",
-        "caption": "Chapter 2 — Webflow."
-      },
-      {
         "type": "text",
         "label": "What we built",
         "body": "A crisp, editorial design fronted by an animated 3D globe and bold typography. Four service pillars are laid out in an interactive carousel, client outcomes are given headline treatment, and CMS collections power case studies, events, and a large leadership and advisory team that the Chapter 2 team can update themselves."
@@ -190,7 +176,7 @@
       {
         "type": "text",
         "label": "Highlights",
-        "body": "Headline client results: offers accepted up 22 percent, cost per hire down 72 percent, 2m dollars of agency spend removed • Animated globe hero and staggered text reveals that bring the brand to life • CMS-driven case studies, events and team profiles built for a growing business"
+        "body": "Animated globe hero and staggered text reveals that bring the brand to life • CMS-driven case studies, events and team profiles built for a growing business"
       }
     ],
     "quote": null,
@@ -201,11 +187,13 @@
   },
   {
     "id": "policy-futures",
-    "title": "Policy Futures",
+    "title": "Policy Futures Programme",
     "subtitle": "Public policy and education",
     "client": "Policy Futures Programme",
-    "heroImage": "/assets/images/case-studies/policy-futures-desktop.jpg",
-    "cardImage": "/assets/images/case-studies/policy-futures-desktop.jpg",
+    "heroImage": "/assets/images/case-studies/pfp hero v1.jpg",
+    "heroSquareTop": "/assets/images/case-studies/pfp hero v2.jpg",
+    "heroSquareBottom": "/assets/images/case-studies/pfp hero v3.jpg",
+    "cardImage": "/assets/images/case-studies/pfp hero v1.jpg",
     "services": [
       "Web design",
       "Webflow development",
@@ -224,11 +212,6 @@
         "type": "text",
         "label": "The brief",
         "body": "The Policy Futures Programme exists to make policy research careers accessible to people from all backgrounds, so the site had to feel welcoming rather than institutional, answer applicants' questions quickly and drive applications for each annual cohort."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/case-studies/policy-futures-desktop-2.jpg",
-        "caption": "Policy Futures — Webflow."
       },
       {
         "type": "text",
@@ -253,6 +236,8 @@
     "subtitle": "SaaS and compliance technology",
     "client": "Foxdocs Limited",
     "heroImage": "/assets/images/case-studies/foxdocs-desktop.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/foxdocs-desktop.jpg",
     "services": [
       "Product marketing site",
@@ -301,6 +286,8 @@
     "subtitle": "Planning and design consultancy",
     "client": "Steedman Planning Limited",
     "heroImage": "/assets/images/case-studies/steedman-desktop.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/steedman-desktop.jpg",
     "services": [
       "Web design",
@@ -348,6 +335,8 @@
     "subtitle": "Legal services",
     "client": "BCR Law LLP",
     "heroImage": "/assets/images/case-studies/bcr-law-desktop.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/bcr-law-desktop.jpg",
     "services": [
       "Multi-brand site architecture",
@@ -396,6 +385,8 @@
     "subtitle": "Holiday and residential parks",
     "client": "Allens Caravans Estates Limited",
     "heroImage": "/assets/images/case-studies/allens-desktop.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/allens-desktop.jpg",
     "services": [
       "Web design",
@@ -445,6 +436,8 @@
     "subtitle": "Builders' merchant and trade retail",
     "client": "Normans Limited",
     "heroImage": "/assets/images/case-studies/normans-desktop.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/normans-desktop.jpg",
     "services": [
       "Web design",
@@ -492,6 +485,8 @@
     "subtitle": "Ecommerce and environmental products",
     "client": "Great Green Systems Ltd",
     "heroImage": "/assets/images/case-studies/great-green-desktop.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/great-green-desktop.jpg",
     "services": [
       "Shopify design and build",
@@ -539,6 +534,8 @@
     "subtitle": "Sport and sustainability",
     "client": "Team Monaco (UIM E1 World Championship)",
     "heroImage": "/assets/images/case-studies/team-monaco-desktop.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/team-monaco-desktop.jpg",
     "services": [
       "Web design",
@@ -586,6 +583,8 @@
     "subtitle": "Professional community and membership",
     "client": "ExecTA Social",
     "heroImage": "/assets/images/case-studies/execta-desktop.jpg",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "/assets/images/case-studies/execta-desktop.jpg",
     "services": [
       "Brand-led web design",
@@ -640,6 +639,8 @@
     "subtitle": "A powerful engine to power the Champions community",
     "client": "House of Champions",
     "heroImage": "",
+    "heroSquareTop": "",
+    "heroSquareBottom": "",
     "cardImage": "",
     "services": [
       "Marketing Site",

@@ -56,6 +56,7 @@ type or spacing breakpoints. To resize something, change the pair in
 | Redaction mark            | `--highlight-block` / `--highlight-text`                          |
 | Rules                     | `--rule-strong`, `--rule-hairline`, `--rule-thick`, `--rule-thin` |
 | Page margin / grid gutter | `--site-margin` / `--site-gutter`                                 |
+| Content max width         | `--max-width-main` (90rem)                                        |
 | Type                      | `--display`, `--h1`…`--h6`, `--text-large/main/small`             |
 | Brand faces               | `--primary-family`, `--font-pixel`, `--font-serif-quote`          |
 
@@ -67,9 +68,9 @@ whatever surrounds it** — that is the old `.inverse-section` band, and it is
 how the "Numbers, not vibes" strip and the case-study quote work in both
 light and dark mode.
 
-The light/dark toggle puts `theme-light` / `theme-dark` on `<html>`; the
-choice is restored from `localStorage` by an inline script in
-`src/layouts/Layout.astro` before first paint.
+The site is dark, with no light/dark toggle: `src/layouts/Layout.astro`
+renders `theme-dark` on `<html>` at build time. Switching the whole site
+back to light is that one `theme` prop.
 
 Per-theme values must be declared on `:root, [class*="theme-"]` (see the
 bottom of `brand.css`), not on `:root` alone — a custom property holding
@@ -85,12 +86,19 @@ freeze the light values and never invert.
 - `src/components/Site/` — **Electric Sheep components.** The bespoke pieces
   Lumos has no equivalent for: the hero slideshow, the redaction-mark section
   label, pixel links and pill badges, the work card's hover reveal, the
-  services marquee.
+  services marquee, and `WorkRow` — the Netflix-style carousel row used on
+  the homepage and under each case study. Pass it the cards as children so
+  the loop stays in the file that imports the JSON.
 
 Build pages from `Section` → `ContentWrapper` / `Grid`. `Section` owns the
 band: background, vertical rhythm, and the container that holds content in to
 the site margin. Never re-add `padding: X var(--site-margin)` to a component
 that sits inside a Section.
+
+Backgrounds run edge to edge, but content stops at `--max-width-main` (90rem)
+and centres on wider screens. The nav and footer aren't Sections, so they pad
+to the same line with `max(var(--site-margin), (100% - var(--max-width-main)) / 2)`;
+anything else full-width outside a Section needs the same.
 
 ### Two traps
 
@@ -99,7 +107,7 @@ that sits inside a Section.
    component, which does not carry this file's scope hash, so the rule silently
    never matches. Either style a real child element in your own template, or
    use `<style is:global>` with a specific enough selector (this is what
-   `WorkTabs.astro` does).
+   `WorkRow.astro` does).
 2. **Wrap every component `<style>` block in `@layer components`.** An
    unlayered style beats every layered one, so an unwrapped block would
    override Lumos utilities.
@@ -131,8 +139,14 @@ collection MUST follow this shape:
 Current collections:
 
 - `src/data/case-studies.json` — work/case studies. `tags` (design |
-  automation | portals) controls homepage tab placement; `order` controls
-  sorting everywhere; `id` doubles as the `/work/<id>` slug.
+  automation | portals) controls which homepage carousel rows it appears
+  in; `order` controls sorting everywhere; `id` doubles as the
+  `/work/<id>` slug. `heroSquareTop` / `heroSquareBottom` are the two
+  squares beside the 9:16 hero on the case-study page.
+
+An image field that starts out empty gives Stacki nothing to infer its type
+from, so declare it as `"image"` in `.stacki/cms.json` to get the picker.
+
 - `src/data/services.json` — statements in the homepage services marquee.
 - `src/data/service-pillars.json` — the three homepage service pillars.
 - `src/data/results.json` — figures in the homepage stats strip.

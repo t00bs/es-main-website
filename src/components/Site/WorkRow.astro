@@ -1,0 +1,189 @@
+---
+// One Netflix-style carousel row: a pixel label over a carousel of work cards
+// that bleeds off both edges of the screen. The cards peeking into the site
+// margin fade out, and the arrows sit over those faded edges. Used for the
+// homepage rows and the case-study page's "More …" row.
+//
+// The cards come in as children, so the loop that makes them stays in the
+// file that imports the case-studies JSON — visual editors bind loops to that
+// import. Drop a row straight into a Section.
+//
+// Built on the Lumos Slider, which supplies the scroll-snap track, drag, the
+// step buttons and the page markers. The fade, and moving the controls onto
+// the row (arrows on the edges, markers beside the label), are ours.
+import Slider from "@/components/Interactive/Slider.astro";
+
+interface Props {
+  /** The row's heading, e.g. `Design`. */
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="work-row reveal-block">
+  <h2 class="work-row__label">{label}</h2>
+  <Slider
+    label={`${label} case studies`}
+    xsmall={1.5}
+    small={2}
+    medium={4}
+    large={5}
+    class="hover-zoom"
+  >
+    <slot />
+  </Slider>
+</div>
+
+<style is:global>
+  @layer components {
+    .work-row {
+      --_label-gap: var(--space-3);
+      display: grid;
+      gap: var(--_label-gap);
+      width: 100%;
+    }
+
+    .work-row__label {
+      margin: 0;
+      font-family: var(--font-pixel);
+      font-weight: var(--primary-regular);
+      font-size: var(--h5);
+      line-height: var(--line-height-small);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+    }
+
+    /* The controls leave the flow: the arrows hang over the edges of the
+       track and the markers sit on the label's line, so the slider is just
+       its track.
+
+       Lumos measures the edge from 100vw, which counts a classic scrollbar
+       the page never gets, so on those systems the track would start a few
+       pixels in from the content above it. Measuring from the section
+       instead — any section holding a row is a query container, so 100cqw
+       is the page's real width — puts the edge exactly where the centred
+       content starts. */
+    .section:has(.work-row) {
+      container-type: inline-size;
+    }
+    .work-row .slider_wrap {
+      --_edge: max(var(--site-margin), (100cqw - var(--max-width-main)) / 2);
+      position: relative;
+      gap: 0;
+    }
+
+    /* The fade. The track runs out through the site margin on both sides;
+       masking that margin away dissolves the cards peeking into it. A mask
+       rather than a colour gradient, so it works on any theme. */
+    .work-row .slider_list {
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 var(--_edge),
+        #000 calc(100% - var(--_edge)),
+        transparent
+      );
+    }
+
+    /* Arrows: a full-height strip over each faded edge, like Netflix's
+       handles, held against the cards — on a wide screen the margin is far
+       wider than the strip. Hidden at either end, and only drawn for a
+       mouse — touch swipes. */
+    .work-row .slider_steps {
+      display: none;
+    }
+
+    .work-row .slider_steps .button_wrap {
+      --button-background: transparent;
+      --button-background-hover: transparent;
+      --button-border: transparent;
+      --button-border-hover: transparent;
+      --button-text: var(--text);
+      --button-text-hover: var(--text);
+      --_handle: min(var(--_edge), 4rem);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: var(--_handle);
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      font-size: var(--h4);
+      opacity: 0;
+      transition: opacity var(--hover-duration) var(--hover-ease);
+
+      &[data-step="-1"] {
+        left: calc(-1 * var(--_handle));
+      }
+      &[data-step="1"] {
+        right: calc(-1 * var(--_handle));
+      }
+      &:disabled {
+        pointer-events: none;
+      }
+
+      .button_mark {
+        transition: scale var(--hover-duration) var(--hover-ease);
+      }
+      &:hover .button_mark {
+        scale: 1.25;
+      }
+    }
+
+    /* Markers: short bars on the label's line, flush right. Lumos trims
+       headings to their cap height, so the line they centre on is 1cap of
+       the label's face. */
+    .work-row .slider_markers {
+      position: absolute;
+      right: 0;
+      bottom: 100%;
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      height: 1cap;
+      margin-bottom: var(--_label-gap);
+      gap: calc(var(--space-1) / 2);
+    }
+
+    .work-row .slider_marker {
+      box-sizing: content-box;
+      width: var(--space-3);
+      height: calc(var(--rule-thin) * 2);
+      padding-block: var(--space-1);
+      border: 0;
+      border-radius: 0;
+      background-color: var(--rule-hairline);
+      background-clip: content-box;
+
+      &.is-active {
+        background-color: var(--rule-strong);
+      }
+    }
+
+    /* With a mouse, the arrows and markers wait for the row to be hovered or
+       focused, as Netflix's do. */
+    @media (hover: hover) and (pointer: fine) {
+      .work-row .slider_steps {
+        display: flex;
+      }
+
+      .work-row .slider_markers {
+        opacity: 0;
+        transition: opacity var(--hover-duration) var(--hover-ease);
+      }
+
+      .work-row:is(:hover, :focus-within) .slider_markers,
+      .work-row:is(:hover, :focus-within)
+        .slider_steps
+        .button_wrap:not(:disabled) {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .work-row .slider_steps .button_mark {
+        transition: none;
+      }
+    }
+  }
+</style>

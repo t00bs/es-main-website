@@ -4,12 +4,11 @@
 // open. Edit the template here — never rename or edit the [id] route file.
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/Wrapper/Section.astro";
-import HeroBanner from "./HeroBanner.astro";
-import SectionLabel from "./SectionLabel.astro";
+import Button from "@/components/Button.astro";
 import PillBadge from "./PillBadge.astro";
-import PixelLink from "./PixelLink.astro";
-import FeatureCard from "./FeatureCard.astro";
-import type caseStudies from "../../data/case-studies.json";
+import WorkRow from "./WorkRow.astro";
+import WorkCard from "./WorkCard.astro";
+import caseStudies from "../../data/case-studies.json";
 
 // The JSON import types each entry by the keys it actually has, so an optional
 // field that some entries omit is absent from the union. `year` is optional in
@@ -18,44 +17,94 @@ type CaseStudy = (typeof caseStudies)[number] & { year?: string };
 
 interface Props {
   cs: CaseStudy;
+  /** Still passed by the routes; the "More …" row below picks its own. */
   next: CaseStudy;
 }
 
-const { cs, next } = Astro.props;
+const { cs } = Astro.props;
 
 // Skip half-filled section rows from the visual editor: an image row needs a
 // src, a text row needs some copy.
 const sections = cs.sections.filter((s) =>
   s.type === "image" ? s.src : s.type === "text" && (s.label || s.body),
 );
+
+// The "More …" row: the rest of this case study's category — its first tag —
+// starting from the one after it and wrapping round, so the first card is
+// the next piece of work in that category.
+const category = cs.tags[0] ?? "";
+const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
+const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
+const inCategory = sorted.filter((item) =>
+  item.tags.some((tag) => tag === category),
+);
+const here = inCategory.findIndex((item) => item.id === cs.id);
+const relatedWork = [
+  ...inCategory.slice(here + 1),
+  ...inCategory.slice(0, Math.max(here, 0)),
+];
 ---
 
 <Layout title={cs.title} description={cs.summary}>
+  {/* Hero: name, service tags and client stacked on the left; on the right
+      a grid of the 9:16 hero image — the same crop as the work card that led
+      here — beside two squares. */}
   <Section paddingTop="even" paddingBottom="none">
-    <HeroBanner src={cs.heroImage} headline={`${cs.title}. ${cs.subtitle}.`} />
-  </Section>
-
-  <Section paddingTop="small" paddingBottom="none">
-    <div class="meta width-full">
-      <div class="meta__services">
-        {cs.services.map((s) => <PillBadge color="var(--text)">{s}</PillBadge>)}
+    <div class="cs-hero width-full">
+      <div class="cs-hero__text">
+        <div class="cs-hero__name">
+          <h1 class="cs-hero__title">
+            {cs.title}
+          </h1>
+          <p class="cs-hero__subtitle">{cs.subtitle}</p>
+        </div>
+        <div class="cs-hero__meta">
+          <div class="cs-hero__services">
+            {
+              cs.services.map((s) => (
+                <PillBadge color="var(--text)">{s}</PillBadge>
+              ))
+            }
+          </div>
+          <div class="cs-hero__cta">
+            <Button element="link" href={cs.liveUrl} class="radius-small">
+              {cs.liveLabel}
+            </Button>
+          </div>
+        </div>
       </div>
-      <div class="px-hover meta__client">
-        <span>{cs.client}{cs.year ? ` · ${cs.year}` : ""}</span>
-        <PixelLink href={cs.liveUrl} color="var(--text)"
-          >{cs.liveLabel}</PixelLink
-        >
+      <div class="cs-hero__images">
+        <div class="cs-hero__image cs-hero__image--main">
+          {
+            cs.heroImage && (
+              <img src={cs.heroImage} alt="" fetchpriority="high" />
+            )
+          }
+        </div>
+        <div class="cs-hero__image">
+          {
+            cs.heroSquareTop && (
+              <img src={cs.heroSquareTop} alt="" />
+            )
+          }
+        </div>
+        <div class="cs-hero__image">
+          {
+            cs.heroSquareBottom && (
+              <img src={cs.heroSquareBottom} alt="" />
+            )
+          }
+        </div>
       </div>
     </div>
   </Section>
 
-  <Section paddingTop="small" paddingBottom="none">
+  <Section paddingTop="small" paddingBottom="small">
     <div class="summary width-full reveal-block">
       <hr />
       <p>{cs.summary}</p>
     </div>
   </Section>
-
   {
     sections.map((section) =>
       section.type === "image" ? (
@@ -67,13 +116,13 @@ const sections = cs.sections.filter((s) =>
           </div>
         </Section>
       ) : (
-        <Section
-          paddingTop="small"
-          paddingBottom="none"
-          containerClass="section-split reveal-block"
-        >
-          <SectionLabel highlight={section.label} />
-          <p class="text-section__body">{section.body}</p>
+        <Section paddingTop="small" paddingBottom="none">
+          <div class="text-section reveal-block">
+            {section.label && (
+              <h2 class="text-section__heading">{section.label}</h2>
+            )}
+            <p class="text-section__body">{section.body}</p>
+          </div>
         </Section>
       ),
     )
@@ -89,41 +138,131 @@ const sections = cs.sections.filter((s) =>
     <span class="quote__author">{cs.quote ? cs.quote.author : ""}</span>
   </Section>
 
-  <Section containerClass="hover-zoom px-hover reveal-block">
-    <FeatureCard
-      src={next.cardImage}
-      headline={`Next: ${next.title}.`}
-      linkText="View case study"
-      href={`/work/${next.id}`}
-    />
+  <Section render={relatedWork.length > 0}>
+    <WorkRow label={`Continue reading more  ${categoryLabel} Case Studies.`}>
+      {
+        relatedWork.map((item) => (
+          <WorkCard
+            src={item.cardImage}
+            title={item.title}
+            subtitle={item.subtitle}
+            showArrow
+            href={`/work/${item.id}`}
+            portrait
+          />
+        ))
+      }
+    </WorkRow>
   </Section>
 </Layout>
 
 <style>
   @layer components {
-    .meta {
+    /* The image grid is sized from one height, --_h: the 9:16 hero spans
+       both rows and the squares fill the second column, so the grid is
+       h × 17/16 + half a gap wide. --_h is the tallest grid that fits both
+       the first screen under the nav and the width it is given (cqw is the
+       hero's own width). */
+    .cs-hero {
+      --_gap: var(--site-gutter);
+      --_avail: calc(100svh - var(--nav-height) - var(--site-margin) * 2);
+      --_h: min(var(--_avail), (100cqw - var(--_gap) / 2) * 16 / 17);
+      container-type: inline-size;
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: var(--site-gutter);
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: var(--space-6);
     }
-    .meta__services {
+    .cs-hero__text {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+    }
+    .cs-hero__name {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .cs-hero__title {
+      margin: 0;
+      font-family: var(--font-hero);
+      font-weight: 700;
+      font-size: var(--h1);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .cs-hero__subtitle {
+      margin: 0;
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      line-height: var(--line-height-medium);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+      text-transform: uppercase;
+      margin-top: var(--space-2);
+    }
+    .cs-hero__meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+    .cs-hero__services {
       display: flex;
       gap: var(--space-1);
       flex-wrap: wrap;
     }
-    .meta__client {
-      display: flex;
-      align-items: baseline;
-      gap: var(--space-4);
-    }
-    .meta__client span {
+    .cs-hero__client {
       font-family: var(--primary-family);
       font-size: var(--text-main);
       line-height: var(--line-height-small);
       color: var(--text);
+    }
+    /* The button sizes in em, so setting the size here scales the whole
+       thing. */
+    .cs-hero__cta {
+      margin-top: var(--space-2);
+      font-size: var(--text-large);
+    }
+
+    .cs-hero__images {
+      display: grid;
+      grid-template-columns:
+        calc(var(--_h) * 9 / 16)
+        calc((var(--_h) - var(--_gap)) / 2);
+      grid-template-rows: repeat(2, calc((var(--_h) - var(--_gap)) / 2));
+      gap: var(--_gap);
+    }
+    .cs-hero__image {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-small);
+      background-color: var(--surface-placeholder);
+    }
+    .cs-hero__image--main {
+      grid-row: span 2;
+    }
+    .cs-hero__image img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Side by side, the images take up to 60% of the row and the text the
+       rest, centred against the grid. Below this the text sits above the
+       images, which then fill the width. */
+    @media (width >= 64rem) {
+      .cs-hero {
+        --_h: max(
+          20rem,
+          min(var(--_avail), (60cqw - var(--_gap) / 2) * 16 / 17)
+        );
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        column-gap: var(--space-7);
+      }
     }
 
     .summary {
@@ -148,19 +287,40 @@ const sections = cs.sections.filter((s) =>
       max-width: 60ch;
     }
 
+    /* Body copy runs in one centred reading column, each heading set above
+       its text on a hairline rule. Images stay full width. */
+    .text-section {
+      width: 100%;
+      max-width: 45rem;
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+    .text-section__heading {
+      margin: 0;
+      padding-bottom: var(--space-4);
+      border-bottom: var(--rule-thin) solid var(--rule-hairline);
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h3);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
     .text-section__body {
+      margin: 0;
       font-family: var(--primary-family);
       font-weight: var(--primary-regular);
       font-size: var(--h4);
       line-height: var(--line-height-huge);
       color: var(--text);
-      max-width: 60ch;
     }
 
     .image-section__frame {
       position: relative;
       height: 32rem;
       overflow: hidden;
+      border-radius: var(--radius-small);
       background-color: var(--surface-placeholder);
     }
     .image-section__frame img {

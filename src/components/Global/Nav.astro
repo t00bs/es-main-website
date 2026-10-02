@@ -1,8 +1,7 @@
 ---
-// Site header: logo lockup left, text links right, theme toggle last.
-// Links sit on the logo's baseline; the toggle is an icon switcher
-// (moon in light mode, sun in dark). On mobile the links live in a
-// full-screen menu behind an animated burger.
+// Site header: logo lockup left, text links right. The logo's bottom edge sits
+// on the links' baseline. On mobile the links live in a full-screen menu
+// behind an animated burger.
 //
 // This is the Lumos Nav slot, rewritten for Electric Sheep — the framework
 // expects this component to be edited rather than configured. Rendered by
@@ -55,45 +54,6 @@ const current = (href: string) => (here === href ? "page" : undefined);
         <a href="/contact" aria-current={current("/contact")}>
           Contact
         </a>
-
-        <button
-          type="button"
-          class="nav_theme"
-          data-theme-toggle
-          aria-label="Switch to dark mode"
-        >
-          <svg
-            class="nav_icon_moon"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-          </svg>
-          <svg
-            class="nav_icon_sun"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="4.5" />
-            <line x1="12" y1="1.5" x2="12" y2="4" />
-            <line x1="12" y1="20" x2="12" y2="22.5" />
-            <line x1="1.5" y1="12" x2="4" y2="12" />
-            <line x1="20" y1="12" x2="22.5" y2="12" />
-            <line x1="4.9" y1="4.9" x2="6.7" y2="6.7" />
-            <line x1="17.3" y1="17.3" x2="19.1" y2="19.1" />
-            <line x1="4.9" y1="19.1" x2="6.7" y2="17.3" />
-            <line x1="17.3" y1="6.7" x2="19.1" y2="4.9" />
-          </svg>
-        </button>
       </nav>
 
       <button
@@ -131,13 +91,19 @@ const current = (href: string) => (here === href ? "page" : undefined);
 
 <style is:global>
   @layer components {
+    /* The logo's bottom edge — the sheep's feet and the p's descender — sits
+       on the links' baseline. An image's baseline is its bottom edge, so
+       baseline alignment holds at any logo size. */
     .nav_wrap {
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: baseline;
       gap: var(--space-4);
       flex-wrap: wrap;
-      padding: var(--space-4) var(--site-margin) var(--space-1);
+      /* Held to the same 90rem measure as the page content below it. */
+      padding: var(--space-4)
+        max(var(--site-margin), (100% - var(--max-width-main)) / 2)
+        var(--space-1);
       background-color: var(--background);
       color: var(--text);
 
@@ -186,6 +152,9 @@ const current = (href: string) => (here === href ? "page" : undefined);
            running copy. */
         text-decoration: none;
         white-space: nowrap;
+        /* Ends the link's box at its baseline, so the space kept for
+           descenders doesn't hang below the logo and deepen the bar. */
+        text-box: trim-end text alphabetic;
         transition: opacity var(--hover-duration) var(--hover-ease);
       }
       & a:hover {
@@ -194,36 +163,6 @@ const current = (href: string) => (here === href ? "page" : undefined);
       & a[aria-current="page"] {
         opacity: 0.55;
       }
-    }
-
-    .nav_theme {
-      appearance: none;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      color: var(--text);
-      display: flex;
-      transition: opacity var(--hover-duration) var(--hover-ease);
-
-      &:hover {
-        opacity: 0.55;
-      }
-      & svg {
-        display: block;
-      }
-    }
-
-    /* Matched to `.nav_theme svg` above, which would otherwise win on
-       specificity and show both icons at once. */
-    .nav_theme .nav_icon_sun {
-      display: none;
-    }
-    .theme-dark .nav_theme .nav_icon_moon {
-      display: none;
-    }
-    .theme-dark .nav_theme .nav_icon_sun {
-      display: block;
     }
 
     /* Burger: hidden on desktop, three lines folding into an X when open. */
@@ -266,6 +205,12 @@ const current = (href: string) => (here === href ? "page" : undefined);
     }
 
     @media (width < 45rem) {
+      /* The links leave the bar, so the burger lines up with the logo's
+         bottom edge instead — it has no text baseline to share. */
+      .nav_wrap {
+        align-items: flex-end;
+      }
+
       .nav_burger {
         display: flex;
       }
@@ -314,45 +259,6 @@ const current = (href: string) => (here === href ? "page" : undefined);
 </style>
 
 <script>
-  const THEME_KEY = "es-theme";
-
-  function currentTheme(): "light" | "dark" {
-    return document.documentElement.classList.contains("theme-dark")
-      ? "dark"
-      : "light";
-  }
-
-  function applyTheme(next: "light" | "dark") {
-    const root = document.documentElement;
-    root.classList.toggle("theme-dark", next === "dark");
-    root.classList.toggle("theme-light", next === "light");
-  }
-
-  function updateLabel(button: HTMLButtonElement) {
-    button.setAttribute(
-      "aria-label",
-      currentTheme() === "dark"
-        ? "Switch to light mode"
-        : "Switch to dark mode",
-    );
-  }
-
-  document
-    .querySelectorAll<HTMLButtonElement>("[data-theme-toggle]")
-    .forEach((button) => {
-      updateLabel(button);
-      button.addEventListener("click", () => {
-        const next = currentTheme() === "dark" ? "light" : "dark";
-        applyTheme(next);
-        try {
-          localStorage.setItem(THEME_KEY, next);
-        } catch {
-          /* private browsing */
-        }
-        updateLabel(button);
-      });
-    });
-
   const bar = document.querySelector<HTMLElement>(".nav_wrap");
   const burger = bar?.querySelector<HTMLButtonElement>("[data-menu-toggle]");
 
