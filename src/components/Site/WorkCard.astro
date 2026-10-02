@@ -2,10 +2,10 @@
 // Square work-grid tile: image, protection gradient, title (+ optional subtitle & arrow).
 // The title is visually hidden — the client's name or logo is in the image —
 // but stays in the markup as the link's text for search engines and screen
-// readers.
+// readers. The subtitle and arrow always show; on hover only the image moves,
+// zoomed by `.hover-zoom` on an ancestor.
 // Optional `tags` render as outline pills top-left, matching the case-study page.
-// `portrait` makes it a 9:16 tile with a smaller title, for the homepage
-// carousels.
+// `portrait` makes it a 9:16 tile, for the carousels and the work grid.
 import PillBadge from "./PillBadge.astro";
 
 interface Props {
@@ -61,13 +61,7 @@ const ARROW_PATH =
   <div class="work-card__caption" style={`bottom: ${subtitle ? 16 : 11}px;`}>
     <div class="work-card__text">
       <span class="work-card__title sr-only">{title}</span>
-      {
-        subtitle && (
-          <span class="work-card__reveal">
-            <span class="work-card__subtitle">{subtitle}</span>
-          </span>
-        )
-      }
+      {subtitle && <span class="work-card__subtitle">{subtitle}</span>}
     </div>
     {
       showArrow && (
@@ -148,19 +142,11 @@ const ARROW_PATH =
       right: var(--card-pad);
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: flex-end;
     }
     .work-card__text {
       display: flex;
       flex-direction: column;
-    }
-    /* The subtitle's row collapses via the 0fr grid trick so its reveal can
-     animate height and push the title up. Its 8px gap to the title lives as
-     padding inside the clipped row so the collapsed state is exactly
-     title-only. */
-    .work-card__reveal {
-      display: grid;
-      grid-template-rows: 1fr;
     }
     .work-card__title {
       font-family: var(--primary-family);
@@ -177,16 +163,13 @@ const ARROW_PATH =
       line-height: var(--line-height-medium);
       white-space: nowrap;
       color: var(--text-on-image);
-      min-height: 0;
-      overflow: hidden;
-      padding-top: 8px;
     }
     .work-card svg {
       flex-shrink: 0;
     }
 
-    /* Portrait tiles run five to a row, so the title steps down a size and
-     both lines may wrap rather than run under the arrow. */
+    /* Portrait tiles are narrow, so the caption wraps rather than running
+     under the arrow. */
     .work-card--portrait {
       aspect-ratio: 9 / 16;
     }
@@ -199,68 +182,6 @@ const ARROW_PATH =
     }
     .work-card--portrait .work-card__subtitle {
       white-space: normal;
-    }
-
-    /* Desktop hover: only the title shows at rest; the subtitle and arrow fade
-     in and rise, the subtitle's expanding row pushing the title up. */
-    @media (hover: hover) and (pointer: fine) {
-      /* Nothing sits on the image at rest, so the protection gradient waits
-         for the hover that brings the subtitle and arrow in — it would only
-         darken the client's name in the image. */
-      .work-card__overlay {
-        opacity: 0;
-        transition: opacity 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
-      }
-      .work-card:hover .work-card__overlay,
-      .work-card:focus-visible .work-card__overlay {
-        opacity: 1;
-      }
-      .work-card__reveal {
-        grid-template-rows: 0fr;
-        transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
-      }
-      /* padding-top collapses with the row — even at 0fr it would keep an 8px
-       floor under the title otherwise. */
-      .work-card__subtitle {
-        opacity: 0;
-        padding-top: 0;
-        transform: translateY(6px);
-        transition:
-          opacity 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
-          padding-top 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
-          transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
-      }
-      .work-card__arrow {
-        opacity: 0;
-        transform: translateY(10px);
-        transition:
-          opacity 0.35s cubic-bezier(0.2, 0.6, 0.2, 1),
-          transform 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
-      }
-      .work-card:hover .work-card__reveal,
-      .work-card:focus-visible .work-card__reveal {
-        grid-template-rows: 1fr;
-      }
-      .work-card:hover .work-card__subtitle,
-      .work-card:focus-visible .work-card__subtitle,
-      .work-card:hover .work-card__arrow,
-      .work-card:focus-visible .work-card__arrow {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      .work-card:hover .work-card__subtitle,
-      .work-card:focus-visible .work-card__subtitle {
-        padding-top: 8px;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .work-card__overlay,
-      .work-card__reveal,
-      .work-card__subtitle,
-      .work-card__arrow {
-        transition-duration: 0s;
-      }
     }
   }
 </style>

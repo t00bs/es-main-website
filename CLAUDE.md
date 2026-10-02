@@ -85,7 +85,7 @@ freeze the light values and never invert.
   and `Global/Footer.astro`.
 - `src/components/Site/` — **Electric Sheep components.** The bespoke pieces
   Lumos has no equivalent for: the hero slideshow, the redaction-mark section
-  label, pixel links and pill badges, the work card's hover reveal, the
+  label, pixel links and pill badges, the work cards, the
   services marquee, and `WorkRow` — the Netflix-style carousel row used on
   the homepage and under each case study. Pass it the cards as children so
   the loop stays in the file that imports the JSON.
