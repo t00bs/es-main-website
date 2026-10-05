@@ -40,7 +40,8 @@ one-class utility always wins over a component's own rules, without
   changes.
 - `src/styles/patterns.css` — framework patterns. Do not edit.
 - `src/styles/site-patterns.css` — `.section-split` and `.statement`, the two
-  brand patterns used across pages.
+  brand patterns used across pages, plus the `.policy-*` clause layout shared
+  by the privacy and cookie pages.
 - `src/styles/utilities.css` — framework utilities. Do not edit.
 
 ### Tokens, not pixel values
@@ -138,9 +139,12 @@ collection MUST follow this shape:
 
 Current collections:
 
-- `src/data/case-studies.json` — work/case studies. `tags` (design |
-  automation | portals) controls which homepage carousel rows it appears
-  in; `order` controls sorting everywhere; `id` doubles as the
+- `src/data/case-studies.json` — work/case studies. `tags`
+  (design-automation | portals — keys and their labels live in
+  `src/consts.ts`) controls which homepage carousel rows it appears in and
+  the `/work?category=<tag>` filter (whose links are written out in
+  `pages/work/index.astro` — keep them in step); `order` controls sorting
+  everywhere; `id` doubles as the
   `/work/<id>` slug. `heroSquareTop` / `heroSquareBottom` are the two
   squares beside the 9:16 hero on the case-study page.
 

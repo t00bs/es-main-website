@@ -9,6 +9,7 @@ import PillBadge from "./PillBadge.astro";
 import WorkRow from "./WorkRow.astro";
 import WorkCard from "./WorkCard.astro";
 import caseStudies from "../../data/case-studies.json";
+import { WORK_TAG_LABELS } from "@/consts.ts";
 
 // The JSON import types each entry by the keys it actually has, so an optional
 // field that some entries omit is absent from the union. `year` and the live
@@ -49,7 +50,7 @@ const sections = (cs.sections as Section[]).filter((s) =>
 // starting from the one after it and wrapping round, so the first card is
 // the next piece of work in that category.
 const category = cs.tags[0] ?? "";
-const categoryLabel = category.charAt(0).toUpperCase() + category.slice(1);
+const categoryLabel = WORK_TAG_LABELS[category] ?? "";
 const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
 const inCategory = sorted.filter((item) =>
   item.tags.some((tag) => tag === category),

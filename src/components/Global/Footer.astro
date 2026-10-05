@@ -2,6 +2,7 @@
 // Black footer: giant full-bleed logotype, then contact rows in cream.
 // The Lumos Footer slot, rewritten for Electric Sheep. Rendered by BaseLayout.
 import { SITE_NAME } from "@/consts.ts";
+import CookieConsent from "@/components/Site/CookieConsent.astro";
 
 interface Props {
   /** Set to `false` to skip rendering this component and its children. */
@@ -35,12 +36,17 @@ const {
         <a href={`mailto:${email}`}>{email}</a>
         <div class="site_footer_legal">
           <a href="/privacy">Privacy</a>
+          <a href="/cookies">Cookie policy</a>
+          <a href="#cookie-settings">Cookie settings</a>
           <span>{legal}</span>
         </div>
       </div>
     </footer>
   )
 }
+
+{/* Outside the render guard: the banner is needed on every page. */}
+<CookieConsent />
 
 <style is:global>
   @layer components {
@@ -66,12 +72,15 @@ const {
       }
     }
 
+    /* Below 64rem the three blocks stack in one left-aligned column; from
+       there they sit in a row — address left, email truly centred, legal
+       right. A wrapping space-between row left a right-aligned legal block
+       stranded on the left whenever it wrapped. */
     .site_footer_rows {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: flex-start;
       gap: var(--space-4);
-      flex-wrap: wrap;
 
       & span,
       & a {
@@ -89,9 +98,24 @@ const {
     .site_footer_legal {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
+      align-items: flex-start;
       gap: var(--space-2);
-      text-align: right;
+    }
+
+    @media (width >= 64rem) {
+      .site_footer_rows {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: start;
+      }
+      .site_footer_rows > a {
+        justify-self: center;
+      }
+      .site_footer_legal {
+        justify-self: end;
+        align-items: flex-end;
+        text-align: right;
+      }
     }
   }
 </style>

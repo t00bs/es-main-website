@@ -1,0 +1,45 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy",
+      "statusCode": 301
+    },
+    {
+      "source": "/cookie-policy",
+      "destination": "/cookies",
+      "statusCode": 301
+    },
+    {
+      "source": "/free-consultation",
+      "destination": "/contact",
+      "statusCode": 301
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/work",
+      "statusCode": 301
+    },
+    {
+      "source": "/portfolio/chapter-2",
+      "destination": "/work/chapter-2",
+      "statusCode": 301
+    },
+    {
+      "source": "/portfolio/:slug",
+      "destination": "/work",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog",
+      "destination": "/",
+      "statusCode": 301
+    },
+    {
+      "source": "/blog/:slug",
+      "destination": "/",
+      "statusCode": 301
+    }
+  ]
+}

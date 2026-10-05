@@ -34,3 +34,178 @@
   color: var(--text);
   white-space: pre-line;
 }
+
+/* The legal pages (privacy, cookies): a dated intro, then numbered clauses,
+ * each ruled off and split label-beside-content like `.section-split`. */
+.policy-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  align-items: flex-start;
+
+  & .statement {
+    max-width: 30ch;
+  }
+}
+
+.policy-updated {
+  font-family: var(--font-pixel);
+  font-size: var(--text-main);
+  letter-spacing: var(--tracking-pixel);
+  color: var(--text);
+}
+
+.policy-lede {
+  font-family: var(--primary-family);
+  font-size: var(--text-large);
+  line-height: var(--line-height-huge);
+  color: var(--text);
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+.policy-clause {
+  display: grid;
+  grid-template-columns: 28.75rem 1fr;
+  gap: var(--space-4) var(--space-1);
+  align-items: start;
+  border-top: var(--rule-thin) solid var(--rule-hairline);
+  padding-block: var(--space-5) var(--space-7);
+}
+
+@media (width < 60rem) {
+  .policy-clause {
+    grid-template-columns: 1fr;
+  }
+}
+
+.policy-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-right: var(--space-5);
+  font-family: var(--primary-family);
+  font-weight: var(--primary-regular);
+  font-size: var(--h4);
+  line-height: var(--line-height-large);
+  color: var(--text);
+}
+
+.policy-number {
+  font-family: var(--font-pixel);
+  font-size: var(--h5);
+  letter-spacing: var(--tracking-pixel);
+}
+
+/* Long-form clause copy. Bold terms take the pixel face, the way `em` does
+ * everywhere else. */
+.policy-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 60ch;
+  font-family: var(--primary-family);
+  font-size: var(--text-large);
+  line-height: var(--line-height-huge);
+  color: var(--text);
+  text-wrap: pretty;
+
+  & ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-left: 1.25em;
+    list-style-type: disc;
+  }
+  & li::marker {
+    color: var(--rule-hairline);
+  }
+  & :is(strong, code) {
+    font-weight: inherit;
+    font-family: var(--font-pixel);
+    letter-spacing: var(--tracking-pixel);
+  }
+  & a {
+    text-decoration: underline;
+    text-decoration-thickness: var(--rule-thin);
+    text-underline-offset: 0.2em;
+    transition: opacity var(--hover-duration) var(--hover-ease);
+  }
+  & a:hover {
+    opacity: 0.6;
+  }
+}
+
+/* A table inside a clause. Below 40rem each row becomes a stacked card, and
+ * every cell carries its column name in `data-label`. */
+.policy-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-main);
+  line-height: var(--line-height-large);
+
+  & caption {
+    text-align: start;
+    padding-bottom: var(--space-2);
+    font-family: var(--font-pixel);
+    letter-spacing: var(--tracking-pixel);
+  }
+  & :is(th, td) {
+    padding: var(--space-2) var(--space-3) var(--space-2) 0;
+    text-align: start;
+    vertical-align: top;
+    border-top: var(--rule-thin) solid var(--rule-hairline);
+  }
+  & th {
+    font-weight: inherit;
+    opacity: 0.7;
+  }
+}
+
+/* Fixed columns, so consecutive tables line up. The first suits a cookie
+ * name; the last a short duration. */
+@media (width >= 40rem) {
+  .policy-table {
+    table-layout: fixed;
+
+    & :is(th, td):first-child {
+      width: 12rem;
+    }
+    & :is(th, td):nth-child(2) {
+      width: 8rem;
+    }
+    & :is(th, td):last-child {
+      width: 6.5rem;
+      padding-right: 0;
+    }
+  }
+}
+
+@media (width < 40rem) {
+  .policy-table {
+    & thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+    & tr {
+      display: grid;
+      gap: var(--space-1);
+      padding-block: var(--space-3);
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+    }
+    & td {
+      display: grid;
+      grid-template-columns: 6rem 1fr;
+      gap: var(--space-2);
+      padding: 0;
+      border: 0;
+    }
+    & td::before {
+      content: attr(data-label);
+      opacity: 0.7;
+    }
+  }
+}

@@ -1,0 +1,97 @@
+---
+// Google Tag Manager behind Google Consent Mode v2. Rendered in <head> by
+// Layout, before anything else can push to the dataLayer.
+//
+// Every signal starts denied. A returning visitor's saved choice is restored
+// before GTM loads, and each category the visitor has accepted is announced
+// with a dataLayer event that the container's tags fire on:
+//
+//   analytics-activated  → GA4                (analytics_storage)
+//   marketing-activated  → Meta Pixel         (ad_storage, ad_user_data,
+//                                              ad_personalization)
+//
+// `window.esConsent` is what CookieConsent calls when the visitor chooses, so
+// the category → signal mapping lives here and nowhere else.
+import { GTM_ID, CONSENT_COOKIE, CONSENT_VERSION } from "@/consts.ts";
+
+const loadGtm = import.meta.env.PROD;
+---
+
+<script
+  is:inline
+  define:vars={{
+    gtmId: GTM_ID,
+    cookie: CONSENT_COOKIE,
+    version: CONSENT_VERSION,
+    loadGtm,
+  }}
+>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  window.gtag = gtag;
+
+  const granted = (yes) => (yes ? "granted" : "denied");
+  const signals = (choice) => ({
+    analytics_storage: granted(choice.analytics),
+    ad_storage: granted(choice.marketing),
+    ad_user_data: granted(choice.marketing),
+    ad_personalization: granted(choice.marketing),
+  });
+
+  gtag("consent", "default", {
+    ...signals({ analytics: false, marketing: false }),
+    functionality_storage: "denied",
+    personalization_storage: "denied",
+    security_storage: "granted",
+    wait_for_update: 500,
+  });
+  gtag("set", "ads_data_redaction", true);
+
+  let saved = null;
+  try {
+    const match = document.cookie.match(
+      new RegExp(`(?:^|; )${cookie}=([^;]*)`),
+    );
+    const value = match && JSON.parse(decodeURIComponent(match[1]));
+    if (value && value.v === version) saved = value;
+  } catch {}
+
+  // What has been switched on in this page, so choosing again doesn't fire a
+  // tag twice.
+  const state = { analytics: false, marketing: false };
+  const activate = (choice) => {
+    for (const key of ["analytics", "marketing"]) {
+      if (choice[key] && !state[key])
+        dataLayer.push({ event: `${key}-activated` });
+      state[key] = Boolean(choice[key]);
+    }
+  };
+
+  window.esConsent = {
+    saved: Boolean(saved),
+    state,
+    apply(choice) {
+      gtag("consent", "update", signals(choice));
+      activate(choice);
+    },
+  };
+
+  if (saved) gtag("consent", "update", signals(saved));
+
+  if (loadGtm) {
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != "dataLayer" ? "&l=" + l : "";
+      j.async = true;
+      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, "script", "dataLayer", gtmId);
+  }
+
+  if (saved) activate(saved);
+</script>

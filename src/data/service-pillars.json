@@ -5,15 +5,15 @@
     "title": "Strategy, identity, product.",
     "body": "Brand and UX/UI systems built to hold up in serious rooms. Strategy first, then identity, then a design system that keeps both honest.",
     "linkText": "View design work",
-    "href": "/work"
+    "href": "/work?category=design-automation"
   },
   {
     "id": "automation",
     "label": "AUTOMATION",
-    "title": "AI does the typing.",
-    "body": "Document drafting, checks and chasing, handled by machines. Every decision that matters gets handed to a human. That part isn’t for sale.",
+    "title": "Technology that works for you.",
+    "body": "We specialise in modernising company processes. Digitising and smoothening your work to enable you to do more.",
     "linkText": "View automation work",
-    "href": "/work"
+    "href": "/work?category=design-automation"
   },
   {
     "id": "portals",
@@ -21,6 +21,6 @@
     "title": "One place for everything.",
     "body": "Custom portals where clients upload once and teams see everything. Six-week paper processes, done the same day.",
     "linkText": "View portal work",
-    "href": "/work"
+    "href": "/work?category=portals"
   }
 ]

@@ -16,19 +16,27 @@ import Slider from "@/components/Interactive/Slider.astro";
 interface Props {
   /** The row's heading, e.g. `Design`. */
   label: string;
+  /** Cards in view below 30rem. Defaults to 1.5, so the next one peeks in. */
+  xsmall?: number;
+  /** Cards in view from 30rem up. Defaults to 2. */
+  small?: number;
+  /** Cards in view from 48rem up. Defaults to 4. */
+  medium?: number;
+  /** Cards in view from 64rem up. Defaults to 5. */
+  large?: number;
 }
 
-const { label } = Astro.props;
+const { label, xsmall = 1.5, small = 2, medium = 4, large = 5 } = Astro.props;
 ---
 
 <div class="work-row reveal-block">
   <h2 class="work-row__label">{label}</h2>
   <Slider
     label={`${label} case studies`}
-    xsmall={1.5}
-    small={2}
-    medium={4}
-    large={5}
+    xsmall={xsmall}
+    small={small}
+    medium={medium}
+    large={large}
     class="hover-zoom"
   >
     <slot />

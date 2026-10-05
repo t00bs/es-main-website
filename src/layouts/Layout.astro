@@ -1,9 +1,10 @@
 ---
 // Every page's shell. Wraps the Lumos BaseLayout (which renders BaseHead, the
-// skip link, Nav, <main> and Footer) with the scroll-reveal motion. The site
-// is dark: `theme-dark` goes on <html> at build time, so there is no toggle
-// and nothing to restore before first paint.
+// skip link, Nav, <main> and Footer) with Tag Manager and the scroll-reveal
+// motion. The site is dark: `theme-dark` goes on <html> at build time, so
+// there is no toggle and nothing to restore before first paint.
 import BaseLayout from "./BaseLayout.astro";
+import TagManager from "@/components/Site/TagManager.astro";
 import type { SeoProps } from "@/types.ts";
 
 type Props = SeoProps;
@@ -11,6 +12,7 @@ type Props = SeoProps;
 
 <BaseLayout theme="dark" {...Astro.props}>
   <Fragment slot="head">
+    <TagManager />
     <script>
       import "@/scripts/reveal";
     </script>

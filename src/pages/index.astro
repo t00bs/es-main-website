@@ -5,7 +5,6 @@ import Grid from "@/components/Wrapper/Grid.astro";
 import HeroSlideshow from "@/components/Site/HeroSlideshow.astro";
 import ClientLogoBar from "@/components/Site/ClientLogoBar.astro";
 import ServicesBreakdown from "@/components/Site/ServicesBreakdown.astro";
-import ResultsStrip from "@/components/Site/ResultsStrip.astro";
 import ProcessSection from "@/components/Site/ProcessSection.astro";
 import WorkCarousels from "@/components/Site/WorkCarousels.astro";
 import PixelLink from "@/components/Site/PixelLink.astro";
@@ -43,8 +42,6 @@ const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
       <PixelLink href="/work" color="var(--text)">View all work</PixelLink>
     </div>
   </Section>
-
-  <ResultsStrip />
 
   <ServicesBreakdown />
 

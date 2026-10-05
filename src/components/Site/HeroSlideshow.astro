@@ -1,7 +1,8 @@
 ---
 // Home hero: canvas slideshow with a pixelation transition, glitch headline
 // bottom-left (chars flicker into Neue Pixel). Port of the reference React
-// implementation to a vanilla script.
+// implementation to a vanilla script. With a single slide the image holds
+// still and the headline keeps glitching on the same beat.
 interface Props {
   headline?: string;
   slides?: string[];
@@ -196,7 +197,12 @@ const {
     if (!REDUCED) {
       spans.forEach((s) => s.classList.add("glx"));
       glitchBurst(900);
-      setInterval(transition, INTERVAL);
+      // One image is a still: pixelating it into itself would only flicker,
+      // so the headline glitches on the slideshow's beat without it.
+      setInterval(
+        imgs.length > 1 ? transition : () => glitchBurst(DURATION),
+        INTERVAL,
+      );
     }
   });
 </script>

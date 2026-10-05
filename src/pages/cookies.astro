@@ -1,0 +1,284 @@
+---
+// The cookie policy. Every cookie named here is set by TagManager (GA4 and the
+// Meta Pixel, through GTM) or CookieConsent (`es_consent`) — keep the tables in
+// step with those two when the container changes.
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import SectionLabel from "@/components/Site/SectionLabel.astro";
+import PixelLink from "@/components/Site/PixelLink.astro";
+---
+
+<Layout
+  title="Cookies"
+  description="Which cookies electricsheep.design uses, why, and how to switch them off."
+>
+  <Section containerClass="section-split reveal-block" paddingBottom="small">
+    <SectionLabel highlight="Cookie policy." />
+    <div class="policy-intro">
+      <p class="statement">Nothing optional runs until you say so.</p>
+      <p class="policy-updated">
+        Last updated <time datetime="2026-10-05">5 October 2026</time>
+      </p>
+      <p class="policy-lede">
+        This policy explains how Electric Sheep Limited (“we”, “us”, or “our”)
+        uses cookies and similar technologies when you visit
+        electricsheep.design: what they are, which ones we use and why, and how
+        you can control them. It sits alongside our <a href="/privacy"
+          >privacy policy</a
+        >.
+      </p>
+    </div>
+  </Section>
+
+  {
+    /* Literal clauses rather than a loop over a local array: the visual editor
+      edits copy in place, and an array in the frontmatter would put this text
+      out of its reach. */
+  }
+  <Section paddingTop="small" gap="0">
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">01</span>
+        <span>What cookies are</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          Cookies are small data files placed on your computer or phone when you
+          visit a website. They let the site remember you and your preferences,
+          for a single visit or across repeat visits.
+        </p>
+        <p>
+          Similar technologies, such as tracking pixels, work in much the same
+          way. This policy covers those too.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">02</span>
+        <span>How we use them</span>
+      </h2>
+      <div class="policy-body">
+        <p>We use three kinds of cookie:</p>
+        <ul>
+          <li>
+            <strong>Necessary:</strong> one cookie that remembers your cookie choices.
+            We can’t respect your choices without it, so it is always on.
+          </li>
+          <li>
+            <strong>Analytics:</strong> Google Analytics, which tells us which pages
+            people read and how they found us, so we can make the site better.
+          </li>
+          <li>
+            <strong>Marketing:</strong> the Meta Pixel, which lets us measure our
+            adverts on Facebook and Instagram, and show them to people who have visited
+            this site.
+          </li>
+        </ul>
+        <p>
+          Analytics and marketing cookies are off until you switch them on. On
+          your first visit, a banner asks whether you want to accept them,
+          reject them, or choose. Until you accept, neither Google Analytics nor
+          the Meta Pixel runs, and neither sets a cookie.
+        </p>
+        <p>
+          Both are loaded through Google Tag Manager, which holds them back
+          until you choose. Tag Manager sets no cookies of its own.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">03</span>
+        <span>The cookies we use</span>
+      </h2>
+      <div class="policy-body">
+        <table class="policy-table">
+          <caption>Necessary</caption>
+          <thead>
+            <tr>
+              <th scope="col">Cookie</th>
+              <th scope="col">Set by</th>
+              <th scope="col">What it does</th>
+              <th scope="col">Lasts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Cookie"><code>es_consent</code></td>
+              <td data-label="Set by">Electric Sheep</td>
+              <td data-label="What it does"
+                >Remembers your cookie choices and when you made them.</td
+              >
+              <td data-label="Lasts">12 months</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="policy-table">
+          <caption>Analytics</caption>
+          <thead>
+            <tr>
+              <th scope="col">Cookie</th>
+              <th scope="col">Set by</th>
+              <th scope="col">What it does</th>
+              <th scope="col">Lasts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Cookie"><code>_ga</code></td>
+              <td data-label="Set by">Google</td>
+              <td data-label="What it does"
+                >Tells one visitor from another with a random ID.</td
+              >
+              <td data-label="Lasts">2 years</td>
+            </tr>
+            <tr>
+              <td data-label="Cookie"><code>_ga_0VDKGKCP7B</code></td>
+              <td data-label="Set by">Google</td>
+              <td data-label="What it does">Keeps track of your current visit.</td>
+              <td data-label="Lasts">2 years</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table class="policy-table">
+          <caption>Marketing</caption>
+          <thead>
+            <tr>
+              <th scope="col">Cookie</th>
+              <th scope="col">Set by</th>
+              <th scope="col">What it does</th>
+              <th scope="col">Lasts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Cookie"><code>_fbp</code></td>
+              <td data-label="Set by">Meta</td>
+              <td data-label="What it does"
+                >Recognises your browser, so Meta can measure our adverts.</td
+              >
+              <td data-label="Lasts">90 days</td>
+            </tr>
+            <tr>
+              <td data-label="Cookie"><code>_fbc</code></td>
+              <td data-label="Set by">Meta</td>
+              <td data-label="What it does"
+                >Records that you arrived by clicking one of our adverts. Only
+                set when you do.</td
+              >
+              <td data-label="Lasts">90 days</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          Google Analytics records the pages you view, how you reached the site,
+          your device and browser, and your approximate location. It does not
+          store your IP address. The Meta Pixel records the pages you visit, and
+          if you are logged in to Facebook or Instagram in the same browser, Meta
+          can link your visit to your account and use its own cookies to do so.
+        </p>
+        <p>
+          Google and Meta use what they collect under their own policies: the <a
+            href="https://policies.google.com/technologies/cookies"
+            target="_blank"
+            rel="noopener">Google cookie policy</a
+          > and the <a
+            href="https://www.facebook.com/privacy/policies/cookies/"
+            target="_blank"
+            rel="noopener">Meta cookie policy</a
+          >. Our <a href="/privacy">privacy policy</a> explains our lawful basis,
+          and how your data is protected when it leaves Jersey.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">04</span>
+        <span>Content from other sites</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          The map on our <a href="/contact">contact page</a> is embedded from Google
+          Maps. Google may set its own cookies when the map loads, under Google’s
+          cookie policy. If you would rather it didn’t, you can block third-party
+          cookies in your browser.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">05</span>
+        <span>Changing your mind</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          You can change your choices at any time from <a
+            href="#cookie-settings">Cookie settings</a
+          >, at the foot of every page. Switching analytics or marketing off
+          removes the cookies they set.
+        </p>
+        <p>You can also:</p>
+        <ul>
+          <li>
+            Block or delete cookies in your browser settings. The site works
+            without them.
+          </li>
+          <li>
+            Opt out of Google Analytics on every website with Google’s <a
+              href="https://tools.google.com/dlpage/gaoptout"
+              target="_blank"
+              rel="noopener">opt-out browser add-on</a
+            >.
+          </li>
+          <li>
+            Control the adverts Meta shows you in the ad preferences of your
+            Facebook or Instagram account.
+          </li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">06</span>
+        <span>Changes to this policy</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          We update this policy whenever we change the tools on our site, and
+          the date at the top of this page shows when it last changed. If we add
+          a new kind of cookie, the banner will ask you again.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">07</span>
+        <span>Contact us</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          For more about how we use cookies, or to make a complaint, email <a
+            href="mailto:hello@electricsheep.design">hello@electricsheep.design</a
+          >. You can also complain to the Jersey Office of the Information
+          Commissioner; our <a href="/privacy">privacy policy</a> has their details.
+        </p>
+      </div>
+    </article>
+  </Section>
+
+  <Section containerClass="px-hover reveal-block gap-3" paddingTop="small">
+    <PixelLink href="#cookie-settings" color="var(--text)" fontSize={24}
+      >Change your cookie settings</PixelLink
+    >
+  </Section>
+</Layout>

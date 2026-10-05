@@ -1,8 +1,6 @@
 import { defineCollection, z } from "astro:content";
 import { file } from "astro/loaders";
-
-// Homepage tab keys — a case study appears under every tab listed in its `tags`.
-export const WORK_TAGS = ["design", "automation", "portals"] as const;
+import { WORK_TAGS } from "./consts.ts";
 
 // One collection, one file: every case study is an item in the array, keyed by
 // its `id` (which is also the /work/<id> slug). Pages and components import

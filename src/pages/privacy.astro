@@ -1,0 +1,370 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import SectionLabel from "@/components/Site/SectionLabel.astro";
+import PixelLink from "@/components/Site/PixelLink.astro";
+---
+
+<Layout
+  title="Privacy"
+  description="How Electric Sheep Limited handles personal data under the Data Protection (Jersey) Law 2018 and the GDPR."
+>
+  <Section containerClass="section-split reveal-block" paddingBottom="small">
+    <SectionLabel highlight="Privacy policy." />
+    <div class="policy-intro">
+      <p class="statement">
+        We collect as little as we can, and tell you plainly what that is.
+      </p>
+      <p class="policy-updated">
+        Last updated <time datetime="2026-10-05">5 October 2026</time>
+      </p>
+      <p class="policy-lede">
+        Electric Sheep Limited (“we”, “us”, or “our”) is committed to protecting
+        the privacy and security of your personal data. This policy outlines how
+        we handle your information in compliance with the Data Protection
+        (Jersey) Law 2018 and the General Data Protection Regulation (GDPR).
+      </p>
+    </div>
+  </Section>
+
+  {
+    /* Twelve literal clauses rather than a loop over a local array: the visual
+      editor edits copy in place, and an array in the frontmatter would put this
+      text out of its reach. */
+  }
+  <Section paddingTop="small" gap="0">
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">01</span>
+        <span>Data controller</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          Electric Sheep Limited is the “data controller” for the information
+          collected via electricsheep.design.
+        </p>
+        <ul>
+          <li>Company name: Electric Sheep Limited</li>
+          <li>
+            Email: <a href="mailto:hello@electricsheep.design"
+              >hello@electricsheep.design</a
+            >
+          </li>
+          <li>Address: 10 Minden Street, St Helier, Jersey JE2 4WR</li>
+          <li>Registration: 149505</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">02</span>
+        <span>Personal information we collect</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          There is no form on this website. If you get in touch, you do it by
+          email, and we collect:
+        </p>
+        <ul>
+          <li><strong>Identity data:</strong> your name.</li>
+          <li>
+            <strong>Contact data:</strong> your email address, and any other contact
+            details in your signature.
+          </li>
+          <li>
+            <strong>Communication data:</strong> anything you choose to include in
+            your email or its attachments.
+          </li>
+        </ul>
+        <p>When you visit the website, we also collect:</p>
+        <ul>
+          <li>
+            <strong>Technical data:</strong> your IP address, browser type, the page
+            you asked for and the page that referred you. This is recorded automatically
+            in the request logs of Vercel, our hosting provider, for security and
+            site performance.
+          </li>
+          <li>
+            <strong>Usage data:</strong> only if you accept analytics cookies, the
+            pages you visit, how long you stay, how you found us, and your approximate
+            location and device type, collected by Google Analytics.
+          </li>
+          <li>
+            <strong>Advertising data:</strong> only if you accept marketing cookies,
+            the pages you visit, collected by the Meta Pixel so we can measure our
+            adverts on Facebook and Instagram.
+          </li>
+        </ul>
+        <p>We do not run a mailing list.</p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">03</span>
+        <span>Lawful basis for processing</span>
+      </h2>
+      <div class="policy-body">
+        <p>We process your data under the following legal bases:</p>
+        <ul>
+          <li>
+            <strong>Contractual necessity / pre-contractual steps:</strong> we process
+            your name and email to respond to your specific request for a quote, service
+            or information. This is a necessary step before potentially entering into
+            a formal contract with you.
+          </li>
+          <li>
+            <strong>Legitimate interests:</strong> we process technical data and keep
+            a record of enquiries to manage our business efficiently, respond to people
+            who contact us, and keep the website secure.
+          </li>
+          <li>
+            <strong>Consent:</strong> we use analytics and marketing cookies only
+            if you accept them, and you can withdraw that consent at any time from
+            <a href="#cookie-settings">Cookie settings</a>.
+          </li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">04</span>
+        <span>How we use your information</span>
+      </h2>
+      <div class="policy-body">
+        <p>We use your data strictly to:</p>
+        <ul>
+          <li>Respond to enquiries you send us.</li>
+          <li>Provide information about our services that you ask for.</li>
+          <li>Maintain a record of business correspondence.</li>
+          <li>Keep the website secure and working properly.</li>
+          <li>
+            Understand how the website is used, if you accept analytics cookies.
+          </li>
+          <li>Measure our advertising, if you accept marketing cookies.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">05</span>
+        <span>Storage, security and retention</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          Emails you send us are stored in Google Workspace. Website request
+          logs are held by Vercel. Both providers are ISO/IEC 27001 certified.
+        </p>
+        <ul>
+          <li>
+            <strong>Retention:</strong> we keep your personal data only for as long
+            as we need it for the purposes we collected it for. Vercel deletes request
+            logs automatically after a short period, and Google Analytics keeps usage
+            data for no longer than 14 months.
+          </li>
+          <li>
+            <strong>Security:</strong> we use appropriate technical and organisational
+            measures to prevent unauthorised access to, loss of, or disclosure of
+            your data.
+          </li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">06</span>
+        <span>International data transfers</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          Vercel, Google and Meta are based in the United States, so your data
+          may be transferred to and stored there. Vercel also serves this
+          website from a global network, so your visit may be handled in a data
+          centre near you.
+        </p>
+        <p>
+          We make sure these transfers are protected by appropriate safeguards,
+          such as Standard Contractual Clauses (SCCs) recognised by the JOIC or
+          under UK or EU law. All three are also certified under the EU–US Data
+          Privacy Framework. Together these give your data a level of protection
+          equivalent to Jersey law.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">07</span>
+        <span>Sharing your information</span>
+      </h2>
+      <div class="policy-body">
+        <p>We do not sell or rent your data. We only share it with:</p>
+        <ul>
+          <li>
+            <strong>Service providers:</strong> Vercel (website hosting) and Google
+            (email, through Google Workspace, and Google Analytics if you accept analytics
+            cookies). They act as “data processors” and are contractually bound to
+            protect your data.
+          </li>
+          <li>
+            <strong>Meta:</strong> if you accept marketing cookies, the Meta Pixel
+            sends details of your visit to Meta Platforms, which uses them under the
+            <a
+              href="https://www.facebook.com/privacy/policy/"
+              target="_blank"
+              rel="noopener">Meta Privacy Policy</a
+            >.
+          </li>
+          <li>
+            <strong>Legal obligations:</strong> where required by Jersey law or a
+            regulatory body.
+          </li>
+        </ul>
+        <p>
+          The map on our <a href="/contact">contact page</a> is embedded from Google
+          Maps. When it loads, your browser connects to Google directly, and Google
+          receives your IP address and browser details. Google decides how it uses
+          that information, under the <a
+            href="https://policies.google.com/privacy"
+            target="_blank"
+            rel="noopener">Google Privacy Policy</a
+          >. We do not receive any of it.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">08</span>
+        <span>Data we process on behalf of clients</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          Where we build and maintain applications for clients, we act as a data
+          processor. That processing is governed by a data processing agreement
+          with each client and carried out on independently audited cloud
+          infrastructure.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block" id="cookies">
+      <h2 class="policy-heading">
+        <span class="policy-number">09</span>
+        <span>Cookies</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          Apart from one cookie that remembers your choice, we only set cookies
+          you have accepted. Analytics cookies (Google Analytics) and marketing
+          cookies (the Meta Pixel) are off until you switch them on, and you can
+          change your mind at any time from <a href="#cookie-settings"
+            >Cookie settings</a
+          >.
+        </p>
+        <p>
+          Our <a href="/cookies">cookie policy</a> lists every cookie we use, what
+          it does and how long it lasts.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">10</span>
+        <span>Your statutory rights</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          Under the Data Protection (Jersey) Law 2018, you have the following
+          rights:
+        </p>
+        <ul>
+          <li>
+            <strong>Right of access:</strong> request a copy of the data we hold about
+            you.
+          </li>
+          <li>
+            <strong>Right to rectification:</strong> ask us to correct inaccurate
+            data.
+          </li>
+          <li>
+            <strong>Right to erasure (“right to be forgotten”):</strong> ask us to
+            delete your data.
+          </li>
+          <li>
+            <strong>Right to withdraw consent:</strong> where we rely on consent,
+            withdraw it at any time.
+          </li>
+          <li>
+            <strong>Right to object or restrict:</strong> object to processing based
+            on legitimate interests.
+          </li>
+          <li>
+            <strong>Right to data portability:</strong> ask us to transfer your data
+            to another service provider.
+          </li>
+        </ul>
+        <p>
+          To exercise any of these rights, email <a
+            href="mailto:hello@electricsheep.design"
+            >hello@electricsheep.design</a
+          >.
+        </p>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">11</span>
+        <span>Complaints</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          If you are unhappy with how we handle your data, you have the right to
+          lodge a complaint with the Jersey Office of the Information
+          Commissioner (JOIC):
+        </p>
+        <ul>
+          <li>
+            Website: <a
+              href="https://jerseyoic.org"
+              target="_blank"
+              rel="noopener">jerseyoic.org</a
+            >
+          </li>
+          <li>
+            Address: 2nd Floor, 5 Castle Street, St Helier, Jersey JE2 3BT
+          </li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="policy-clause reveal-block">
+      <h2 class="policy-heading">
+        <span class="policy-number">12</span>
+        <span>Changes to this policy</span>
+      </h2>
+      <div class="policy-body">
+        <p>
+          We may update this policy to reflect changes in the law or in how we
+          work. The date at the top of this page shows when it last changed, and
+          we encourage you to review it from time to time.
+        </p>
+      </div>
+    </article>
+  </Section>
+
+  <Section containerClass="px-hover reveal-block gap-3" paddingTop="small">
+    <PixelLink
+      href="mailto:hello@electricsheep.design"
+      color="var(--text)"
+      fontSize={24}>Ask us about your data</PixelLink
+    >
+  </Section>
+</Layout>
+

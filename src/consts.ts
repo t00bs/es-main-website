@@ -15,3 +15,27 @@ export const SITE_LOCALE = "en-GB";
  * case-study template — a real URL for Stacki to open, not a real page.
  */
 export const NOINDEX_ROUTES: string[] = ["/404", "/work/preview"];
+/**
+ * Google Tag Manager container. It holds GA4 and the Meta Pixel, and loads in
+ * production builds only, so editing sessions in dev never reach analytics.
+ * Its tags fire on the `analytics-activated` and `marketing-activated` events
+ * the cookie banner pushes, never before.
+ */
+export const GTM_ID = "GTM-W7QG5RS";
+/**
+ * The first-party cookie that remembers a visitor's cookie choices. Bump
+ * `CONSENT_VERSION` when the categories change, and everyone is asked again.
+ */
+export const CONSENT_COOKIE = "es_consent";
+export const CONSENT_VERSION = 1;
+export const CONSENT_MAX_AGE_DAYS = 365;
+/**
+ * Case-study categories: the keys a case study's `tags` may hold, and how each
+ * reads on the site. A case study appears in the homepage row for every tag
+ * it has; its first tag picks the "More …" row under its own page.
+ */
+export const WORK_TAGS = ["design-automation", "portals"] as const;
+export const WORK_TAG_LABELS: Record<string, string> = {
+  "design-automation": "Design & Automation",
+  portals: "Portals",
+};

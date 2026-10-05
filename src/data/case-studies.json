@@ -10,8 +10,7 @@
     "services": [
       "Web design",
       "Webflow development",
-      "Custom web application",
-      "CMS build"
+      "Custom web application"
     ],
     "tags": [
       "portals"
@@ -56,11 +55,10 @@
     "services": [
       "Web design",
       "Webflow development",
-      "Custom calculator",
-      "Copy structure"
+      "Custom calculator"
     ],
     "tags": [
-      "design"
+      "design-automation"
     ],
     "order": 2,
     "liveUrl": "https://www.mortgageshop.je/",
@@ -87,7 +85,7 @@
       "text": "“A massive thank you for delivering this project early, and on-budget.”",
       "author": "Mortgage Shop"
     },
-    "testimonialImage": "/assets/images/testimonial-mortgage-shop.jpg",
+    "testimonialImage": "/assets/images/testimonial-mortgage-shop-1.jpg",
     "featured": true,
     "clientLogoNew": "/assets/client logos/6847ffab8a8eb190ad87a6b1_TMS Stacked.svg",
     "clientLogoWidth": 140
@@ -102,13 +100,12 @@
     "heroSquareBottom": "/assets/images/case-studies/virdaris 3.jpg",
     "cardImage": "/assets/images/case-studies/virdaris 1.jpg",
     "services": [
-      "Brand-led web design",
-      "Webflow development",
-      "CMS build",
-      "Motion design"
+      "Brand design",
+      "Web Design",
+      "Web Development"
     ],
     "tags": [
-      "design"
+      "design-automation"
     ],
     "order": 3,
     "liveUrl": "https://www.virdaris.com/",
@@ -135,7 +132,7 @@
       "text": "“I can’t thank or endorse you enough for the amazing process throughout (you can print that!)”",
       "author": "Virdaris"
     },
-    "testimonialImage": "/assets/images/testimonial-virdaris.png",
+    "testimonialImage": "/assets/images/testimonial-virdaris-2.jpg",
     "featured": false,
     "clientLogoNew": "",
     "clientLogoWidth": 0
@@ -153,10 +150,10 @@
       "Web design",
       "Webflow development",
       "CMS build",
-      "Motion design"
+      "3D Motion Design"
     ],
     "tags": [
-      "design"
+      "design-automation"
     ],
     "order": 4,
     "liveUrl": "https://www.chapter2.group/",
@@ -196,12 +193,10 @@
     "cardImage": "/assets/images/case-studies/pfp 1.jpg",
     "services": [
       "Web design",
-      "Webflow development",
-      "Content structure"
+      "Webflow development"
     ],
     "tags": [
-      "design",
-      "automation"
+      "design-automation"
     ],
     "order": 5,
     "liveUrl": "https://www.policyfutures.org.uk/",
@@ -245,8 +240,7 @@
       "Webflow development"
     ],
     "tags": [
-      "design",
-      "automation"
+      "portals"
     ],
     "order": 6,
     "liveUrl": "https://foxdocs.com/",
@@ -290,7 +284,7 @@
       "CMS build"
     ],
     "tags": [
-      "design"
+      "design-automation"
     ],
     "order": 7,
     "liveUrl": "https://www.steedmanplanning.com/",
@@ -335,7 +329,7 @@
       "CMS build"
     ],
     "tags": [
-      "design"
+      "design-automation"
     ],
     "order": 8,
     "liveUrl": "https://www.bcrlawllp.com/",
@@ -380,8 +374,7 @@
       "Search and filtering"
     ],
     "tags": [
-      "automation",
-      "design"
+      "design-automation"
     ],
     "order": 9,
     "liveUrl": "https://allenscaravans-esdev.webflow.io/",
@@ -394,11 +387,6 @@
         "body": "Allens Caravans has been creating park communities since 1947, with parks across the Midlands, Wales and Northamptonshire. The new site had to serve three distinct audiences at once: holiday home owners, residential park home buyers and short-break guests."
       },
       {
-        "type": "image",
-        "src": "/assets/images/case-studies/allens-desktop-2.jpg",
-        "caption": "Allens Caravans — Webflow (in development)."
-      },
-      {
         "type": "text",
         "label": "What we built",
         "body": "An elegant design led by the line 'Making memories for generations'. A home finder lets visitors search by location, new or pre-loved, and budget; a parks collection presents each location with holiday and residential tags; and clear journeys guide people to own, stay, book a tour or download the brochure."
@@ -406,7 +394,7 @@
       {
         "type": "text",
         "label": "Highlights",
-        "body": "Home finder with location, condition and budget filters • Parks CMS with aerial photography for every location • Heritage-forward brand story with modern enquiry and booking journeys"
+        "body": "Home finder with location, condition and budget filters • Parks CMS with aerial photography for every location • Heritage-forward brand story with modern enquiry and booking journeys • Integrated website stock with sales CRM"
       }
     ],
     "quote": null,
@@ -426,11 +414,10 @@
     "cardImage": "/assets/images/case-studies/ggs 1.jpg",
     "services": [
       "Shopify design and build",
-      "Ecommerce UX",
-      "Content structure"
+      "Ecommerce UX"
     ],
     "tags": [
-      "design"
+      "design-automation"
     ],
     "order": 11,
     "liveUrl": "https://greatgreensystems.com/",
@@ -441,11 +428,6 @@
         "type": "text",
         "label": "The brief",
         "body": "Composting is a considered purchase with lots of jargon. The store had to help shoppers choose the right system for their home and habits, serve both consumers and wholesale buyers, and capitalise on the new Simpler Recycling regulations."
-      },
-      {
-        "type": "image",
-        "src": "/assets/images/case-studies/great-green-desktop-2.jpg",
-        "caption": "Great Green Systems — Shopify."
       },
       {
         "type": "text",
@@ -473,13 +455,35 @@
     "heroSquareTop": "/assets/images/case-studies/plp 2.jpg",
     "heroSquareBottom": "/assets/images/case-studies/plp 3.jpg",
     "cardImage": "/assets/images/case-studies/plp 1.jpg",
-    "services": [],
-    "tags": [],
+    "services": [
+      "Web design",
+      "Webflow Development",
+      "Recruitment"
+    ],
+    "tags": [
+      "design-automation"
+    ],
     "order": 12,
     "liveUrl": "",
     "liveLabel": "",
-    "summary": "",
-    "sections": [],
+    "summary": "Labour won a landslide election and had an urgent need to help recruit 1000+ support staff. They used The Ladder Group to build the infrastructure to do so. Electric Sheep provided the front-end website to funnel traffic through. Delivered in record time.",
+    "sections": [
+      {
+        "type": "text",
+        "label": "The brief",
+        "body": "After a landslide general election win, the Parliamentary Labour Party needed to recruit more than 1,000 support staff, and quickly. The Ladder Group was building the recruitment infrastructure behind the scenes; what it needed was a front door that could take a surge of interest and send every candidate the right way."
+      },
+      {
+        "type": "text",
+        "label": "What we built",
+        "body": "The front-end website that sits in front of The Ladder Group's recruitment platform. A clear, focused Webflow site sets out the opportunity and funnels every visitor straight into the application journey, designed and built against the clock and delivered in record time."
+      },
+      {
+        "type": "text",
+        "label": "Highlights",
+        "body": "Front-end recruitment site for a hiring drive of more than 1,000 roles • A single, clear funnel into The Ladder Group's application infrastructure • Designed, built in Webflow and delivered in record time"
+      }
+    ],
     "quote": null,
     "testimonialImage": "",
     "featured": false,
@@ -498,10 +502,10 @@
     "services": [
       "Brand-led web design",
       "Webflow development",
-      "Motion design"
+      "Community Platform"
     ],
     "tags": [
-      "automation"
+      "portals"
     ],
     "order": 13,
     "liveUrl": "https://www.execta.social/",
@@ -514,11 +518,6 @@
         "body": "ExecTA Social is a closed-door community for senior TA leaders, so the site had to feel exclusive and fun at the same time: credible enough for VPs at global brands, characterful enough to stand apart from every corporate community platform."
       },
       {
-        "type": "image",
-        "src": "/assets/images/case-studies/execta-desktop-2.jpg",
-        "caption": "ExecTA Social — Webflow."
-      },
-      {
         "type": "text",
         "label": "What we built",
         "body": "A distinctive identity built around a rocket-and-UFO space theme, animated typography and a bold magenta accent. Membership and partner journeys are kept crisp, a wall of member testimonials from companies like Sage, ThoughtWorks and Mimecast builds trust, and a live chapter list shows the community's global spread."
@@ -527,13 +526,6 @@
         "type": "text",
         "label": "Highlights",
         "body": "Characterful space-themed brand world with animated type • Member testimonial wall featuring 1,200 plus global Heads of TA • Application-based membership and partner journeys with a global chapter map"
-      },
-      {
-        "type": "",
-        "label": "",
-        "body": "",
-        "src": "",
-        "caption": ""
       }
     ],
     "quote": null,
@@ -549,11 +541,12 @@
     "client": "House of Champions",
     "heroImage": "/assets/images/case-studies/hoc 1.jpg",
     "heroSquareTop": "/assets/images/case-studies/hoc 2.jpg",
-    "heroSquareBottom": "/assets/images/case-studies/hoc 3.jpg",
+    "heroSquareBottom": "/assets/images/case-studies/hoc 4.jpg",
     "cardImage": "/assets/images/case-studies/hoc 1.jpg",
     "services": [
       "Marketing Site",
-      "Business Tool"
+      "Business Tool",
+      "Members Portal"
     ],
     "tags": [
       "portals"
@@ -561,27 +554,22 @@
     "order": 0,
     "liveUrl": "https://ourhouseofchampions.com/",
     "liveLabel": "Visit ourhouseofchampions.com",
-    "summary": "",
+    "summary": "A marketing site to attract new members and a new members experience via a dedicated portal. This allows members to manage their membership, book meeting rooms and more.",
     "sections": [
       {
         "type": "text",
         "label": "The brief",
-        "body": ""
-      },
-      {
-        "type": "image",
-        "src": "",
-        "caption": ""
+        "body": "House of Champions is a members' community built around creativity, community, collaboration and communication. It needed two things working as one: a site that makes a compelling case to prospective members, and a better day-to-day experience for the members already inside."
       },
       {
         "type": "text",
         "label": "What we built",
-        "body": ""
+        "body": "A marketing site that tells the House of Champions story and leads visitors towards applying for membership, paired with a dedicated members' portal. Once inside, members can manage their membership, book meeting rooms and more, all in one place."
       },
       {
         "type": "text",
         "label": "Highlights",
-        "body": ""
+        "body": "Marketing site designed to attract and convert new members • Dedicated members' portal for managing membership • Meeting room booking built into the members' experience"
       }
     ],
     "quote": null,

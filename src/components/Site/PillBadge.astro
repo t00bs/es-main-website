@@ -1,15 +1,22 @@
 ---
-// Outline pill badge (40px radius, 1px inset stroke) — e.g. "Customer Stories".
+// Pill badge (40px radius) — e.g. "Customer Stories". Outlined by default, a
+// 1px inset stroke in `color`; `filled` makes it a solid block of `color`
+// with the label reversed out in ink, like the redaction mark — so set over
+// imagery with the cream default, the two kinds read apart at a glance.
 interface Props {
   color?: string;
+  /** A filled chip instead of an outline. */
+  filled?: boolean;
 }
 
-const { color = "var(--text-on-image)" } = Astro.props;
+const { color = "var(--text-on-image)", filled = false } = Astro.props;
 ---
 
 <span
-  class="pill-badge"
-  style={`color: ${color}; box-shadow: inset 0 0 0 1px ${color};`}
+  class:list={["pill-badge", filled && "pill-badge--filled"]}
+  style={filled
+    ? `background-color: ${color}; color: var(--dark-900);`
+    : `color: ${color}; box-shadow: inset 0 0 0 1px ${color};`}
 >
   <slot />
 </span>

@@ -1,0 +1,294 @@
+---
+// The cookie banner and the Cookie settings dialog. Rendered beside the footer,
+// whose "Cookie settings" link reopens the dialog on every page.
+//
+// Nothing here loads a tracker. TagManager (in <head>) owns Consent Mode and
+// GTM; this only records the visitor's choice and hands it to
+// `window.esConsent.apply`. Accept and reject carry equal weight, and both
+// optional categories start switched off.
+import Button from "@/components/Button.astro";
+import Choice from "@/components/Form/Choice.astro";
+import Modal from "@/components/Interactive/Modal.astro";
+---
+
+<section
+  class="consent_banner theme-invert"
+  aria-label="Cookie consent"
+  data-consent-banner
+  hidden
+>
+  <p class="consent_title">Cookies.</p>
+  <p class="consent_text">
+    We’d like to use analytics cookies to see how people use this site, and
+    marketing cookies to measure our adverts. Neither is switched on unless you
+    say so. <a href="/cookies">How we use cookies</a>
+  </p>
+  <div class="consent_actions">
+    <Button data-consent="accept">Accept all</Button>
+    <Button data-consent="reject">Reject all</Button>
+    <Button variant="link" data-modal-open="cookie-settings"
+      >Choose cookies</Button
+    >
+  </div>
+</section>
+
+<Modal id="cookie-settings" label="Cookie settings">
+  <h2 class="consent_heading">Cookie settings</h2>
+  <p class="consent_text">
+    Choose which cookies we can use. You can change your mind at any time from
+    Cookie settings at the foot of every page.
+  </p>
+  <div class="consent_options">
+    <div class="consent_option">
+      <Choice
+        variant="toggle"
+        label="Necessary"
+        name="necessary"
+        checked
+        disabled
+        aria-describedby="consent-necessary"
+      />
+      <p id="consent-necessary">
+        Always on. Remembers the choices you make here, and nothing else.
+      </p>
+    </div>
+    <div class="consent_option">
+      <Choice
+        variant="toggle"
+        label="Analytics"
+        name="analytics"
+        aria-describedby="consent-analytics"
+      />
+      <p id="consent-analytics">
+        Google Analytics. Tells us which pages people read and how they found
+        us, so we can make the site better.
+      </p>
+    </div>
+    <div class="consent_option">
+      <Choice
+        variant="toggle"
+        label="Marketing"
+        name="marketing"
+        aria-describedby="consent-marketing"
+      />
+      <p id="consent-marketing">
+        The Meta Pixel. Lets us measure our adverts on Facebook and Instagram,
+        and show them to people who have visited this site.
+      </p>
+    </div>
+  </div>
+  <div class="consent_actions">
+    <Button data-consent="save">Save choices</Button>
+    <Button emphasis="secondary" data-consent="accept">Accept all</Button>
+    <Button emphasis="secondary" data-consent="reject">Reject all</Button>
+  </div>
+</Modal>
+
+<script>
+  import {
+    CONSENT_COOKIE,
+    CONSENT_VERSION,
+    CONSENT_MAX_AGE_DAYS,
+  } from "@/consts.ts";
+
+  type Categories = { analytics: boolean; marketing: boolean };
+
+  declare global {
+    interface Window {
+      /** Set by TagManager in <head>. */
+      esConsent?: {
+        saved: boolean;
+        state: Categories;
+        apply(choice: Categories): void;
+      };
+      fbq?: (...args: unknown[]) => void;
+    }
+  }
+
+  const CATEGORIES = ["analytics", "marketing"] as const;
+
+  // What each category leaves behind, cleared when it is switched off.
+  const TRACES: Record<keyof Categories, RegExp> = {
+    analytics: /^_ga(_|$)|^_gid$/,
+    marketing: /^_fb[pc]$/,
+  };
+
+  const consent = window.esConsent;
+  const banner = document.querySelector<HTMLElement>("[data-consent-banner]");
+  const settings =
+    document.querySelector<HTMLDialogElement>("#cookie-settings");
+  const toggle = (name: keyof Categories) =>
+    settings?.querySelector<HTMLInputElement>(`input[name="${name}"]`);
+
+  // GA and Meta set their cookies on the registrable domain, not the host, so
+  // each name is expired on every parent of the current hostname.
+  function clearCookies(pattern: RegExp) {
+    const parts = location.hostname.split(".");
+    const domains = ["", ...parts.map((_, i) => parts.slice(i).join("."))];
+    for (const pair of document.cookie.split("; ")) {
+      const name = pair.split("=")[0];
+      if (!pattern.test(name)) continue;
+      for (const domain of domains) {
+        document.cookie = `${name}=; Max-Age=0; Path=/${domain ? `; Domain=${domain}` : ""}`;
+      }
+    }
+  }
+
+  function save(choice: Categories) {
+    if (!consent) return;
+    const record = {
+      v: CONSENT_VERSION,
+      ...choice,
+      at: new Date().toISOString(),
+    };
+    const secure = location.protocol === "https:" ? "; Secure" : "";
+    document.cookie = `${CONSENT_COOKIE}=${encodeURIComponent(JSON.stringify(record))}; Max-Age=${CONSENT_MAX_AGE_DAYS * 86400}; Path=/; SameSite=Lax${secure}`;
+
+    // The Meta Pixel doesn't read Consent Mode, so it is told directly. It
+    // only exists here if marketing was already on earlier in this page.
+    if (choice.marketing !== consent.state.marketing) {
+      window.fbq?.("consent", choice.marketing ? "grant" : "revoke");
+    }
+
+    consent.apply(choice);
+    consent.saved = true;
+    for (const key of CATEGORIES) {
+      if (!choice[key]) clearCookies(TRACES[key]);
+    }
+
+    if (banner) banner.hidden = true;
+    if (settings?.open) settings.close();
+  }
+
+  if (consent) {
+    if (banner && !consent.saved) banner.hidden = false;
+
+    // The dialog always opens on what is saved, not on toggles left unsaved.
+    settings?.addEventListener("modal-open", () => {
+      for (const key of CATEGORIES) {
+        const input = toggle(key);
+        if (input) input.checked = consent.state[key];
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const action = target
+        .closest("[data-consent]")
+        ?.getAttribute("data-consent");
+      if (action === "accept") save({ analytics: true, marketing: true });
+      else if (action === "reject")
+        save({ analytics: false, marketing: false });
+      else if (action === "save") {
+        save({
+          analytics: Boolean(toggle("analytics")?.checked),
+          marketing: Boolean(toggle("marketing")?.checked),
+        });
+      }
+    });
+  }
+</script>
+
+<style is:global>
+  @layer components {
+    /* A card in the inverse of the page, pinned to the bottom-right corner of
+       the screen rather than the content edge. */
+    .consent_banner {
+      --_inset: 1.5rem;
+
+      position: fixed;
+      z-index: 90;
+      bottom: var(--_inset);
+      inset-inline-end: var(--_inset);
+      width: min(32rem, 100% - var(--_inset) * 2);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+      padding: var(--space-5);
+      background-color: var(--background);
+      color: var(--text);
+      border-radius: var(--radius-main);
+      transition:
+        opacity var(--open-duration) var(--open-ease),
+        translate var(--open-duration) var(--open-ease);
+
+      &[hidden] {
+        display: none;
+      }
+    }
+
+    @starting-style {
+      .consent_banner {
+        opacity: 0;
+        translate: 0 1rem;
+      }
+    }
+
+    .consent_title {
+      font-size: var(--text-large);
+      line-height: var(--line-height-small);
+    }
+
+    .consent_heading {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h4);
+      line-height: var(--line-height-large);
+      margin-bottom: var(--space-3);
+    }
+
+    .consent_text {
+      font-size: var(--text-main);
+      line-height: var(--line-height-medium);
+      text-wrap: pretty;
+
+      & a {
+        text-decoration: underline;
+        text-decoration-thickness: var(--rule-thin);
+        text-underline-offset: 0.2em;
+        white-space: nowrap;
+        transition: opacity var(--hover-duration) var(--hover-ease);
+      }
+      & a:hover {
+        opacity: 0.6;
+      }
+    }
+
+    .consent_actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3) var(--space-4);
+    }
+
+    .consent_options {
+      margin-block: var(--space-5);
+      border-bottom: var(--rule-thin) solid var(--rule-hairline);
+    }
+
+    .consent_option {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+      padding-block: var(--space-4);
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+
+      & > p {
+        font-size: var(--text-small);
+        line-height: var(--line-height-medium);
+        color: var(--text-2);
+        text-wrap: pretty;
+      }
+
+      & .form-choice:has(:disabled) {
+        cursor: default;
+        & .form-choice_mark {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+</style>

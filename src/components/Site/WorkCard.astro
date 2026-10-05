@@ -4,7 +4,8 @@
 // but stays in the markup as the link's text for search engines and screen
 // readers. The subtitle and arrow always show; on hover only the image moves,
 // zoomed by `.hover-zoom` on an ancestor.
-// Optional `tags` render as outline pills top-left, matching the case-study page.
+// Optional `tags` render as outline pills top-left, matching the case-study
+// page, followed by `services` as filled pills so the two read apart.
 // `portrait` makes it a 9:16 tile, for the carousels and the work grid.
 import PillBadge from "./PillBadge.astro";
 
@@ -15,6 +16,8 @@ interface Props {
   showArrow?: boolean;
   href?: string;
   tags?: string[];
+  /** Service tags, drawn as filled pills after the outlined `tags`. */
+  services?: string[];
   /** Load the image immediately instead of lazily — for cards near the fold. */
   eager?: boolean;
   /** 9:16 portrait tile instead of a square, with a smaller title. */
@@ -28,9 +31,12 @@ const {
   showArrow = false,
   href = "#",
   tags = [],
+  services = [],
   eager = false,
   portrait = false,
 } = Astro.props;
+
+const hasTags = tags.length > 0 || services.length > 0;
 
 const ARROW_PATH =
   "M 27 19.286 L 23.143 19.286 L 23.143 3.857 L 7.714 3.857 L 7.714 0 L 27 0 L 27 19.286 Z M 0 27 L 0 23.143 L 3.857 23.143 L 3.857 27 L 0 27 Z M 3.857 23.143 L 3.857 19.286 L 7.714 19.286 L 7.714 23.143 L 3.857 23.143 Z M 7.714 19.286 L 7.714 15.429 L 11.571 15.429 L 11.571 19.286 L 7.714 19.286 Z M 11.571 15.429 L 11.571 11.571 L 15.429 11.571 L 15.429 15.429 L 11.571 15.429 Z M 15.429 11.571 L 15.429 7.714 L 19.286 7.714 L 19.286 11.571 L 15.429 11.571 Z";
@@ -48,12 +54,15 @@ const ARROW_PATH =
     )
   }
   <div class="work-card__overlay"></div>
-  {tags.length > 0 && <div class="work-card__tags-protect" />}
+  {hasTags && <div class="work-card__tags-protect" />}
   {
-    tags.length > 0 && (
+    hasTags && (
       <div class="work-card__tags">
         {tags.map((tag) => (
           <PillBadge>{tag}</PillBadge>
+        ))}
+        {services.map((service) => (
+          <PillBadge filled>{service}</PillBadge>
         ))}
       </div>
     )

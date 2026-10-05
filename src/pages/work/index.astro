@@ -5,20 +5,9 @@ import Grid from "@/components/Wrapper/Grid.astro";
 import SectionLabel from "@/components/Site/SectionLabel.astro";
 import WorkCard from "@/components/Site/WorkCard.astro";
 import caseStudies from "../../data/case-studies.json";
+import { WORK_TAG_LABELS } from "@/consts.ts";
 
 const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
-
-// Category tags (capitalised) followed by the service tags shown on the
-// case-study pages.
-const TAG_LABELS: Record<string, string> = {
-  design: "Design",
-  automation: "Automation",
-  portals: "Portals",
-};
-const cardTags = (item: (typeof caseStudies)[number]) => [
-  ...item.tags.map((tag) => TAG_LABELS[tag] ?? tag),
-  ...item.services,
-];
 ---
 
 <Layout
@@ -27,37 +16,132 @@ const cardTags = (item: (typeof caseStudies)[number]) => [
 >
   <Section containerClass="section-split reveal-block" paddingBottom="small">
     <SectionLabel highlight="Work worth staring at." />
-    <p class="statement">
-      Portals, automations, brands and the occasional machine that learns. Every
-      project below shipped, and every client is still speaking to us.
-    </p>
+    <p class="statement"> Portals, automations, brands and the occasional machine that learns. Every project below is shipped, and every client is delighted.</p>
   </Section>
 
-  <Section paddingTop="none" containerClass="hover-zoom">
+  <Section paddingTop="none" gap="5" containerClass="hover-zoom">
     {
-      /* 9:16 cards like the homepage rows, four across at most so every card
-        stays wide enough for its longest tag. */
+      /* Category filter. Each is a real link — /work?category=<tag> — so the
+        homepage service links can open a filtered view, and the script below
+        applies it. Written out rather than looped so the visual editor can
+        rename them; keep them in step with WORK_TAGS in src/consts.ts. */
+    }
+    <nav class="work-filter" aria-label="Filter work by category">
+      <a href="/work" data-filter="" aria-current="page">All</a>
+      <a href="/work?category=design-automation" data-filter="design-automation"
+        >Design &amp; Automation</a
+      >
+      <a href="/work?category=portals" data-filter="portals">Portals</a>
+    </nav>
+
+    {
+      /* 9:16 cards like the homepage rows, three across at most. Category
+        tags are outlined, service tags filled. */
     }
     <Grid
       xsmall={1}
       small={2}
       medium={3}
-      large={4}
+      large={3}
       class="work-grid width-full reveal-group"
     >
       {
         sorted.map((item) => (
-          <WorkCard
-            src={item.cardImage}
-            title={item.title}
-            subtitle={item.subtitle}
-            showArrow
-            href={`/work/${item.id}`}
-            tags={cardTags(item)}
-            portrait
-          />
+          <div class="work-grid__item" data-tags={item.tags.join(" ")}>
+            <WorkCard
+              src={item.cardImage}
+              title={item.title}
+              subtitle={item.subtitle}
+              showArrow
+              href={`/work/${item.id}`}
+              tags={item.tags.map((tag) => WORK_TAG_LABELS[tag] ?? tag)}
+              services={item.services}
+              portrait
+            />
+          </div>
         ))
       }
     </Grid>
   </Section>
+
+  {
+    /* Inline and straight after the grid, so a filtered view hides the other
+      cards before the page first paints rather than flashing them. Clicking a
+      filter swaps the view in place and keeps the URL in step, so back and
+      forward work. An unknown category shows everything. */
+  }
+  <script is:inline>
+    (() => {
+      const nav = document.querySelector(".work-filter");
+      if (!nav) return;
+      const links = [...nav.querySelectorAll("a[data-filter]")];
+      const items = document.querySelectorAll(".work-grid [data-tags]");
+      const known = links.map((link) => link.dataset.filter);
+
+      const apply = (category) => {
+        const current = known.includes(category) ? category : "";
+        for (const link of links) {
+          if (link.dataset.filter === current) {
+            link.setAttribute("aria-current", "page");
+          } else {
+            link.removeAttribute("aria-current");
+          }
+        }
+        for (const item of items) {
+          item.hidden =
+            current !== "" && !item.dataset.tags.split(" ").includes(current);
+        }
+      };
+
+      const fromUrl = () =>
+        new URLSearchParams(location.search).get("category") ?? "";
+
+      apply(fromUrl());
+
+      nav.addEventListener("click", (event) => {
+        const link = event.target.closest("a[data-filter]");
+        if (!link || event.button !== 0) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+          return;
+        }
+        event.preventDefault();
+        history.pushState(null, "", link.href);
+        apply(link.dataset.filter);
+      });
+
+      addEventListener("popstate", () => apply(fromUrl()));
+    })();
+  </script>
 </Layout>
+
+<style>
+  @layer components {
+    /* Pixel-face labels, the active one at full strength — the same voice as
+       the homepage row labels. */
+    .work-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-5);
+    }
+    .work-filter a {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      line-height: var(--line-height-small);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0.35;
+      transition: opacity var(--hover-duration) var(--hover-ease);
+    }
+    .work-filter a[aria-current="page"] {
+      opacity: 1;
+    }
+    .work-filter a:not([aria-current="page"]):hover {
+      opacity: 0.7;
+    }
+
+    .work-grid__item[hidden] {
+      display: none;
+    }
+  }
+</style>
