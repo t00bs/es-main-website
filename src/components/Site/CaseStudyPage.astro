@@ -9,7 +9,8 @@ import PillBadge from "./PillBadge.astro";
 import WorkRow from "./WorkRow.astro";
 import WorkCard from "./WorkCard.astro";
 import caseStudies from "../../data/case-studies.json";
-import { WORK_TAG_LABELS } from "@/consts.ts";
+import { WORK_TAG_SINGULAR } from "@/consts.ts";
+import { caseStudyOgImage } from "@/utils/og.ts";
 
 // The JSON import types each entry by the keys it actually has, so an optional
 // field that some entries omit is absent from the union. `year` and the live
@@ -50,7 +51,7 @@ const sections = (cs.sections as Section[]).filter((s) =>
 // starting from the one after it and wrapping round, so the first card is
 // the next piece of work in that category.
 const category = cs.tags[0] ?? "";
-const categoryLabel = WORK_TAG_LABELS[category] ?? "";
+const categoryLabel = WORK_TAG_SINGULAR[category] ?? "";
 const sorted = [...caseStudies].sort((a, b) => a.order - b.order);
 const inCategory = sorted.filter((item) =>
   item.tags.some((tag) => tag === category),
@@ -62,7 +63,11 @@ const relatedWork = [
 ];
 ---
 
-<Layout title={cs.title} description={cs.summary}>
+<Layout
+  title={cs.title}
+  description={cs.summary}
+  image={caseStudyOgImage(cs)}
+>
   {/* Hero: name, service tags and client stacked on the left; on the right
       a grid of the 9:16 hero image — the same crop as the work card that led
       here — beside two squares. */}
@@ -170,7 +175,7 @@ const relatedWork = [
   </Section>
 
   <Section render={relatedWork.length > 0}>
-    <WorkRow label={`Continue reading more  ${categoryLabel} Case Studies.`}>
+    <WorkRow label={`Continue reading more ${categoryLabel} Case Studies.`}>
       {
         relatedWork.map((item) => (
           <WorkCard

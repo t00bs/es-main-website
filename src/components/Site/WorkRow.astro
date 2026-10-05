@@ -103,6 +103,16 @@ const { label, xsmall = 1.5, small = 2, medium = 4, large = 5 } = Astro.props;
        content starts. */
     .section:has(.work-row) {
       container-type: inline-size;
+
+      /* The track scrolls and its cards zoom on hover, so Chrome often draws
+         the cards on a GPU layer of their own, leaving nothing but the
+         section's flat background behind them. Chrome draws a stretch of
+         page that is all one colour as a solid block rather than rasterising
+         it, and on a wide-gamut screen that block comes out a shade darker
+         than the page round it — a dark band behind the cards. The same
+         colour painted as a gradient is never treated as a solid block, so it
+         always matches. It reads --background, so it follows the theme. */
+      background-image: linear-gradient(var(--background), var(--background));
     }
     .work-row .slider_wrap {
       --_edge: max(var(--site-margin), (100cqw - var(--max-width-main)) / 2);

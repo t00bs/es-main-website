@@ -2,7 +2,7 @@
 export const SITE_NAME = "Electric Sheep";
 /** Fallback meta description for pages that don't set their own. */
 export const SITE_DESCRIPTION =
-  "We design & build digital tools that are automated by AI, but driven by people.";
+  "We design and build digital tools for growing service businesses, saving you time and freeing your team to focus on clients.";
 /** Canonical origin. Resolves canonical URLs, social images, and the sitemap. */
 export const SITE_URL = "https://electricsheep.design";
 /** BCP 47 locale tag used to format dates and numbers. */
@@ -38,4 +38,9 @@ export const WORK_TAGS = ["design-automation", "portals"] as const;
 export const WORK_TAG_LABELS: Record<string, string> = {
   "design-automation": "Design & Automation",
   portals: "Portals",
+};
+/** Each category in the singular, for describing a noun — "Portal Case Studies". */
+export const WORK_TAG_SINGULAR: Record<string, string> = {
+  "design-automation": "Design & Automation",
+  portals: "Portal",
 };
