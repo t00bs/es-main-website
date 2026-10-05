@@ -30,7 +30,9 @@ const { label, xsmall = 1.5, small = 2, medium = 4, large = 5 } = Astro.props;
 ---
 
 <div class="work-row reveal-block">
-  <h2 class="work-row__label">{label}</h2>
+  <h2 class="work-row__label">
+    {label} <span class="work-row__room" aria-hidden="true"></span>
+  </h2>
   <Slider
     label={`${label} case studies`}
     xsmall={xsmall}
@@ -42,6 +44,23 @@ const { label, xsmall = 1.5, small = 2, medium = 4, large = 5 } = Astro.props;
     <slot />
   </Slider>
 </div>
+
+<script>
+  // Hold the label's gap to the markers' width. The slider draws its markers
+  // once it can measure a page, and redraws them when the count changes, so
+  // watch them rather than reading once. Hidden markers measure 0. The width
+  // goes on the label, not the row: the reveal animation rewrites the row's
+  // inline style.
+  for (const row of document.querySelectorAll<HTMLElement>(".work-row")) {
+    const label = row.querySelector<HTMLElement>(".work-row__label");
+    const markers = row.querySelector<HTMLElement>(".slider_markers");
+    if (!label || !markers) continue;
+    new ResizeObserver(([entry]) => {
+      const width = entry.borderBoxSize[0].inlineSize;
+      label.style.setProperty("--_markers", `${width}px`);
+    }).observe(markers);
+  }
+</script>
 
 <style is:global>
   @layer components {
@@ -60,6 +79,16 @@ const { label, xsmall = 1.5, small = 2, medium = 4, large = 5 } = Astro.props;
       line-height: var(--line-height-small);
       letter-spacing: var(--tracking-pixel);
       color: var(--text);
+    }
+
+    /* The markers sit on the label's last line but take no room there, so
+       the label ends with a gap as wide as they are (measured by the script
+       below). Where they fit beside the text, the gap does too; where they
+       don't — a long label, or many markers on a phone — the gap wraps onto
+       a line of its own and the markers drop with it, clear of the text. */
+    .work-row__room {
+      display: inline-block;
+      width: var(--_markers, 0px);
     }
 
     /* The controls leave the flow: the arrows hang over the edges of the
