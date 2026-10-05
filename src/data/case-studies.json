@@ -73,12 +73,12 @@
       {
         "type": "text",
         "label": "What we built",
-        "body": "A bold, characterful design built around clear buyer journeys for first-time buyers, remortgaging, buy to let and moving house. An interactive mortgage calculator estimates monthly repayments, legal fees and stamp duty with first-time buyer logic built in, and appointment booking sits one click away throughout."
+        "body": "A bold, characterful design built around clear buyer journeys for first-time buyers, remortgaging, buy to let and moving house. An interactive mortgage calculator estimates monthly repayments, legal fees and stamp duty with first-time buyer logic built in, and appointment booking sits one click away throughout.\n\nThe design of the new look for The Mortgage Shop was done in collaboration with MixBox."
       },
       {
         "type": "text",
         "label": "Highlights",
-        "body": "Custom mortgage calculator covering repayments, legal fees and stamp duty • Client testimonials, rate newsletter sign-up and appointment booking throughout"
+        "body": "Custom mortgage calculator covering repayments, legal fees and stamp duty • Client testimonials, rate newsletter sign-up and appointment booking throughout."
       }
     ],
     "quote": {
@@ -140,7 +140,7 @@
   {
     "id": "chapter-2",
     "title": "Chapter 2",
-    "subtitle": "Talent and recruitment (RPO)",
+    "subtitle": "Talent and Technology",
     "client": "Chapter 2 Group",
     "heroImage": "/assets/images/case-studies/c2 1.jpg",
     "heroSquareTop": "/assets/images/case-studies/c2 2.jpg",

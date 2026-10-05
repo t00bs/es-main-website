@@ -9,9 +9,8 @@ type Props = SeoProps;
 const {
   title,
   description = SITE_DESCRIPTION,
-  // TODO: replace with a purpose-made 1200x630 social card. This is a stand-in
-  // so og:image points at a real file rather than 404-ing on every page.
-  image = "/assets/images/hero-sheep.png",
+  // 1200x630 brand card: the cream logo centred on the dark page colour.
+  image = "/assets/images/og-image.png",
   type = "website",
   noindex,
 } = Astro.props;
