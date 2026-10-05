@@ -245,6 +245,11 @@ const current = (href: string) => (here === href ? "page" : undefined);
         background: var(--background);
         opacity: 0;
         visibility: hidden;
+        /* One compositing layer for the whole panel, always. Left to itself,
+           Chrome promotes it while it fades and drops it again afterwards,
+           and the parts drawn on and off the GPU can come out a shade apart
+           on a wide-gamut screen — a lighter band across the black. */
+        will-change: opacity;
         transition:
           opacity 0.3s ease,
           visibility 0s linear 0.35s;
