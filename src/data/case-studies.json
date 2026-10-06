@@ -38,9 +38,9 @@
     ],
     "quote": null,
     "testimonialImage": "",
-    "featured": false,
-    "clientLogoNew": "/assets/client logos/6847fde41996349f7ff8a19c_BCR.svg",
-    "clientLogoWidth": 0,
+    "featured": true,
+    "clientLogoNew": "/assets/client logos/6847fde4bad71a7d94fa7d79_Gov Jersey.svg",
+    "clientLogoWidth": 180,
     "heroSquareBottom": "/assets/images/case-studies/fj 3.jpg"
   },
   {
@@ -486,9 +486,9 @@
     ],
     "quote": null,
     "testimonialImage": "",
-    "featured": false,
-    "clientLogoNew": "",
-    "clientLogoWidth": 0
+    "featured": true,
+    "clientLogoNew": "/assets/client logos/6847fde4f035109a004b18e3_labourlogo 1.svg",
+    "clientLogoWidth": 140
   },
   {
     "id": "execta-social",

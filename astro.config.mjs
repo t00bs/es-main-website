@@ -1,17 +1,10 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
-import sitemap from "@astrojs/sitemap";
 import { SITE_URL } from "./src/consts.ts";
-import { isNoindexRoute } from "./src/utils/seo.ts";
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
-  integrations: [
-    sitemap({
-      filter: (page) => !isNoindexRoute(new URL(page).pathname),
-    }),
-  ],
   // The three brand faces. Astro emits the @font-face rules, fingerprints the
   // files and preloads the ones BaseHead asks for, so none of that is hand-held
   // in CSS any more.
