@@ -67,9 +67,10 @@ const {
       position: absolute;
       left: var(--card-pad);
       top: 81px;
+      /* Stop short of the right side of the card, where the portraits sit,
+         so the quote never runs over a face whatever the card's width. */
+      right: 40%;
       margin: 0;
-      max-width: 410px;
-      padding-right: var(--card-pad);
       font-family: var(--font-serif-quote);
       font-weight: 400;
       font-style: italic;

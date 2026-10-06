@@ -7,10 +7,17 @@ import caseStudies from "../../data/case-studies.json";
 const featuredLogos = [...caseStudies]
   .sort((a, b) => a.order - b.order)
   .filter((item) => item.featured && item.clientLogoNew);
+
+// When the logos can't hold one row they split into two even ones, so each
+// row takes half the logos, rounded up.
+const logoColumns = Math.ceil(featuredLogos.length / 2);
 ---
 
 <Section paddingTop="none" render={featuredLogos.length > 0}>
-  <div class="logo-bar__row width-full reveal-group">
+  <div
+    class="logo-bar__row width-full reveal-group"
+    style={`--logo-cols: ${logoColumns};`}
+  >
     <span class="logo-bar__label">Trusted by:</span>
     {
       featuredLogos.map((item) => (
@@ -32,22 +39,26 @@ const featuredLogos = [...caseStudies]
 
 <style>
   @layer components {
+    /* One row on desktop. It never wraps: if room runs short before the
+       breakpoint below, the logos shrink in proportion instead of dropping a
+       stray onto a second line. */
     .logo-bar__row {
       display: flex;
       align-items: center;
-      gap: var(--space-8);
-      flex-wrap: wrap;
+      gap: var(--space-6);
       justify-content: space-between;
       padding: var(--space-4) 0;
       border-top: var(--rule-thin) solid var(--rule-hairline);
       border-bottom: var(--rule-thin) solid var(--rule-hairline);
     }
     .logo-bar__label {
+      flex-shrink: 0;
       font-family: var(--font-pixel);
       font-size: var(--h5);
       letter-spacing: var(--tracking-pixel);
       color: var(--text);
       text-align: center;
+      white-space: nowrap;
     }
     /* Logos render monochrome at half strength: flattened to ink on the light
        theme, inverted to cream on the dark one. Per-logo widths arrive as
@@ -55,7 +66,9 @@ const featuredLogos = [...caseStudies]
     .logo-bar__logo {
       height: 2rem;
       width: auto;
+      min-width: 0;
       display: block;
+      object-fit: contain;
       opacity: 0.5;
       filter: brightness(0);
     }
@@ -67,22 +80,39 @@ const featuredLogos = [...caseStudies]
       filter: brightness(0) invert(1);
     }
 
+    /* Too narrow for one row: the logos split into two even rows (--logo-cols
+       is half the count, rounded up) with the label centred beside them. */
+    @media (width < 75rem) {
+      .logo-bar__row {
+        display: grid;
+        grid-template-columns: auto repeat(var(--logo-cols, 3), auto);
+        justify-items: center;
+        gap: var(--space-6);
+      }
+      .logo-bar__label {
+        grid-row: span 2;
+        justify-self: start;
+      }
+    }
+
     /* Below desktop the per-logo widths give way to uniform boxes: every logo
        is contained in the same footprint so heavy wordmarks and delicate marks
        read at even weight, in centred rows. The label takes its own line. */
     @media (width < 60rem) {
       .logo-bar__row {
+        grid-template-columns: repeat(var(--logo-cols, 3), auto);
         justify-content: center;
         gap: var(--space-5) var(--space-7);
       }
       .logo-bar__label {
-        flex-basis: 100%;
+        grid-column: 1 / -1;
+        grid-row: auto;
+        justify-self: center;
       }
       .logo-bar__logo,
       .logo-bar__logo[style] {
         width: 8rem;
         height: 2.75rem;
-        object-fit: contain;
       }
     }
 
@@ -94,6 +124,13 @@ const featuredLogos = [...caseStudies]
       .logo-bar__logo[style] {
         width: 6.5rem;
         height: 2.5rem;
+      }
+    }
+
+    /* Phones: two to a row. */
+    @media (width < 27rem) {
+      .logo-bar__row {
+        grid-template-columns: repeat(2, auto);
       }
     }
   }
