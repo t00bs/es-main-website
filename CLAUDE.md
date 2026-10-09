@@ -170,7 +170,16 @@ static art that no editor needs to swap.
 `src/consts.ts` holds the site name, description, URL and `NOINDEX_ROUTES`.
 That last one drives both the `robots` meta tag and sitemap exclusion, so the
 two cannot disagree. Pages pass a bare `title` ("Work"); `BaseHead` renders it
-as `Work | Electric Sheep`.
+as `Work | Electric Sheep`. The homepage's title carries the product term
+("Design & Automation Studio in Jersey") — the brand alone is too generic to
+rank — and `Site/StudioSchema.astro` adds Organization JSON-LD through
+`Layout`'s `head` slot.
+
+For AI agents, `src/pages/.well-known/ard.json.ts` publishes an Agentic
+Resource Discovery catalog listing one Agent Skill,
+`.well-known/skills/electric-sheep/SKILL.md.ts`. The skill is built from the
+case-study, service-pillar and process-step JSON, so it follows the visual
+editor; the studio's email and address come from `STUDIO_*` in `consts.ts`.
 
 ## Motion
 

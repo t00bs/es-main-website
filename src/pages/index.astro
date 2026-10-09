@@ -11,6 +11,7 @@ import PixelLink from "@/components/Site/PixelLink.astro";
 import TestimonialCard from "@/components/Site/TestimonialCard.astro";
 import SectionLabel from "@/components/Site/SectionLabel.astro";
 import FeatureCard from "@/components/Site/FeatureCard.astro";
+import StudioSchema from "@/components/Site/StudioSchema.astro";
 import caseStudies from "../data/case-studies.json";
 import heroSlidesData from "../data/hero-slides.json";
 
@@ -21,7 +22,12 @@ const testimonials = sorted.filter((item) => item.quote);
 const slides = heroSlidesData.map((item) => item.image).filter(Boolean);
 ---
 
-<Layout>
+<Layout
+  title="Design & Automation Studio in Jersey"
+  description="Electric Sheep is a design and automation studio in Jersey, building brands, websites, client portals and AI automations for growing service businesses."
+>
+  <StudioSchema slot="head" />
+
   {/* Hero timing: intervalMs = how long each slide holds, transitionMs =
       pixelation/glitch speed. Tweak here. */}
   <Section paddingTop="even">

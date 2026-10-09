@@ -5,6 +5,19 @@ export const SITE_DESCRIPTION =
   "We design and build digital tools for growing service businesses, saving you time and freeing your team to focus on clients.";
 /** Canonical origin. Resolves canonical URLs, social images, and the sitemap. */
 export const SITE_URL = "https://electricsheep.design";
+/**
+ * Studio contact details for machine-readable output: the homepage JSON-LD and
+ * the agent skill. The visible copies (footer, contact and about pages) are
+ * edited in place, so keep these in step with them.
+ */
+export const STUDIO_EMAIL = "hello@electricsheep.design";
+export const STUDIO_ADDRESS = {
+  street: "10 Minden Street",
+  locality: "St Helier",
+  postcode: "JE2 4WR",
+  /** ISO 3166-1 alpha-2: Jersey. */
+  country: "JE",
+};
 /** BCP 47 locale tag used to format dates and numbers. */
 export const SITE_LOCALE = "en-GB";
 /**

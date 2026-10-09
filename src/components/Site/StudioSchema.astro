@@ -1,0 +1,61 @@
+---
+// Homepage structured data. "Electric Sheep" is a crowded name (the novel, the
+// screensaver, other studios), so this tells search engines and AI clients
+// that this domain is the Jersey design studio, and who founded it.
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_DESCRIPTION,
+  STUDIO_EMAIL,
+  STUDIO_ADDRESS,
+} from "@/consts.ts";
+import services from "../../data/services.json";
+
+const organization = `${SITE_URL}/#organization`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": organization,
+      name: SITE_NAME,
+      legalName: "Electric Sheep Limited",
+      url: `${SITE_URL}/`,
+      logo: `${SITE_URL}/assets/logo/es-logo-dark.svg`,
+      image: `${SITE_URL}/assets/images/og-image.png`,
+      description: SITE_DESCRIPTION,
+      email: STUDIO_EMAIL,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: STUDIO_ADDRESS.street,
+        addressLocality: STUDIO_ADDRESS.locality,
+        postalCode: STUDIO_ADDRESS.postcode,
+        addressCountry: STUDIO_ADDRESS.country,
+      },
+      foundingDate: "2023",
+      founder: {
+        "@type": "Person",
+        name: "Toby Balderson",
+        url: `${SITE_URL}/about/`,
+        sameAs: ["https://www.linkedin.com/in/toby-balderson-69b752164/"],
+      },
+      // The services marquee, minus its bullet separators.
+      knowsAbout: services.map((item) => item.text.replace(/\s*•\s*$/, "")),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+      publisher: { "@id": organization },
+    },
+  ],
+};
+---
+
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify(schema)}
+/>
