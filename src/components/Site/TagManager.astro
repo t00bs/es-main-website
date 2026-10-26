@@ -13,8 +13,10 @@
 // `window.esConsent` is what CookieConsent calls when the visitor chooses, so
 // the category → signal mapping lives here and nowhere else.
 import { GTM_ID, CONSENT_COOKIE, CONSENT_VERSION } from "@/consts.ts";
+import { IS_PREVIEW_DEPLOY } from "@/utils/deploy.ts";
 
-const loadGtm = import.meta.env.PROD;
+// Production builds only, and never on staging/preview deploys.
+const loadGtm = import.meta.env.PROD && !IS_PREVIEW_DEPLOY;
 ---
 
 <script

@@ -2,6 +2,7 @@
 import { Font } from "astro:assets";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/consts.ts";
 import { isNoindexRoute } from "@/utils/seo.ts";
+import { IS_PREVIEW_DEPLOY } from "@/utils/deploy.ts";
 import type { SeoProps } from "@/types.ts";
 
 type Props = SeoProps;
@@ -15,7 +16,8 @@ const {
   noindex,
 } = Astro.props;
 
-const isNoindex = noindex ?? isNoindexRoute(Astro.url.pathname);
+const isNoindex =
+  IS_PREVIEW_DEPLOY || (noindex ?? isNoindexRoute(Astro.url.pathname));
 
 const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
 const canonical = new URL(Astro.url.pathname, Astro.site);

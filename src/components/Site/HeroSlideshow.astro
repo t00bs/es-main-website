@@ -59,6 +59,10 @@ const {
       line-height: var(--line-height-medium);
       color: var(--text-on-image);
     }
+    /* Built by the script below, so it has to reach through the scope. */
+    h1 :global(.hero-accent) {
+      color: var(--accent-500);
+    }
     @media (max-width: 720px) {
       h1 {
         left: var(--card-pad);
@@ -80,9 +84,14 @@ const {
     const h1 = hero.querySelector("h1")!;
     const words = (h1.textContent || "").trim().split(/\s+/);
     h1.textContent = "";
+    // Everything after the first full stop is the second beat ("Not by
+    // nature.") and takes the accent colour.
+    let accent = false;
     words.forEach((word, i) => {
       if (i > 0) h1.append(" ");
       const wordSpan = document.createElement("span");
+      if (accent) wordSpan.classList.add("hero-accent");
+      if (word.endsWith(".")) accent = true;
       for (const ch of word) {
         const charSpan = document.createElement("span");
         charSpan.textContent = ch;
