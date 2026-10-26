@@ -18,17 +18,10 @@
   --dark-800: #1a1a1a;
   --dark-900: #101010; /* ink — the page, inverted */
 
-  /* `theme-brand` still resolves to the inverse band: the brand moment is
-     ink-on-cream reversed out. */
+  /* Electric Sheep has no accent hue: the brand moment is ink-on-cream
+     reversed out, so `theme-brand` resolves to the inverse band. */
   --brand-500: #101010;
   --brand-text: #f7eed5;
-
-  /* Accent: lime. Used sparingly, for the one thing to look at in a block:
-     the redaction mark, primary buttons, pixel labels and links on dark.
-     Same hue as the client report PDFs. */
-  --accent-500: #c6fb50;
-  --accent-400: #d6fc80; /* hover */
-  --accent-ink: #101010; /* text set on lime */
 
   /* Families. The --font-es-* variables come from the `fonts` block in
      astro.config.mjs, which emits the @font-face rules and their fallbacks. */
@@ -154,8 +147,8 @@
 [class*="theme-"] {
   /* The redaction mark: a solid block of the text colour, with the words
      inside reversed out of it. */
-  --highlight-block: var(--accent-500);
-  --highlight-text: var(--accent-ink);
+  --highlight-block: var(--text);
+  --highlight-text: var(--background);
 
   /* Rules. The hairline is heavier than Lumos's default --border. */
   --rule-strong: var(--text);
@@ -164,27 +157,16 @@
   /* Empty image wells */
   --surface-placeholder: color-mix(in lab, var(--text) 15%, var(--background));
 
-  /* Primary buttons are the redaction mark again: a solid lime block with ink
-     text, which holds on cream and ink alike. Hover lightens the lime. */
-  --button-background: var(--accent-500);
-  --button-border: var(--accent-500);
-  --button-text: var(--accent-ink);
-  --button-background-hover: var(--accent-400);
-  --button-border-hover: var(--accent-400);
-  --button-text-hover: var(--accent-ink);
-}
-
-/* Accent as a text colour. Lime only reads on the dark surfaces; on cream it
-   fails contrast, so it falls back to the text colour there. Selectors mirror
-   Lumos's light/dark scheme blocks and sit after the block above so they win. */
-:root,
-.theme-light,
-.theme-dark .theme-invert {
-  --accent-text: var(--text);
-}
-.theme-dark,
-.theme-light .theme-invert {
-  --accent-text: var(--accent-500);
+  /* Primary buttons are the redaction mark again: a solid block of the text
+     colour with the label reversed out, so they hold in every theme. Lumos
+     fills them with --brand-500, which is ink here — invisible on the dark
+     page. Hover drops the fill to an outline. */
+  --button-background: var(--text);
+  --button-border: var(--text);
+  --button-text: var(--background);
+  --button-background-hover: transparent;
+  --button-border-hover: var(--text);
+  --button-text-hover: var(--text);
 }
 
 /* The protection gradient under every image caption is a fixed black scrim —
