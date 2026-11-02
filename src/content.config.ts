@@ -99,6 +99,39 @@ const processSteps = defineCollection({
   schema: z.object({ number: z.string(), title: z.string(), body: z.string() }),
 });
 
+// The Sheepdog page: one card per sheep in the crew.
+const sheep = defineCollection({
+  loader: file("src/data/sheep.json"),
+  schema: z.object({
+    name: z.string(),
+    plan: z.string(),
+    status: z.string(),
+    image: z.string(),
+    alt: z.string(),
+    body: z.string(),
+  }),
+});
+
+// Numbered steps in the Sheepdog page's "How it works".
+const sheepdogSteps = defineCollection({
+  loader: file("src/data/sheepdog-steps.json"),
+  schema: z.object({ number: z.string(), title: z.string(), body: z.string() }),
+});
+
+// Sheepdog plans. `amount` is the monthly price in pounds for the page's JSON-LD;
+// keep it in step with `price`.
+const sheepdogPlans = defineCollection({
+  loader: file("src/data/sheepdog-plans.json"),
+  schema: z.object({
+    name: z.string(),
+    price: z.string(),
+    amount: z.number(),
+    period: z.string(),
+    body: z.string(),
+    allowance: z.string(),
+  }),
+});
+
 export const collections = {
   caseStudies,
   services,
@@ -106,4 +139,7 @@ export const collections = {
   servicePillars,
   results,
   processSteps,
+  sheep,
+  sheepdogSteps,
+  sheepdogPlans,
 };

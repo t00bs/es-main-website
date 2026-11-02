@@ -4,5 +4,8 @@
     "clientLogoNew": "image",
     "heroSquareTop": "image",
     "heroSquareBottom": "image"
+  },
+  "data/sheep.json": {
+    "image": "image"
   }
 }

@@ -5,13 +5,15 @@
 // surfaces the cream block hides the highlighted words.
 interface Props {
   highlight?: string;
+  /** The element to render. A label that names a section can be its heading. */
+  tag?: "span" | "h2" | "h3";
 }
 
-const { highlight } = Astro.props;
+const { highlight, tag: Tag = "span" } = Astro.props;
 const hasChildren = Astro.slots.has("default");
 ---
 
-<span class="section-label">
+<Tag class="section-label">
   <slot />
   {
     highlight && (
@@ -21,7 +23,7 @@ const hasChildren = Astro.slots.has("default");
       </>
     )
   }
-</span>
+</Tag>
 <style>
   @layer components {
     .section-label {

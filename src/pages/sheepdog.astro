@@ -1,0 +1,289 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Section from "@/components/Wrapper/Section.astro";
+import Grid from "@/components/Wrapper/Grid.astro";
+import SectionLabel from "@/components/Site/SectionLabel.astro";
+import PixelLink from "@/components/Site/PixelLink.astro";
+import PillBadge from "@/components/Site/PillBadge.astro";
+import { SITE_URL } from "@/consts.ts";
+import sheepData from "../data/sheep.json";
+import stepsData from "../data/sheepdog-steps.json";
+import plansData from "../data/sheepdog-plans.json";
+
+const sheep = sheepData;
+const steps = stepsData;
+const plans = plansData;
+
+// Service + Offer markup, so answer engines read the prices as data. Built
+// from the plans JSON, so it follows the visual editor.
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${SITE_URL}/sheepdog/#service`,
+  name: "Sheepdog",
+  serviceType: "Managed website updates",
+  description:
+    "A managed website service from Electric Sheep. AI assistants make the changes a client's team asks for in Slack, test them and send a preview; a person the client chooses decides what goes live, and anything involving code or tracking is reviewed by Electric Sheep.",
+  url: `${SITE_URL}/sheepdog/`,
+  provider: { "@id": `${SITE_URL}/#organization` },
+  areaServed: ["Jersey", "United Kingdom"],
+  offers: plans.map((plan) => ({
+    "@type": "Offer",
+    name: `Sheepdog ${plan.name}`,
+    description: plan.body,
+    priceSpecification: {
+      "@type": "UnitPriceSpecification",
+      price: plan.amount,
+      priceCurrency: "GBP",
+      unitText: "MON",
+    },
+  })),
+};
+---
+
+<Layout
+  title="Sheepdog: website updates from your team chat"
+  description="Sheepdog is a managed website service from Electric Sheep. Your team asks for changes in Slack, checks a preview and screenshots, and presses publish. From £195 a month."
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
+  />
+
+  {/* Intro */}
+  <Section containerClass="section-split reveal-block" paddingBottom="small">
+    <SectionLabel highlight="Sheepdog" />
+    <div class="sheepdog__intro">
+      <h1 class="statement">Your website team, in your team chat.</h1>
+      <p class="note">
+        Sheepdog is a managed website service from Electric Sheep. A small crew
+        of AI assistants, the sheep, makes the changes your team asks for in
+        Slack, tests them and sends back a preview. Someone you choose decides
+        what goes live, and Toby checks anything risky.
+      </p>
+    </div>
+  </Section>
+
+  {/* The question */}
+  <Section
+    containerClass="section-split reveal-block"
+    paddingTop="small"
+    paddingBottom="small"
+  >
+    <SectionLabel tag="h2" highlight="Can AI update my website safely?" />
+    <p class="note">
+      Yes, as long as it can't publish on its own. Sheepdog drafts every change
+      on a private copy of your site, tests it and sends a preview link with
+      desktop and phone screenshots. Nothing goes live until someone you've
+      approved presses publish, and any change can be undone for seven days.
+      Code, tracking and contact details go to Toby first. If your team is happy
+      working in Webflow, Webflow's Slack agent is free while it's in beta (as
+      of November 2026) and may be enough. Sheepdog is for teams who would
+      rather send a message than learn a CMS.
+    </p>
+  </Section>
+
+  {/* How it works */}
+  <Section>
+    <SectionLabel tag="h2" highlight="How it works" />
+    <Grid xsmall={1} small={2} large={4} class="width-full reveal-group">
+      {
+        steps.map((item) => (
+          <div class="step">
+            <span class="step__number">{item.number}</span>
+            <h3 class="step__title">{item.title}</h3>
+            <span class="step__body">{item.body}</span>
+          </div>
+        ))
+      }
+    </Grid>
+  </Section>
+
+  {/* The flock */}
+  <Section>
+    <SectionLabel tag="h2" highlight="flock.">Meet the</SectionLabel>
+    <Grid xsmall={1} small={2} large={5} class="width-full reveal-group">
+      {
+        sheep.map((item) => (
+          <article class="sheep">
+            <div class="sheep__frame">
+              <img
+                src={item.image}
+                alt={item.alt}
+                width="1036"
+                height="717"
+                loading="lazy"
+              />
+            </div>
+            <div class="sheep__badge">
+              <PillBadge color="var(--text)">{item.status}</PillBadge>
+            </div>
+            <span class="sheep__plan">{item.plan}</span>
+            <h3 class="sheep__name">{item.name}</h3>
+            <p class="sheep__body">{item.body}</p>
+          </article>
+        ))
+      }
+    </Grid>
+  </Section>
+
+  {/* Still human */}
+  <Section containerClass="section-split reveal-block">
+    <SectionLabel tag="h2" highlight="Still very much human." />
+    <p class="note">
+      Sheepdog doesn't replace Toby. He sets up every client's crew himself,
+      writes the rules each sheep works to, and reviews any change that touches
+      code, tracking or your contact details. You can still call or email him,
+      same as always. The sheep take the small jobs, so he has more time for the
+      bigger ones.
+    </p>
+  </Section>
+
+  {/* Pricing */}
+  <Section>
+    <SectionLabel tag="h2" highlight="per site.">One flat fee</SectionLabel>
+    <Grid xsmall={1} large={3} class="width-full reveal-group">
+      {
+        plans.map((item) => (
+          <div class="plan">
+            <h3 class="plan__name">{item.name}</h3>
+            <span class="plan__price">
+              {item.price}
+              <span class="plan__period"> {item.period}</span>
+            </span>
+            <span class="plan__body">{item.body}</span>
+            <span class="plan__allowance">{item.allowance}</span>
+          </div>
+        ))
+      }
+    </Grid>
+    <p class="sheepdog__terms reveal-block">
+      Prices are per site, plus GST where it applies, as of November 2026. No
+      hour caps and no AI credits to top up. Setup is £750 if we built your site
+      and £1,500 if we didn't, and it's waived with a new build. Existing
+      Electric Sheep clients get the Content Sheep free for three months.
+    </p>
+  </Section>
+
+  {/* Next step */}
+  <Section containerClass="px-hover reveal-block gap-3">
+    <PixelLink
+      href="mailto:hello@electricsheep.design?subject=Sheepdog"
+      color="var(--text)"
+      fontSize={24}>Ask about Sheepdog</PixelLink
+    >
+    <PixelLink
+      href="https://agentic-cms-demo.esdev.co.uk"
+      color="var(--text)"
+      fontSize={24}>Watch the two-minute demo</PixelLink
+    >
+  </Section>
+</Layout>
+
+<style>
+  @layer components {
+    .sheepdog__intro {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      align-items: flex-start;
+    }
+
+    /* A sheep card: render, status pill, then the same pixel label / title /
+       body stack as the homepage service pillars. */
+    .sheep {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .sheep__frame {
+      overflow: hidden;
+      border-radius: var(--radius-small);
+      background-color: var(--surface-placeholder);
+    }
+    .sheep__frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1036 / 717;
+      object-fit: cover;
+    }
+    .sheep__badge {
+      padding-top: var(--space-1);
+    }
+    .sheep__plan {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+    }
+    .sheep__name {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h3);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .sheep__body {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+      text-wrap: pretty;
+    }
+
+    /* A plan: ruled column like the pillars, with the price at statement size. */
+    .plan {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+      padding-top: var(--space-4);
+    }
+    .plan__name {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+    }
+    .plan__price {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--display);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .plan__period {
+      font-size: var(--text-large);
+    }
+    .plan__body {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+      text-wrap: pretty;
+    }
+    .plan__allowance {
+      margin-top: auto;
+      padding-top: var(--space-1);
+      font-family: var(--font-pixel);
+      font-size: var(--text-main);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+      opacity: 0.7;
+    }
+
+    .sheepdog__terms {
+      max-width: 60ch;
+      font-family: var(--primary-family);
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+      opacity: 0.7;
+      text-wrap: pretty;
+    }
+  }
+</style>

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "content",
+    "name": "Content Sheep",
+    "plan": "Content plan",
+    "status": "Available now",
+    "image": "/assets/images/sheepdog/content-sheep.jpg",
+    "alt": "A voxel sheep with teal wool",
+    "body": "News, events, team members, jobs and copy changes, written in your house style. If it doesn't know something, like a photo credit, it asks instead of guessing."
+  },
+  {
+    "id": "qa",
+    "name": "QA Sheep",
+    "plan": "Every plan",
+    "status": "Comes with every sheep",
+    "image": "/assets/images/sheepdog/qa-sheep.jpg",
+    "alt": "A voxel sheep with mustard yellow wool",
+    "body": "Checks every change before you see it: broken links, page speed, accessibility, the phone layout, and a before and after comparison so nothing else moved."
+  },
+  {
+    "id": "design-build",
+    "name": "Design & Build Sheep",
+    "plan": "Studio plan",
+    "status": "Coming soon",
+    "image": "/assets/images/sheepdog/design-build-sheep.jpg",
+    "alt": "A voxel sheep with burnt orange wool",
+    "body": "New sections and landing pages built from your existing components, plus booking widgets, video and forms. Anything involving code goes to Toby before it goes live."
+  },
+  {
+    "id": "seo",
+    "name": "SEO Sheep",
+    "plan": "Studio plan",
+    "status": "Coming soon",
+    "image": "/assets/images/sheepdog/seo-sheep.jpg",
+    "alt": "A voxel sheep with pink wool",
+    "body": "Page titles, descriptions, alt text and internal links, with a monthly report on how you show up in Google."
+  },
+  {
+    "id": "tracking",
+    "name": "Tracking Sheep",
+    "plan": "Team plan",
+    "status": "Coming soon",
+    "image": "/assets/images/sheepdog/tracking-sheep.jpg",
+    "alt": "A voxel sheep with purple wool",
+    "body": "Analytics, conversion tracking and cookie consent, set up properly. Every tracking change goes to Toby first."
+  }
+]
