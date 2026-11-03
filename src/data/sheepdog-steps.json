@@ -3,30 +3,30 @@
     "id": "ask",
     "number": "01",
     "title": "Ask",
-    "body": "Post in your website channel like you'd brief a person. Links, photos, PDFs and screenshots all work."
+    "body": "Post the change in your website channel. Links, photos and PDFs all work."
   },
   {
     "id": "draft",
     "number": "02",
     "title": "Draft",
-    "body": "Sheepdog makes the change on a private copy of the site. The live site isn't touched."
+    "body": "The right sheep makes it on a private copy. Your live site isn't touched."
   },
   {
     "id": "check",
     "number": "03",
     "title": "Check",
-    "body": "Links, speed, accessibility, spelling, the phone layout and a before and after comparison, on every change."
+    "body": "Every change is tested: links, speed, accessibility and the phone layout."
   },
   {
     "id": "preview",
     "number": "04",
     "title": "Preview",
-    "body": "A preview link and screenshots arrive in the thread, usually within a few minutes."
+    "body": "A preview link and screenshots arrive in the thread, usually within minutes."
   },
   {
     "id": "approve",
     "number": "05",
     "title": "Approve",
-    "body": "Press the button and it's live in under a minute. Undo stays on the message for seven days."
+    "body": "Press publish and it's live in under a minute. Undo lasts seven days."
   }
 ]

@@ -6,7 +6,7 @@
     "price": "£195",
     "amount": 195,
     "period": "a month",
-    "body": "The Content Sheep and the QA Sheep. News, events, team, jobs and page copy, checked before you see it.",
+    "body": "The Content and QA sheep, for news, events, team, jobs and page copy.",
     "allowance": "Up to 25 requests a month"
   },
   {
@@ -16,7 +16,7 @@
     "price": "£395",
     "amount": 395,
     "period": "a month",
-    "body": "Everything in Content, plus the Design & Build Sheep and the SEO Sheep: new sections, booking widgets, video, forms and a monthly search report.",
+    "body": "Everything in Content, plus the Design & Build and SEO sheep.",
     "allowance": "Up to 60 requests a month"
   },
   {
@@ -26,7 +26,7 @@
     "price": "£795",
     "amount": 795,
     "period": "a month",
-    "body": "Everything in Studio, plus the Tracking Sheep, Microsoft Teams, up to three sites and a quarterly review call.",
+    "body": "Everything in Studio, plus the Tracking sheep, Microsoft Teams, up to three sites and a quarterly review.",
     "allowance": "Up to 120 requests a month"
   }
 ]

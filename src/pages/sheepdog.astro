@@ -2,7 +2,6 @@
 import Layout from "@/layouts/Layout.astro";
 import Section from "@/components/Wrapper/Section.astro";
 import Grid from "@/components/Wrapper/Grid.astro";
-import SectionLabel from "@/components/Site/SectionLabel.astro";
 import PixelLink from "@/components/Site/PixelLink.astro";
 import PillBadge from "@/components/Site/PillBadge.astro";
 import SheepdogDemo from "@/components/Site/SheepdogDemo.astro";
@@ -25,7 +24,7 @@ const schema = {
   name: "Sheepdog",
   serviceType: "Managed website updates",
   description:
-    "A managed website service from Electric Sheep. AI assistants make the changes a client's team asks for in Slack, test them and send a preview; a person the client chooses decides what goes live, and anything involving code or tracking is reviewed by Electric Sheep.",
+    "A managed website service from Electric Sheep. Your team asks for website changes in Slack, gets a tested preview in minutes and publishes when it's ready. Code and tracking changes are checked by Electric Sheep.",
   url: `${SITE_URL}/sheepdog/`,
   provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: ["Jersey", "United Kingdom"],
@@ -45,7 +44,7 @@ const schema = {
 
 <Layout
   title="Sheepdog: website updates from your team chat"
-  description="Sheepdog is a managed website service from Electric Sheep. Your team asks for changes in Slack, checks a preview and screenshots, and presses publish. From £195 a month."
+  description="Ask for website changes in Slack, get a tested preview in minutes and publish when you're ready. Sheepdog by Electric Sheep, from £195 a month."
 >
   <script
     slot="head"
@@ -57,16 +56,14 @@ const schema = {
   <Section paddingBottom="small" containerClass="reveal-block">
     <div class="sd-hero">
       <div class="sd-hero__title">
-        <SectionLabel highlight="Sheepdog" />
+        <p class="sd-eyebrow">Sheepdog</p>
         <h1>Your website team, in your team chat.</h1>
       </div>
       <div class="sd-hero__aside">
         <p class="sd-hero__lede">
-          Sheepdog is a managed website service from Electric Sheep. Post a
-          change in Slack the way you'd brief a person. A few minutes later you
-          get a preview link, phone and desktop screenshots and the test results
-          in the same thread. Nothing goes live until someone you trust presses
-          the button.
+          Ask for a website change in Slack, the way you'd message a colleague.
+          Minutes later you have a tested preview to check, and nothing goes
+          live until you press publish.
         </p>
         <Button id="sd-watch">Play the two-minute demo</Button>
       </div>
@@ -80,32 +77,58 @@ const schema = {
 
   {/* The question */}
   <Section
-    containerClass="section-split reveal-block"
+    containerClass="section-split sd-band-head reveal-block"
     paddingTop="small"
-    paddingBottom="small"
   >
-    <SectionLabel tag="h2" highlight="Can AI update my website safely?" />
+    <h2>Can AI update my website safely?</h2>
     <p class="note">
-      Yes, as long as it can't publish on its own. Sheepdog drafts every change
-      on a private copy of your site, tests it and sends a preview link with
-      desktop and phone screenshots. Nothing goes live until someone you've
-      approved presses publish, and any change can be undone for seven days.
-      Code, tracking and contact details go to Toby first. If your team is happy
-      working in Webflow, Webflow's Slack agent is free while it's in beta (as
-      of November 2026) and may be enough. Sheepdog is for teams who would
-      rather send a message than learn a CMS.
+      Yes, if it can't publish on its own. Every change is made on a private
+      copy of your site, tested and sent to you as a preview. Only the people
+      you choose can put it live, any change can be undone for seven days, and
+      anything touching code or tracking comes to Toby first.
     </p>
+  </Section>
+
+  {/* What your team gets */}
+  <Section>
+    <h2 class="reveal-block">What your team gets</h2>
+    <Grid xsmall={1} small={2} large={4} class="width-full reveal-group">
+      <div class="sd-benefit">
+        <h3 class="sd-benefit__title">The sheep work where you work.</h3>
+        <p class="sd-benefit__body">
+          Ask in Slack, the way you'd message a colleague. Microsoft Teams is
+          coming.
+        </p>
+      </div>
+      <div class="sd-benefit">
+        <h3 class="sd-benefit__title">Nobody learns a CMS.</h3>
+        <p class="sd-benefit__body">
+          No website logins, so a new starter can post an update on day one.
+        </p>
+      </div>
+      <div class="sd-benefit">
+        <h3 class="sd-benefit__title">Changes in minutes, not days.</h3>
+        <p class="sd-benefit__body">
+          Previews usually arrive within a few minutes, tested and with
+          screenshots.
+        </p>
+      </div>
+      <div class="sd-benefit">
+        <h3 class="sd-benefit__title">Nothing goes live by accident.</h3>
+        <p class="sd-benefit__body">
+          Only the people you choose can publish, and Undo lasts seven days.
+        </p>
+      </div>
+    </Grid>
   </Section>
 
   {/* How it works */}
   <Section>
     <div class="section-split sd-band-head reveal-block">
-      <SectionLabel tag="h2" highlight="How it works" />
+      <h2>How it works</h2>
       <p class="sd-band-lede">
-        One thread, one change, one button. Each request gets its own private
-        copy of your site, so two people can ask for different things at the
-        same time without treading on each other. Follow-ups in the same thread
-        update the same preview.
+        Each request gets its own private copy of your site, so several people
+        can ask at once. Follow-ups in the thread update the same preview.
       </p>
     </div>
     <ol class="sd-timeline reveal-group">
@@ -121,27 +144,31 @@ const schema = {
     </ol>
     <div class="sd-approve reveal-block">
       <div>
-        <h3 class="sd-approve__title">Content and on-brand design</h3>
+        <h3 class="sd-approve__title">You publish</h3>
         <p class="sd-approve__body">
-          News, events, team, jobs, copy edits, and design changes that use your
-          existing colours and components. The people you choose publish these
-          themselves once the checks pass.
+          News, events, team, jobs, copy and design changes within your brand.
+          The people you choose put these live once the checks pass.
         </p>
       </div>
       <div>
-        <h3 class="sd-approve__title">Code, tracking and contact details</h3>
+        <h3 class="sd-approve__title">Toby checks</h3>
         <p class="sd-approve__body">
-          New scripts, analytics, cookie changes, forms, phone numbers, bank
-          details and anything off-brand come to Toby, who checks the change and
-          the code before it goes live. Usually the same day.
+          Code, tracking, cookies, forms, and contact or bank details. These
+          come to Toby before they go live, usually the same day.
         </p>
       </div>
     </div>
   </Section>
 
   {/* The flock */}
-  <Section>
-    <SectionLabel tag="h2" highlight="flock.">Meet the</SectionLabel>
+  <Section theme="light">
+    <div class="section-split sd-band-head reveal-block">
+      <h2>Meet the flock</h2>
+      <p class="sd-band-lede">
+        One sheep for each kind of job. Start with Content and add the rest when
+        you need them.
+      </p>
+    </div>
     <Grid xsmall={1} small={2} large={5} class="width-full reveal-group">
       {
         sheep.map((item) => (
@@ -168,25 +195,22 @@ const schema = {
   </Section>
 
   {/* Still human */}
-  <Section containerClass="section-split reveal-block">
-    <SectionLabel tag="h2" highlight="Still very much human." />
+  <Section containerClass="section-split sd-band-head reveal-block">
+    <h2>Still very much human</h2>
     <p class="note">
-      Sheepdog doesn't replace Toby. He sets up every client's crew himself,
-      writes the rules each sheep works to, and reviews any change that touches
-      code, tracking or your contact details. You can still call or email him,
-      same as always. The sheep take the small jobs, so he has more time for the
-      bigger ones.
+      Toby sets up every flock, writes the rules each sheep follows and checks
+      anything that touches code, tracking or your contact details. You can
+      still call him, same as always.
     </p>
   </Section>
 
   {/* Pricing */}
   <Section>
     <div class="section-split sd-band-head reveal-block">
-      <SectionLabel tag="h2" highlight="per site.">One flat fee</SectionLabel>
+      <h2>Pricing</h2>
       <p class="sd-band-lede">
-        No hour caps and no AI credits to top up. Bigger jobs, like a new page
-        type or an integration, are quoted separately, and Sheepdog tells you
-        when a request is one of those.
+        One flat fee per site, with no hour caps or AI credits. Bigger jobs,
+        like a new page type, are quoted separately.
       </p>
     </div>
     <div class="sd-prices reveal-group">
@@ -213,14 +237,9 @@ const schema = {
     </div>
     <div class="sd-price-foot reveal-block">
       <span>Setup £750 if we built your site, £1,500 if we didn't.</span>
-      <span>Setup is waived with a new build on a 12-month term.</span>
-      <span
-        >Prices per site, plus GST where it applies, as of November 2026.</span
-      >
-      <span
-        >Existing Electric Sheep clients get the Content plan free for three
-        months.</span
-      >
+      <span>Setup is free with a new build on a 12-month term.</span>
+      <span>Per site, plus GST, as of November 2026.</span>
+      <span>Existing clients get Content free for three months.</span>
     </div>
   </Section>
 
@@ -239,6 +258,32 @@ const schema = {
 
 <style>
   @layer components {
+    .sd-eyebrow {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+    }
+
+    /* What your team gets: four short benefits in ruled columns. */
+    .sd-benefit {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+      padding-top: var(--space-4);
+    }
+    .sd-benefit__title {
+      font-size: var(--h4);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .sd-benefit__body {
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+    }
+
     /* Hero: headline left, the pitch and the demo button right. */
     .sd-hero {
       display: grid;
@@ -271,9 +316,12 @@ const schema = {
       }
     }
 
-    /* Section head: label beside a lede, as `.section-split` but full width. */
+    /* Section head: a plain h2 beside its lede, on the `.section-split` grid. */
     .sd-band-head {
       width: 100%;
+    }
+    .sd-band-head h2 {
+      padding-right: var(--space-5);
     }
     .sd-band-lede {
       max-width: 40em;
