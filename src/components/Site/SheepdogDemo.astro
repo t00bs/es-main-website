@@ -1,0 +1,2084 @@
+---
+// The Sheepdog demo: a scripted Slack workspace for a made-up client (Kestrel
+// Quay) that plays four requests through to a published, undoable change.
+// Ported from the standalone demo (products/agentic-cms/demo). The Slack
+// window imitates Slack, so it keeps Slack's own colours and type; the chrome
+// around it (scenario tabs, controls, caption) is set in the site's tokens.
+// Markup inside the window is built by the script, so styles are global and
+// scoped under `.sd-demo`. `?demo=2` opens scenario 2; add `&end=1` to jump
+// to its end.
+---
+
+<div class="sd-demo" id="sd-stage" aria-label="Sheepdog demo" role="region">
+  <div class="tabs" role="tablist" id="sd-tabs"></div>
+  <div class="stage-grid">
+    <div>
+      <div class="slack" id="sd-slack">
+        <aside class="side" aria-hidden="true">
+          <div class="ws"><span class="ws-ico">KQ</span>Kestrel Quay</div>
+          <h4>Channels</h4>
+          <div class="ch"># general</div>
+          <div class="ch"># events</div>
+          <div class="ch"># marketing</div>
+          <div class="ch on"># website</div>
+          <h4>Direct messages</h4>
+          <div class="ch"><span class="dot"></span>Maya Patel</div>
+          <div class="ch"><span class="dot"></span>Tom Ferris</div>
+          <div class="ch">
+            <span class="dot"></span>Toby Balderson <span class="ext">ext</span>
+          </div>
+          <h4>Apps</h4>
+          <div class="ch"><span class="dot"></span>Sheepdog</div>
+        </aside>
+        <div class="chan">
+          <div class="ph"><b># website</b><small>6 members</small></div>
+          <div class="feed" id="sd-feed"></div>
+          <div class="composer">Message #website</div>
+        </div>
+        <div class="thread">
+          <div class="ph">
+            <span
+              ><span class="back">‹ # website&nbsp;&nbsp;</span><b>Thread</b
+              ></span
+            ><small id="sd-tmeta"># website</small>
+          </div>
+          <div class="tbody" id="sd-tbody" aria-live="polite"></div>
+          <div class="composer">Reply…</div>
+        </div>
+      </div>
+      <div class="controls" aria-label="Demo controls">
+        <button class="cbtn" id="sd-restart" type="button" aria-label="Restart"
+          ><svg viewBox="0 0 16 16"
+            ><path
+              d="M8 2a6 6 0 1 1-5.7 4.1l1.9.6A4 4 0 1 0 8 4v2.5L4.5 3.3 8 0z"
+            ></path></svg
+          ></button
+        >
+        <button
+          class="cbtn"
+          id="sd-prev"
+          type="button"
+          aria-label="Back one step"
+          ><svg viewBox="0 0 16 16"><path d="M11 2L4 8l7 6z"></path></svg
+          ></button
+        >
+        <button class="cbtn primary" id="sd-play" type="button"
+          ><svg viewBox="0 0 16 16" id="sd-playico"
+            ><path d="M4 2l10 6-10 6z"></path></svg
+          ><span id="sd-playlbl">Play</span></button
+        >
+        <button class="cbtn" id="sd-next" type="button" aria-label="Next step"
+          ><svg viewBox="0 0 16 16"><path d="M5 2l7 6-7 6z"></path></svg
+          ></button
+        >
+        <div class="progress">
+          <div class="bar"><i id="sd-barfill"></i></div><span
+            class="pixel"
+            id="sd-ptext">Step 0 of 0</span>
+        </div>
+      </div>
+    </div>
+    <aside class="caption" id="sd-caption" aria-live="polite"></aside>
+  </div>
+  <p class="sd-demo__fine">
+    Kestrel Quay is a made-up club. Everything in this window is scripted, so
+    the preview links and results are examples.
+  </p>
+</div>
+
+<style is:global>
+  @layer components {
+    .sd-demo {
+      /* Chrome in site tokens */
+      --ink: var(--text);
+      --cream: var(--background);
+      --ink-2: color-mix(in lab, var(--text) 85%, var(--background));
+      --muted: color-mix(in lab, var(--text) 65%, var(--background));
+      --line: var(--rule-hairline);
+      --cream-2: color-mix(in lab, var(--text) 8%, var(--background));
+      --cream-3: var(--surface-placeholder);
+      --pixel: var(--font-pixel);
+      /* The Slack window and its mock site */
+      --ui:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+        sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --s-side: #1c1d21;
+      --s-side-2: #2a2b31;
+      --s-side-text: #c9c9cf;
+      --s-bg: #fff;
+      --s-text: #1d1c1d;
+      --s-muted: #616061;
+      --s-line: #e6e6e6;
+      --s-link: #1264a3;
+      --s-hover: #f6f6f6;
+      --r-content: #2f7d6d;
+      --r-design: #c0602a;
+      --r-tracking: #7a4a7f;
+      --r-qa: #d9a521;
+      --r-seo: #d98a9b;
+      --r-publish: #101010;
+      --ok: #2e7d32;
+      --warn: #b26a00;
+      --flag: #8a4f00;
+      --k-navy: #13324b;
+      --k-sand: #efe6d6;
+      --k-sea: #8cc7b5;
+      --photo-day:
+        radial-gradient(
+          ellipse 30% 18% at 70% 30%,
+          rgba(255, 250, 230, 0.9),
+          transparent 70%
+        ),
+        linear-gradient(
+          180deg,
+          #cfe0e4 0%,
+          #a9c8d2 48%,
+          #3d6f86 49%,
+          #2b5468 100%
+        );
+      --photo:
+        radial-gradient(
+          ellipse 60% 30% at 50% 58%,
+          rgba(255, 196, 120, 0.55),
+          transparent 70%
+        ),
+        linear-gradient(
+          180deg,
+          #1f2a36 0%,
+          #2c3846 38%,
+          #3a2c22 52%,
+          #6b4a30 53%,
+          #4a3020 100%
+        );
+      width: 100%;
+      font-family: var(--primary-family);
+      color: var(--text);
+    }
+    /* Lumos trims every p and heading to its cap height. The Slack replica
+       is set like Slack, so switch the trim off inside the window. */
+    .sd-demo .slack :is(p, h1, h2, h3, h4, h5, h6) {
+      display: block;
+      margin: 0;
+    }
+    .sd-demo .slack :is(p, h1, h2, h3, h4, h5, h6)::before,
+    .sd-demo .slack :is(p, h1, h2, h3, h4, h5, h6)::after {
+      content: none;
+    }
+    .sd-demo .slack img {
+      width: auto;
+    }
+    .sd-demo .slack .av img {
+      width: 100%;
+    }
+
+    .sd-demo .pixel {
+      font-family: var(--font-pixel);
+      letter-spacing: var(--tracking-pixel);
+      text-transform: uppercase;
+    }
+
+    /* Scenario tabs */
+    .sd-demo .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+    .sd-demo .tab {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      min-height: 3.5rem;
+      padding: var(--space-3) var(--space-3);
+      border: var(--rule-thin) solid var(--rule-hairline);
+      border-radius: var(--radius-small);
+      color: var(--text);
+      text-align: start;
+      transition: background-color var(--hover-duration) var(--hover-ease);
+    }
+    .sd-demo .tab .pixel {
+      font-size: var(--text-small);
+      color: var(--muted);
+    }
+    .sd-demo .tab span:last-child {
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+    }
+    .sd-demo .tab:hover {
+      background-color: var(--cream-2);
+    }
+    .sd-demo .tab[aria-selected="true"] {
+      background-color: var(--highlight-block);
+      border-color: var(--highlight-block);
+      color: var(--highlight-text);
+    }
+    .sd-demo .tab[aria-selected="true"] .pixel {
+      color: color-mix(
+        in lab,
+        var(--highlight-text) 70%,
+        var(--highlight-block)
+      );
+    }
+
+    .sd-demo .stage-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 16.25rem;
+      gap: var(--space-5);
+      align-items: start;
+    }
+
+    /* Caption beside the window */
+    .sd-demo .caption {
+      position: sticky;
+      top: var(--space-5); /* the nav scrolls away, so no offset */
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+    .sd-demo .caption .pixel {
+      font-size: var(--text-small);
+      color: var(--muted);
+    }
+    .sd-demo .caption .ct {
+      font-size: var(--h4);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .sd-demo .caption p {
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--ink-2);
+    }
+    .sd-demo .caption .who {
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+      padding-top: var(--space-3);
+      font-size: var(--text-small);
+      line-height: var(--line-height-large);
+      color: var(--muted);
+    }
+    .sd-demo .caption .who strong {
+      font-weight: inherit;
+      color: var(--text);
+    }
+
+    /* Controls under the window */
+    .sd-demo .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .sd-demo .cbtn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-width: 3rem;
+      height: 3rem;
+      padding: 0 var(--space-4);
+      border: var(--rule-thin) solid var(--text);
+      border-radius: var(--radius-round);
+      color: var(--text);
+      font-size: var(--text-main);
+      transition:
+        background-color var(--hover-duration) var(--hover-ease),
+        color var(--hover-duration) var(--hover-ease);
+    }
+    .sd-demo .cbtn:hover {
+      background-color: var(--cream-2);
+    }
+    .sd-demo .cbtn.primary {
+      min-width: 7.5rem;
+      background-color: var(--button-background);
+      border-color: var(--button-border);
+      color: var(--button-text);
+    }
+    .sd-demo .cbtn.primary:hover {
+      background-color: var(--button-background-hover);
+      color: var(--button-text-hover);
+    }
+    .sd-demo .cbtn svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      fill: currentColor;
+    }
+    .sd-demo .progress {
+      flex: 1;
+      min-width: 11.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      margin-left: var(--space-2);
+    }
+    .sd-demo .bar {
+      height: 0.25rem;
+      overflow: hidden;
+      border-radius: var(--radius-round);
+      background-color: var(--cream-3);
+    }
+    .sd-demo .bar i {
+      display: block;
+      width: 0;
+      height: 100%;
+      background-color: var(--text);
+      transition: width 0.4s;
+    }
+    .sd-demo .progress .pixel {
+      font-size: var(--text-small);
+      color: var(--muted);
+    }
+    .sd-demo__fine {
+      margin-top: var(--space-4);
+      font-size: var(--text-small);
+      line-height: var(--line-height-large);
+      color: var(--muted);
+    }
+
+    @media (width < 73.75rem) {
+      .sd-demo .stage-grid {
+        grid-template-columns: 1fr;
+      }
+      .sd-demo .caption {
+        position: static;
+        order: -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-3) var(--space-6);
+      }
+      .sd-demo .caption .who {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        border-top: 0;
+        padding-top: 0;
+      }
+    }
+    @media (width < 45rem) {
+      .sd-demo .tabs {
+        grid-template-columns: 1fr 1fr;
+      }
+      .sd-demo .caption {
+        display: flex;
+      }
+      .sd-demo .caption .who {
+        border-top: var(--rule-thin) solid var(--rule-hairline);
+        padding-top: var(--space-3);
+      }
+      .sd-demo .controls {
+        gap: var(--space-2);
+      }
+      .sd-demo .cbtn {
+        padding: 0 var(--space-3);
+      }
+      .sd-demo .progress {
+        order: 5;
+        min-width: 100%;
+        margin: var(--space-2) 0 0;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .sd-demo * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* --- Slack window (from the standalone demo) --- */
+    .sd-demo .slack {
+      background: var(--s-bg);
+      color: var(--s-text);
+      font-family: var(--ui);
+      font-size: 15px;
+      line-height: 1.42;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.04),
+        0 24px 60px -24px rgba(16, 16, 16, 0.35);
+      border: 1px solid rgba(16, 16, 16, 0.18);
+      display: grid;
+      grid-template-columns: 180px minmax(210px, 0.62fr) minmax(0, 1.4fr);
+      grid-template-rows: minmax(0, 1fr);
+      height: 680px;
+    }
+    .sd-demo .side {
+      background: var(--s-side);
+      color: var(--s-side-text);
+      padding: 12px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 14px;
+      overflow: hidden;
+    }
+    .sd-demo .ws {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #fff;
+      font-weight: 700;
+      padding: 4px 8px 12px;
+      border-bottom: 1px solid #34353b;
+      margin-bottom: 8px;
+    }
+    .sd-demo .ws-ico {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: var(--k-sea);
+      color: var(--k-navy);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .sd-demo .side h4 {
+      margin: 12px 8px 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #8e8e96;
+    }
+    .sd-demo .ch {
+      padding: 4px 8px;
+      border-radius: 6px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      white-space: nowrap;
+    }
+    .sd-demo .ch.on {
+      background: #3d5a6c;
+      color: #fff;
+    }
+    .sd-demo .ch .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #3aa76d;
+    }
+    .sd-demo .ch .ext {
+      font-size: 10px;
+      border: 1px solid #5a5b62;
+      border-radius: 4px;
+      padding: 0 4px;
+      color: #a9a9b1;
+    }
+    .sd-demo .chan {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--s-line);
+      min-width: 0;
+      min-height: 0;
+    }
+    .sd-demo .ph {
+      height: 52px;
+      border-bottom: 1px solid var(--s-line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .sd-demo .ph b {
+      font-size: 16px;
+    }
+    .sd-demo .ph small {
+      color: var(--s-muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .sd-demo .ph .back {
+      display: none;
+    }
+    .sd-demo .feed {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+    .sd-demo .composer {
+      margin: 0 12px 12px;
+      border: 1px solid #c9c9c9;
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #8c8c8c;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .sd-demo .thread {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      background: #fff;
+    }
+    .sd-demo .tbody {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0 16px;
+      scroll-behavior: smooth;
+    }
+    .sd-demo .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--s-muted);
+      font-size: 13px;
+      padding: 6px 16px;
+    }
+    .sd-demo .divider:after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--s-line);
+    }
+    .sd-demo .m {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      gap: 10px;
+      padding: 8px 16px;
+      animation: sd-pop 0.35s ease-out;
+    }
+    .sd-demo .m:hover {
+      background: var(--s-hover);
+    }
+    .sd-demo .feed .m {
+      cursor: pointer;
+      animation: none;
+    }
+    .sd-demo .feed .m.on {
+      background: #f2f7fb;
+      box-shadow: inset 3px 0 0 #1264a3;
+    }
+    @keyframes sd-pop {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    .sd-demo .av {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .sd-demo .av.bot {
+      font-family: var(--pixel);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      font-size: 14px;
+    }
+    .sd-demo .av.img {
+      padding: 2px;
+      overflow: hidden;
+    }
+    .sd-demo .av.img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 6px;
+    }
+    .sd-demo .mh {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px;
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+    .sd-demo .mh b {
+      font-weight: 800;
+    }
+    .sd-demo .mh .role {
+      font-weight: 700;
+      color: var(--s-muted);
+    }
+    .sd-demo .mh .app {
+      font-size: 10px;
+      font-weight: 700;
+      background: #ececec;
+      color: #555;
+      border-radius: 3px;
+      padding: 1px 4px;
+      letter-spacing: 0.02em;
+    }
+    .sd-demo .mh .ext {
+      font-size: 10px;
+      font-weight: 700;
+      border: 1px solid #c7c7c7;
+      color: #555;
+      border-radius: 3px;
+      padding: 0 4px;
+    }
+    .sd-demo .mh time {
+      color: var(--s-muted);
+      font-size: 12px;
+    }
+    .sd-demo .mt p {
+      margin: 0 0 6px;
+    }
+    .sd-demo .mt p:last-child {
+      margin-bottom: 0;
+    }
+    .sd-demo .mt ul {
+      margin: 2px 0 8px;
+      padding-left: 20px;
+    }
+    .sd-demo .mt li {
+      margin: 2px 0;
+    }
+    .sd-demo .mt .lbl {
+      font-weight: 700;
+      margin: 8px 0 2px;
+    }
+    .sd-demo .mt a {
+      color: var(--s-link);
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+    .sd-demo .mt a:hover {
+      text-decoration: underline;
+    }
+    .sd-demo .mt code,
+    .sd-demo .draft {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      background: #f3f3f3;
+      border: 1px solid #e4e4e4;
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: #c0315a;
+      word-break: break-all;
+    }
+    .sd-demo .draft {
+      display: inline-block;
+      white-space: nowrap;
+      word-break: normal;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: bottom;
+    }
+    .sd-demo .confirm {
+      background: #fff4d6;
+      border: 1px solid #f0d58a;
+      border-radius: 4px;
+      padding: 0 4px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    .sd-demo .feed .mt {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .sd-demo .replies {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      margin-top: 4px;
+      color: var(--s-link);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .sd-demo .replies i {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .sd-demo .typing {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      color: var(--s-muted);
+      font-size: 13px;
+    }
+    .sd-demo .typing span {
+      display: inline-flex;
+      gap: 3px;
+    }
+    .sd-demo .typing span i {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #9a9a9a;
+      animation: sd-blink 1s infinite;
+    }
+    .sd-demo .typing span i:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+    .sd-demo .typing span i:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+    @keyframes sd-blink {
+      0%,
+      100% {
+        opacity: 0.25;
+      }
+      50% {
+        opacity: 1;
+      }
+    }
+    .sd-demo .unfurl {
+      border-left: 4px solid #dcdcdc;
+      padding: 2px 0 2px 12px;
+      margin: 6px 0;
+      font-size: 14px;
+    }
+    .sd-demo .unfurl .src {
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .sd-demo .unfurl .src em {
+      font-style: normal;
+      color: #0a66c2;
+    }
+    .sd-demo .file {
+      display: inline-flex;
+      flex-direction: column;
+      border: 1px solid var(--s-line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 6px;
+      width: 200px;
+      max-width: 100%;
+    }
+    .sd-demo .file .ph-img {
+      height: 110px;
+      background: var(--photo);
+    }
+    .sd-demo .file small {
+      padding: 6px 10px;
+      color: var(--s-muted);
+      font-size: 12px;
+    }
+    .sd-demo .card {
+      border: 1px solid var(--s-line);
+      border-radius: 8px;
+      margin: 8px 0;
+      overflow: hidden;
+      background: #fff;
+    }
+    .sd-demo .card-h {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--s-line);
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .sd-demo .card-h b {
+      font-size: 14px;
+    }
+    .sd-demo .card-b {
+      padding: 10px 12px;
+    }
+    .sd-demo .shots {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      padding: 10px 12px;
+      background: #f7f7f7;
+    }
+    .sd-demo .shots figure {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .sd-demo .shots figcaption {
+      font-size: 11px;
+      color: var(--s-muted);
+    }
+    .sd-demo .shots .d {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 320px;
+    }
+    .sd-demo .shots .mo {
+      flex: 0 0 86px;
+    }
+    .sd-demo .opts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #f7f7f7;
+    }
+    .sd-demo .opts figure {
+      margin: 0;
+    }
+    .sd-demo .opts figcaption {
+      font-size: 12px;
+      margin-top: 4px;
+      font-weight: 700;
+    }
+    .sd-demo .btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .sd-demo .sbtn {
+      min-height: 36px;
+      padding: 0 14px;
+      border-radius: 6px;
+      border: 1px solid #bdbdbd;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--ui);
+    }
+    .sd-demo .sbtn:hover {
+      background: #f4f4f4;
+    }
+    .sd-demo .sbtn.go {
+      background: #007a5a;
+      border-color: #007a5a;
+      color: #fff;
+    }
+    .sd-demo .sbtn.go:hover {
+      background: #148567;
+    }
+    .sd-demo .sbtn:disabled {
+      cursor: default;
+    }
+    .sd-demo .sbtn.done {
+      background: #eef6f1;
+      border-color: #9fcdb5;
+      color: #1e6b34;
+    }
+    .sd-demo .sbtn.done:before {
+      content: "\2713  ";
+    }
+    .sd-demo .sbtn.press {
+      animation: sd-press 0.6s;
+    }
+    @keyframes sd-press {
+      0% {
+        box-shadow: 0 0 0 0 rgba(0, 122, 90, 0.6);
+      }
+      100% {
+        box-shadow: 0 0 0 12px rgba(0, 122, 90, 0);
+      }
+    }
+    .sd-demo .hint {
+      font-size: 12px;
+      color: var(--s-muted);
+      margin-top: 6px;
+    }
+    .sd-demo .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      background: #fff4d6;
+      color: #7a5200;
+      border: 1px solid #f0d58a;
+      margin-top: 6px;
+    }
+    .sd-demo .pill.live {
+      background: #e6f4ea;
+      color: #1e6b34;
+      border-color: #b6dfc0;
+    }
+    .sd-demo .pill i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .sd-demo .qa-row {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      padding: 4px 0;
+      font-size: 14px;
+      align-items: start;
+    }
+    .sd-demo .ic {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: 2px;
+    }
+    .sd-demo .ic.ok {
+      background: var(--ok);
+    }
+    .sd-demo .ic.warn {
+      background: var(--warn);
+    }
+    .sd-demo .ic.flag {
+      background: #6b6b6b;
+    }
+    .sd-demo .score {
+      font-size: 12.5px;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: 2px 8px;
+    }
+    .sd-demo .score.ok {
+      background: #e6f4ea;
+      color: #1e6b34;
+    }
+    .sd-demo .log {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--s-muted);
+      margin-top: 6px;
+    }
+    .sd-demo .shot {
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid #d6d6d6;
+      background: #fff;
+      container-type: inline-size;
+    }
+    .sd-demo .sbar {
+      display: flex;
+      align-items: center;
+      gap: 3cqw;
+      padding: 2cqw 3cqw;
+      background: #ececec;
+      border-bottom: 1px solid #dadada;
+      font-family: var(--ui);
+    }
+    .sd-demo .sbar i {
+      width: 2.4cqw;
+      height: 2.4cqw;
+      border-radius: 50%;
+      background: #c8c8c8;
+      flex-shrink: 0;
+    }
+    .sd-demo .sbar span {
+      font-size: 3.4cqw;
+      color: #666;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: #fff;
+      border-radius: 3cqw;
+      padding: 0.6cqw 3cqw;
+      flex: 1;
+    }
+    .sd-demo .mo .sbar {
+      padding: 4cqw 6cqw;
+      gap: 5cqw;
+    }
+    .sd-demo .mo .sbar i {
+      display: none;
+    }
+    .sd-demo .mo .sbar span {
+      font-size: 8cqw;
+      padding: 1.5cqw 5cqw;
+    }
+    .sd-demo .ks {
+      background: var(--k-sand);
+      color: var(--k-navy);
+      font-family: Georgia, "Times New Roman", serif;
+      aspect-ratio: 16/10;
+      overflow: hidden;
+      position: relative;
+    }
+    .sd-demo .mo .ks {
+      aspect-ratio: 9/17;
+    }
+    .sd-demo .k-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.6cqw 4cqw;
+      background: var(--k-navy);
+      color: var(--k-sand);
+    }
+    .sd-demo .k-logo {
+      font-style: italic;
+      font-size: 3.6cqw;
+    }
+    .sd-demo .k-links {
+      display: flex;
+      gap: 3cqw;
+      font-family: var(--ui);
+      font-size: 2.4cqw;
+    }
+    .sd-demo .k-links i {
+      font-style: normal;
+      opacity: 0.85;
+    }
+    .sd-demo .k-join {
+      font-family: var(--ui);
+      font-size: 2.4cqw;
+      border: 1px solid var(--k-sand);
+      border-radius: 9cqw;
+      padding: 0.6cqw 2.4cqw;
+    }
+    .sd-demo .mo .k-nav {
+      padding: 6cqw 8cqw;
+    }
+    .sd-demo .mo .k-logo {
+      font-size: 10cqw;
+    }
+    .sd-demo .mo .k-join {
+      font-size: 7cqw;
+      padding: 1.5cqw 6cqw;
+    }
+    .sd-demo .k-photo {
+      background: var(--photo);
+      border-radius: 1cqw;
+    }
+    .sd-demo .k-art {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4cqw;
+      padding: 5cqw 6cqw;
+      align-items: start;
+    }
+    .sd-demo .k-kick {
+      font-family: var(--ui);
+      font-size: 2.2cqw;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 1.5cqw;
+    }
+    .sd-demo .k-h {
+      font-size: 5cqw;
+      line-height: 1.05;
+      margin-bottom: 2.5cqw;
+    }
+    .sd-demo .k-art .k-photo {
+      aspect-ratio: 4/3;
+    }
+    .sd-demo .k-cap {
+      font-family: var(--ui);
+      font-size: 1.9cqw;
+      opacity: 0.7;
+      margin-top: 1cqw;
+    }
+    .sd-demo .k-p i {
+      display: block;
+      height: 1.3cqw;
+      background: rgba(19, 50, 75, 0.22);
+      border-radius: 1cqw;
+      margin: 1.6cqw 0;
+    }
+    .sd-demo .mo .k-art {
+      grid-template-columns: 1fr;
+      padding: 8cqw;
+      gap: 5cqw;
+    }
+    .sd-demo .mo .k-kick {
+      font-size: 6cqw;
+    }
+    .sd-demo .mo .k-h {
+      font-size: 13cqw;
+    }
+    .sd-demo .mo .k-cap {
+      font-size: 5.5cqw;
+    }
+    .sd-demo .mo .k-p i {
+      height: 3.5cqw;
+      margin: 4cqw 0;
+    }
+    .sd-demo .k-hero {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4cqw;
+      padding: 6cqw;
+      align-items: center;
+      height: calc(100% - 9cqw);
+    }
+    .sd-demo .k-hero .k-h {
+      font-size: 6.4cqw;
+    }
+    .sd-demo .k-sub {
+      font-family: var(--ui);
+      font-size: 2.4cqw;
+      opacity: 0.8;
+      margin-bottom: 3.4cqw;
+    }
+    .sd-demo .k-hero .k-photo {
+      height: 100%;
+      background: var(--photo-day);
+    }
+    .sd-demo .k-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 1cqw;
+      font-family: var(--ui);
+      font-weight: 700;
+      border-radius: 9cqw;
+      background: var(--k-navy);
+      color: #fff;
+      font-size: 2.2cqw;
+      padding: 1.2cqw 2.8cqw;
+    }
+    .sd-demo .k-btn.lg {
+      font-size: 3cqw;
+      padding: 2cqw 4.4cqw;
+    }
+    .sd-demo .k-btn.sea {
+      background: var(--k-sea);
+      color: var(--k-navy);
+    }
+    .sd-demo .mo .k-hero {
+      grid-template-columns: 1fr;
+      padding: 8cqw;
+      height: auto;
+      gap: 6cqw;
+    }
+    .sd-demo .mo .k-hero .k-h {
+      font-size: 15cqw;
+    }
+    .sd-demo .mo .k-sub {
+      font-size: 6.5cqw;
+    }
+    .sd-demo .mo .k-hero .k-photo {
+      height: 58cqw;
+      order: -1;
+    }
+    .sd-demo .mo .k-btn {
+      font-size: 6.5cqw;
+      padding: 3.2cqw 7cqw;
+    }
+    .sd-demo .mo .k-btn.lg {
+      font-size: 8cqw;
+      padding: 5cqw 10cqw;
+    }
+    .sd-demo .k-cookie {
+      position: absolute;
+      left: 4cqw;
+      right: 4cqw;
+      bottom: 4cqw;
+      background: #fff;
+      border-radius: 1.6cqw;
+      box-shadow: 0 1cqw 4cqw rgba(0, 0, 0, 0.25);
+      padding: 2.6cqw 3cqw;
+      font-family: var(--ui);
+      font-size: 2.2cqw;
+      display: flex;
+      align-items: center;
+      gap: 3cqw;
+      flex-wrap: wrap;
+      color: #222;
+    }
+    .sd-demo .k-cookie b {
+      font-size: 2.6cqw;
+      margin-right: auto;
+    }
+    .sd-demo .k-tg {
+      display: flex;
+      align-items: center;
+      gap: 1.2cqw;
+    }
+    .sd-demo .k-tg em {
+      width: 4.6cqw;
+      height: 2.6cqw;
+      border-radius: 2cqw;
+      background: #c9c9c9;
+      position: relative;
+      display: inline-block;
+    }
+    .sd-demo .k-tg em:after {
+      content: "";
+      position: absolute;
+      top: 0.3cqw;
+      left: 0.3cqw;
+      width: 2cqw;
+      height: 2cqw;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .sd-demo .k-tg em.on {
+      background: var(--k-navy);
+    }
+    .sd-demo .k-tg em.on:after {
+      left: 2.3cqw;
+    }
+    .sd-demo .k-tg.new span {
+      background: #fff4d6;
+      outline: 1px solid #f0d58a;
+      border-radius: 0.6cqw;
+      padding: 0 0.8cqw;
+    }
+    .sd-demo .k-cbtn {
+      background: var(--k-navy);
+      color: #fff;
+      border-radius: 9cqw;
+      padding: 0.8cqw 3cqw;
+      font-weight: 700;
+    }
+    .sd-demo .mo .k-cookie {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 3cqw;
+      padding: 6cqw;
+      font-size: 6cqw;
+      border-radius: 4cqw;
+    }
+    .sd-demo .mo .k-cookie b {
+      font-size: 7cqw;
+    }
+    .sd-demo .mo .k-tg {
+      justify-content: space-between;
+    }
+    .sd-demo .mo .k-tg em {
+      width: 12cqw;
+      height: 7cqw;
+      border-radius: 5cqw;
+    }
+    .sd-demo .mo .k-tg em:after {
+      width: 5.6cqw;
+      height: 5.6cqw;
+      top: 0.7cqw;
+      left: 0.7cqw;
+    }
+    .sd-demo .mo .k-tg em.on:after {
+      left: 5.7cqw;
+    }
+    .sd-demo .mo .k-cbtn {
+      text-align: center;
+      padding: 2.5cqw;
+    }
+    @media (width < 73.75rem) {
+      .sd-demo .slack {
+        grid-template-columns: 170px minmax(200px, 0.7fr) minmax(0, 1.3fr);
+      }
+    }
+    @media (width < 61.25rem) {
+      .sd-demo .slack {
+        grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.3fr);
+      }
+      .sd-demo .side {
+        display: none;
+      }
+    }
+    @media (width < 45rem) {
+      .sd-demo .slack {
+        grid-template-columns: 1fr;
+        height: 620px;
+        font-size: 14.5px;
+        border-radius: 10px;
+      }
+      .sd-demo .chan {
+        display: none;
+      }
+      .sd-demo .ph .back {
+        display: inline;
+        color: var(--s-link);
+        font-weight: 700;
+      }
+      .sd-demo .m {
+        padding: 8px 12px;
+        gap: 8px;
+        grid-template-columns: 32px minmax(0, 1fr);
+      }
+      .sd-demo .av {
+        width: 32px;
+        height: 32px;
+      }
+      .sd-demo .opts {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        padding: 8px;
+      }
+      .sd-demo .shots {
+        padding: 8px;
+        gap: 8px;
+      }
+      .sd-demo .shots .mo {
+        flex-basis: 66px;
+      }
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    "use strict";
+    var PEOPLE = {
+      maya: {
+        name: "Maya Patel",
+        role: "Marketing manager",
+        init: "MP",
+        col: "#b5654a",
+      },
+      tom: {
+        name: "Tom Ferris",
+        role: "Events manager",
+        init: "TF",
+        col: "#4f6f8f",
+      },
+      toby: {
+        name: "Toby Balderson",
+        ext: "Electric Sheep",
+        init: "TB",
+        col: "#101010",
+      },
+      content: {
+        bot: 1,
+        role: "Content",
+        init: "C",
+        col: "var(--r-content)",
+        img: "/assets/images/sheepdog/av-content.jpg",
+      },
+      design: {
+        bot: 1,
+        role: "Design & Build",
+        init: "D",
+        col: "var(--r-design)",
+        img: "/assets/images/sheepdog/av-design-build.jpg",
+      },
+      tracking: {
+        bot: 1,
+        role: "Tracking",
+        init: "T",
+        col: "var(--r-tracking)",
+        img: "/assets/images/sheepdog/av-tracking.jpg",
+      },
+      qa: {
+        bot: 1,
+        role: "QA",
+        init: "QA",
+        col: "var(--r-qa)",
+        img: "/assets/images/sheepdog/av-qa.jpg",
+      },
+      publish: { bot: 1, role: "Publish", init: "P", col: "var(--r-publish)" },
+    };
+    var PV = "https://kq-cms-";
+    function link(slug) {
+      return '<a href="#" data-act="fake">' + PV + slug + ".vercel.app</a>";
+    }
+    function draft(b) {
+      return '<span class="draft">Draft: ' + b + "</span>";
+    }
+
+    /* mini site "screenshots" */
+    function shot(v, mode, url) {
+      var nav =
+        '<div class="k-nav"><span class="k-logo">Kestrel Quay</span>' +
+        (mode === "d"
+          ? '<span class="k-links"><i>Club</i><i>Events</i><i>Dining</i><i>News</i></span>'
+          : "") +
+        '<span class="k-join">Join</span></div>';
+      var body = "";
+      if (v === "news" || v === "news2" || v === "live") {
+        body =
+          '<div class="k-art"><div><div class="k-kick">News · 2 Nov 2026</div><div class="k-h">Winter supper club returns on 28 November</div><div class="k-p"><i></i><i></i><i style="width:70%"></i>' +
+          (mode === "d" ? '<i></i><i style="width:55%"></i>' : "") +
+          '</div></div><div><div class="k-photo" style="aspect-ratio:4/3"></div>' +
+          (v !== "news" ? '<div class="k-cap">Photo: Kestrel Quay</div>' : "") +
+          "</div></div>";
+      } else {
+        var btn = {
+          hero: '<span class="k-btn">Book a table</span>',
+          heroA: '<span class="k-btn lg sea">Book a table</span>',
+          heroB: '<span class="k-btn lg">Book a table →</span>',
+          consent: '<span class="k-btn">Book a table</span>',
+        }[v];
+        body =
+          '<div class="k-hero"><div><div class="k-h">Your table by the water</div><div class="k-sub">Dining, events and a members\u2019 club on the quay.</div>' +
+          btn +
+          '</div><div class="k-photo"></div></div>';
+        if (v === "consent")
+          body +=
+            '<div class="k-cookie"><b>Cookies</b><span class="k-tg"><span>Essential</span><em class="on"></em></span><span class="k-tg"><span>Analytics</span><em class="on"></em></span><span class="k-tg new"><span>Marketing</span><em></em></span><span class="k-cbtn">Save</span></div>';
+      }
+      return (
+        '<div class="shot"><div class="sbar"><i></i><i></i><i></i><span>' +
+        url +
+        '</span></div><div class="ks">' +
+        nav +
+        body +
+        "</div></div>"
+      );
+    }
+    function shots(v, slug, live) {
+      var url = live
+        ? "kestrelquay.je/news/winter-supper-club"
+        : "kq-cms-" + slug + ".vercel.app";
+      return (
+        '<div class="shots"><figure class="d">' +
+        shot(v, "d", url) +
+        '<figcaption>Desktop, 1440px</figcaption></figure><figure class="mo">' +
+        shot(v, "m", url) +
+        "<figcaption>Phone, 390px</figcaption></figure></div>"
+      );
+    }
+    function qa(title, score, rows, extra) {
+      return (
+        '<div class="card"><div class="card-h"><b>' +
+        title +
+        '</b><span class="score ok">' +
+        score +
+        '</span></div><div class="card-b">' +
+        rows
+          .map(function (r) {
+            var ic = { ok: "✓", warn: "!", flag: "i" }[r[0]];
+            return (
+              '<div class="qa-row"><span class="ic ' +
+              r[0] +
+              '" aria-hidden="true">' +
+              ic +
+              "</span><span>" +
+              r[1] +
+              "</span></div>"
+            );
+          })
+          .join("") +
+        (extra || "") +
+        "</div></div>"
+      );
+    }
+
+    var S = [
+      {
+        key: "content",
+        tab: "Content",
+        title: "A LinkedIn post becomes a news article",
+        caption:
+          "Maya pastes the post and the photo. Sheepdog writes the article in house style, sizes the photo, builds a private preview and sends back screenshots. Anything it can\u2019t find out, it asks about instead of guessing.",
+        who: "<strong>Maya</strong>, marketing manager, asks. <strong>Sheepdog Content</strong> drafts it and <strong>QA</strong> tests it.",
+        thread: "a",
+        day: "Monday 2 November",
+        parent: {
+          who: "maya",
+          time: "09:12",
+          html: '<p>Can we get this on the news page? It\u2019s our LinkedIn post from this morning. Photo attached.</p><div class="unfurl"><div class="src"><em>LinkedIn</em> · Kestrel Quay</div>Our winter supper club is back. Six courses at the long table by the harbour window, Saturday 28 November, £45 a head. Members get first pick of tables until Friday.</div><div class="file"><div class="ph-img"></div><small>supper-club.jpg · 4.1 MB</small></div>',
+        },
+        steps: [
+          {
+            who: "content",
+            time: "09:12",
+            wait: 1500,
+            html: "<p>On it: turning this into a news article. Preview in about two minutes.</p>",
+          },
+          {
+            who: "content",
+            time: "09:14",
+            wait: 3600,
+            html:
+              "<p>Preview ready: " +
+              link("1102-winter-supper-club") +
+              "</p><p>" +
+              draft("cms-1102-winter-supper-club") +
+              "</p>" +
+              shots("news", "1102-winter-supper-club") +
+              '<p class="lbl">What changed</p><ul><li>New news article: \u201cWinter supper club returns on 28 November\u201d</li><li>Your photo, cropped to fit the news layout and shrunk from 4.1 MB to 190 KB</li><li>Added to the top of the News page and the Latest row on the home page</li></ul><p class="lbl">Please check</p><ul><li>The post says £45 a head, so that\u2019s the price I\u2019ve used.</li><li><span class="confirm">confirm: photo credit</span> The post doesn\u2019t say who took the photo. Who should I credit?</li></ul>',
+          },
+          {
+            who: "qa",
+            time: "09:15",
+            wait: 2600,
+            html: qa(
+              "Checks on this preview",
+              "14 passed · 1 to look at",
+              [
+                ["ok", "Build and page checks"],
+                ["ok", "31 links checked, none broken"],
+                ["ok", "Speed 96, accessibility 100"],
+                ["ok", "Phone layout checked at 390px"],
+                ["ok", "Before and after: 2 pages changed, both expected"],
+                ["ok", "British English spelling"],
+                ["ok", "No new scripts or outside websites"],
+                [
+                  "warn",
+                  "I wrote the photo description for screen readers: \u201cA long table laid for supper beside the harbour window\u201d. Please check it reads right.",
+                ],
+              ],
+              '<div class="log">Ready to approve once the photo credit is in.</div>',
+            ),
+          },
+        ],
+      },
+      {
+        key: "design",
+        tab: "Design",
+        title: "\u201cMake the hero button green and bigger\u201d",
+        caption:
+          "Sheepdog reads the site\u2019s design system before it touches anything. Green isn\u2019t in the palette, so it offers two options that are, and says why. Changes that stay inside the brand are the client\u2019s lead publisher\u2019s call.",
+        who: "<strong>Tom</strong>, events manager, asks. <strong>Sheepdog Design &amp; Build</strong> proposes and <strong>QA</strong> tests it.",
+        thread: "b",
+        day: "Tuesday 3 November",
+        parent: {
+          who: "tom",
+          time: "11:40",
+          html: "<p>Can we make the hero button green and bigger? People keep telling me they can\u2019t find where to book.</p>",
+        },
+        steps: [
+          {
+            who: "design",
+            time: "11:40",
+            wait: 1500,
+            html: "<p>On it. I\u2019ll check your design system first, so whatever I suggest still looks like Kestrel Quay.</p>",
+          },
+          {
+            who: "design",
+            time: "11:43",
+            wait: 3800,
+            html:
+              "<p>Green isn\u2019t one of your brand colours, so I haven\u2019t invented one. Here are two options using colours you already have. " +
+              draft("cms-1103-hero-button") +
+              '</p><div class="card"><div class="opts"><figure>' +
+              shot("heroA", "d", "Option A") +
+              "<figcaption>A: Sea glass, large</figcaption></figure><figure>" +
+              shot("heroB", "d", "Option B") +
+              '<figcaption>B: Navy, large, with arrow</figcaption></figure></div></div><p><b>A</b> uses sea glass, the colour already on your event tags, at the large button size (56px tall instead of 44px). The text is navy, because white on sea glass only reaches 1.9:1 contrast and fails accessibility. Navy reaches 6.9:1.</p><p><b>B</b> keeps navy at the large size and adds an arrow. It\u2019s the safer choice for the brand.</p><p>If you\u2019d rather have a new green, that\u2019s a brand change, so I\u2019ve noted it for Toby.</p><div class="btns"><button class="sbtn" data-act="chooseA" type="button">Use A</button><button class="sbtn" data-act="fake" type="button">Use B</button></div>',
+          },
+          {
+            who: "tom",
+            time: "11:46",
+            wait: 2400,
+            trigger: "chooseA",
+            html: "<p>A please.</p>",
+          },
+          {
+            who: "design",
+            time: "11:47",
+            wait: 2600,
+            html:
+              "<p>Done. Same preview link, updated: " +
+              link("1103-hero-button") +
+              "</p>" +
+              shots("heroA", "1103-hero-button") +
+              "<p>The new button is on the home page and the 8 event pages that share that hero.</p>",
+          },
+          {
+            who: "qa",
+            time: "11:48",
+            wait: 2400,
+            html: qa(
+              "Checks on this preview",
+              "12 passed",
+              [
+                [
+                  "ok",
+                  "Before and after: one button changed on 9 pages, nothing else moved",
+                ],
+                ["ok", "Text contrast 6.9:1 (needs 4.5:1)"],
+                ["ok", "Tap target 56px tall on phones (needs 44px)"],
+                ["ok", "Speed 97, accessibility 100"],
+              ],
+              '<div class="log">+ 8 more passed</div><span class="pill"><i></i>On brand: ready for a lead publisher to approve</span>',
+            ),
+          },
+        ],
+      },
+      {
+        key: "tracking",
+        tab: "Tracking",
+        title: "Add the Meta pixel and track the contact form",
+        caption:
+          "Tracking touches your visitors\u2019 privacy, so Sheepdog explains what changes in the cookie banner, tests that nothing loads before consent, and sends the change to Toby with the code.",
+        who: "<strong>Maya</strong> asks. <strong>Sheepdog Tracking</strong> plans it, <strong>QA</strong> tests consent, <strong>Toby</strong> reviews.",
+        thread: "c",
+        day: "Wednesday 4 November",
+        parent: {
+          who: "maya",
+          time: "15:05",
+          html: "<p>Can you add the Meta pixel and track when people send the contact form? Our agency wants to start Instagram ads next week.</p>",
+        },
+        steps: [
+          {
+            who: "tracking",
+            time: "15:05",
+            wait: 1500,
+            html: "<p>On it. One thing to flag first, because this changes your cookie banner.</p>",
+          },
+          {
+            who: "tracking",
+            time: "15:09",
+            wait: 4200,
+            html:
+              "<p>Here\u2019s the plan. " +
+              draft("cms-1104-meta-pixel") +
+              '</p><p class="lbl">Contact form</p><p>Google Analytics will record a lead each time someone sends the form successfully. Like your analytics today, it only runs for visitors who accept analytics cookies.</p><p class="lbl">Meta pixel</p><p>The pixel sets advertising cookies, so it can only load after a visitor agrees. Your banner only asks about analytics at the moment, so I\u2019ve added a Marketing option, switched off by default. Anyone who leaves it off never loads the pixel.</p>' +
+              shots("consent", "1104-meta-pixel") +
+              '<p class="lbl">I need from you</p><ul><li><span class="confirm">confirm: pixel ID</span> from Meta Events Manager. The preview uses a test ID until then.</li><li>Your privacy policy should mention Meta. I haven\u2019t changed it, because legal pages go to Toby.</li></ul>',
+          },
+          {
+            who: "qa",
+            time: "15:10",
+            wait: 3000,
+            html: qa("Consent and tracking checks", "11 passed · 1 flagged", [
+              ["ok", "Before consent: pixel blocked, no Meta cookies set"],
+              ["ok", "After Marketing is accepted: pixel loads once"],
+              ["ok", "Form test: one lead per successful send, none on errors"],
+              ["ok", "Speed 96 before, 94 with the pixel loaded"],
+              [
+                "flag",
+                "New script from connect.facebook.net. Expected for this request, and it means Toby reviews the code.",
+              ],
+            ]),
+          },
+          {
+            who: "tracking",
+            time: "15:10",
+            wait: 2000,
+            html: '<p>Tracking changes always go to Toby, so I\u2019ve sent him the code changes with a summary. You\u2019ll hear back in this thread.</p><span class="pill"><i></i>Waiting for Toby</span>',
+          },
+        ],
+      },
+      {
+        key: "live",
+        tab: "Approve and go live",
+        title: "Checked, approved, live, and undoable",
+        caption:
+          "Back in Monday\u2019s thread. The preview has been tested before anyone looks at it. One press and it\u2019s live in under a minute, with Undo on the message for seven days and a record of who asked and who approved.",
+        who: "<strong>Maya</strong> publishes it herself. Toby gets a note and sees every change in the daily digest.",
+        thread: "a",
+        day: "Monday 2 November",
+        earlier: 3,
+        parent: null,
+        steps: [
+          {
+            who: "maya",
+            time: "09:26",
+            wait: 1800,
+            html: "<p>Looks great. Credit the photo to Kestrel Quay, it\u2019s one of ours.</p>",
+          },
+          {
+            who: "content",
+            time: "09:27",
+            wait: 2600,
+            html:
+              "<p>Credit added under the photo. Same preview link, updated: " +
+              link("1102-winter-supper-club") +
+              "</p>" +
+              shots("news2", "1102-winter-supper-club") +
+              '<div class="qa-row"><span class="ic ok" aria-hidden="true">✓</span><span>Checks ran again: 15 of 15 passed.</span></div><div class="card"><div class="card-b"><b>Ready to go live</b><p style="margin:4px 0 0">Content changes like this one are yours to publish. Toby gets a note, and Undo stays on the message for 7 days.</p><div class="btns"><button class="sbtn go" data-act="approve" type="button">Approve to go live</button><button class="sbtn" data-act="fake" type="button">Request changes</button><button class="sbtn" data-act="fake" type="button">Discard</button></div></div></div>',
+          },
+          {
+            who: "publish",
+            time: "09:31",
+            wait: 2600,
+            trigger: "approve",
+            html: "<p><b>Maya Patel</b> pressed Approve to go live.</p>",
+          },
+          {
+            who: "publish",
+            time: "09:32",
+            wait: 3000,
+            html:
+              '<p>Live: <a href="#" data-act="fake">kestrelquay.je/news/winter-supper-club</a>. Published in 42 seconds.</p>' +
+              shots("live", "", true) +
+              '<span class="pill live"><i></i>Live</span><div class="btns"><button class="sbtn" data-act="undo" type="button">Undo</button></div><p class="hint">Undo is here for 7 days. It puts back the previous version of every page this change touched.</p><div class="log">Logged: asked by Maya Patel, published by Maya Patel, 2 Nov 09:31.</div>',
+          },
+        ],
+      },
+    ];
+    var UNDO = {
+      who: "publish",
+      time: "09:34",
+      html: "<p>Undone. The site is back to how it was at 09:31. The draft is kept, so you can publish it again from this thread.</p>",
+    };
+
+    var PACE = 1.75,
+      cur = 0,
+      pos = 0,
+      playing = false,
+      timer = null,
+      undone = false,
+      maxSeen = 0;
+    var $ = function (id) {
+      return document.getElementById(id);
+    };
+    var tbody = $("sd-tbody"),
+      feed = $("sd-feed");
+
+    function msg(m, cls, extra, attrs) {
+      var p = PEOPLE[m.who],
+        nm = p.bot ? "Sheepdog" : p.name;
+      var head =
+        "<b>" +
+        nm +
+        "</b>" +
+        (p.bot
+          ? '<span class="role">' +
+            p.role +
+            '</span><span class="app">APP</span>'
+          : "") +
+        (p.ext ? '<span class="ext">' + p.ext + "</span>" : "") +
+        "<time>" +
+        m.time +
+        "</time>";
+      var av = p.img
+        ? '<img src="' + p.img + '" alt="" width="36" height="36">'
+        : p.init;
+      return (
+        "<div " +
+        (attrs || "") +
+        ' class="m' +
+        (cls ? " " + cls : "") +
+        '"><div class="av' +
+        (p.bot ? " bot" : "") +
+        (p.img ? " img" : "") +
+        '" style="background:' +
+        p.col +
+        '" aria-hidden="true">' +
+        av +
+        '</div><div class="mb"><div class="mh">' +
+        head +
+        '</div><div class="mt">' +
+        m.html +
+        "</div>" +
+        (extra || "") +
+        "</div></div>"
+      );
+    }
+    function parentOf(i) {
+      return S[i].parent || S[0].parent;
+    }
+    function totalSteps() {
+      return S.reduce(function (a, s) {
+        return a + s.steps.length;
+      }, 0);
+    }
+    function doneSteps() {
+      var n = 0;
+      for (var i = 0; i < cur; i++) n += S[i].steps.length;
+      return n + pos;
+    }
+
+    function renderTabs() {
+      $("sd-tabs").innerHTML = S.map(function (s, i) {
+        return (
+          '<button class="tab" role="tab" type="button" aria-selected="' +
+          (i === cur) +
+          '" data-i="' +
+          i +
+          '"><span class="pixel">0' +
+          (i + 1) +
+          " · " +
+          s.tab +
+          "</span><span>" +
+          s.title +
+          "</span></button>"
+        );
+      }).join("");
+    }
+    function renderFeed() {
+      var parents = [0, 1, 2],
+        html = "";
+      parents.forEach(function (i) {
+        if (i > Math.max(maxSeen, cur)) return;
+        var s = S[i],
+          n = s.steps.length;
+        if (i === 0) {
+          n =
+            maxSeen >= 3
+              ? S[0].steps.length + (cur === 3 ? pos : S[3].steps.length)
+              : cur === 0
+                ? pos
+                : n;
+        } else if (i === cur) {
+          n = pos;
+        }
+        var active = S[cur].thread === s.thread;
+        var rep = n
+          ? '<div class="replies"><i style="background:var(--r-' +
+            s.key +
+            ')"></i>' +
+            n +
+            (n === 1 ? " reply" : " replies") +
+            "</div>"
+          : "";
+        html +=
+          '<div class="divider">' +
+          s.day +
+          "</div>" +
+          msg(
+            s.parent,
+            active ? "on" : "",
+            rep,
+            'data-i="' + (i === 0 && cur === 3 ? 3 : i) + '"',
+          );
+      });
+      feed.innerHTML = html;
+    }
+    function render(scroll) {
+      var s = S[cur],
+        html = '<div class="divider">' + s.day + "</div>" + msg(parentOf(cur));
+      if (s.earlier) {
+        html += '<div class="divider">' + s.earlier + " earlier replies</div>";
+      } else
+        html += '<div class="divider">' + s.steps.length + " replies</div>";
+      for (var i = 0; i < pos; i++) html += msg(s.steps[i]);
+      if (cur === 3 && undone && pos === s.steps.length) html += msg(UNDO);
+      tbody.innerHTML = html;
+      /* pressed states */
+      tbody.querySelectorAll("[data-act]").forEach(function (b) {
+        var a = b.getAttribute("data-act");
+        if (a === "undo" && undone) {
+          b.classList.add("done");
+          b.disabled = true;
+        }
+        for (var k = 0; k < pos; k++) {
+          if (s.steps[k].trigger === a) {
+            b.classList.add("done");
+            b.disabled = true;
+          }
+        }
+      });
+      $("sd-caption").innerHTML =
+        '<span class="pixel">Scenario ' +
+        (cur + 1) +
+        " of " +
+        S.length +
+        '</span><p class="ct">' +
+        s.title +
+        "</p><p>" +
+        s.caption +
+        '</p><div class="who">' +
+        s.who +
+        "</div>";
+      $("sd-tmeta").textContent = "# website";
+      renderTabs();
+      renderFeed();
+      var t = totalSteps(),
+        d = doneSteps();
+      $("sd-barfill").style.width = (100 * d) / t + "%";
+      $("sd-ptext").textContent =
+        "Scenario " +
+        (cur + 1) +
+        " of " +
+        S.length +
+        " · step " +
+        pos +
+        " of " +
+        s.steps.length;
+      if (scroll !== false)
+        requestAnimationFrame(function () {
+          tbody.scrollTop = tbody.scrollHeight;
+        });
+    }
+    function setPlaying(p) {
+      playing = p;
+      $("sd-playlbl").textContent = p ? "Pause" : atEnd() ? "Replay" : "Play";
+      $("sd-playico").innerHTML = p
+        ? '<path d="M3 2h4v12H3zM9 2h4v12H9z"/>'
+        : '<path d="M4 2l10 6-10 6z"/>';
+      clearTimeout(timer);
+      var ty = tbody.querySelector(".typing");
+      if (ty) ty.remove();
+      if (p) schedule();
+    }
+    function atEnd() {
+      return cur === S.length - 1 && pos === S[cur].steps.length;
+    }
+    function showTyping(who) {
+      var p = PEOPLE[who];
+      var el = document.createElement("div");
+      el.className = "typing";
+      el.innerHTML =
+        "<span><i></i><i></i><i></i></span>" +
+        (p.bot ? "Sheepdog " + p.role + " is working" : p.name + " is typing");
+      tbody.appendChild(el);
+      tbody.scrollTop = tbody.scrollHeight;
+    }
+    function schedule() {
+      clearTimeout(timer);
+      var s = S[cur];
+      if (pos >= s.steps.length) {
+        if (cur < S.length - 1) {
+          timer = setTimeout(function () {
+            go(cur + 1, 0);
+            if (playing) schedule();
+          }, 3800);
+        } else setPlaying(false);
+        return;
+      }
+      var st = s.steps[pos],
+        W = Math.round(st.wait * PACE);
+      if (st.trigger) {
+        timer = setTimeout(function () {
+          var b = tbody.querySelector('[data-act="' + st.trigger + '"]');
+          if (b) {
+            b.classList.add("press");
+          }
+          timer = setTimeout(function () {
+            showTyping(st.who);
+            timer = setTimeout(function () {
+              step(1);
+            }, 900);
+          }, 700);
+        }, W);
+        return;
+      }
+      timer = setTimeout(
+        function () {
+          showTyping(st.who);
+          timer = setTimeout(
+            function () {
+              step(1);
+            },
+            PEOPLE[st.who].bot ? 1600 : 1000,
+          );
+        },
+        PEOPLE[st.who].bot ? Math.max(500, W - 1600) : W,
+      );
+    }
+    function go(i, p) {
+      fresh = false;
+      cur = i;
+      pos = p;
+      maxSeen = Math.max(maxSeen, i);
+      if (i !== 3) undone = false;
+      render();
+    }
+    function step(d) {
+      fresh = false;
+      var s = S[cur];
+      if (d > 0) {
+        if (pos < s.steps.length) {
+          pos++;
+          render();
+        } else if (cur < S.length - 1) {
+          go(cur + 1, 0);
+        }
+      } else {
+        if (pos > 0) {
+          pos--;
+          if (cur === 3) undone = false;
+          render();
+        } else if (cur > 0) {
+          go(cur - 1, S[cur - 1].steps.length);
+        }
+      }
+      maxSeen = Math.max(maxSeen, cur);
+      if (playing) schedule();
+      else setPlaying(false);
+    }
+
+    var fresh = true;
+    $("sd-play").addEventListener("click", function () {
+      if (playing) {
+        setPlaying(false);
+        return;
+      }
+      if (atEnd() || fresh) {
+        undone = false;
+        maxSeen = 0;
+        go(0, 0);
+      }
+      fresh = false;
+      setPlaying(true);
+    });
+    $("sd-next").addEventListener("click", function () {
+      setPlaying(false);
+      step(1);
+    });
+    $("sd-prev").addEventListener("click", function () {
+      setPlaying(false);
+      step(-1);
+    });
+    $("sd-restart").addEventListener("click", function () {
+      undone = false;
+      maxSeen = 0;
+      go(0, 0);
+      setPlaying(true);
+    });
+    $("sd-watch").addEventListener("click", function () {
+      var y =
+        $("sd-stage").getBoundingClientRect().top + window.pageYOffset - 12;
+      window.scrollTo({
+        top: y,
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
+      undone = false;
+      maxSeen = 0;
+      go(0, 0);
+      setPlaying(true);
+    });
+    $("sd-tabs").addEventListener("click", function (e) {
+      var t = e.target.closest(".tab");
+      if (!t) return;
+      var i = +t.getAttribute("data-i");
+      undone = false;
+      go(i, 0);
+      setPlaying(true);
+    });
+    feed.addEventListener("click", function (e) {
+      var m = e.target.closest("[data-i]");
+      if (!m) return;
+      var i = +m.getAttribute("data-i");
+      if (i === cur) return;
+      go(i, S[i].steps.length);
+      setPlaying(false);
+    });
+    tbody.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-act]");
+      if (!b) return;
+      e.preventDefault();
+      var a = b.getAttribute("data-act"),
+        s = S[cur],
+        nx = s.steps[pos];
+      if (a === "undo") {
+        if (!undone) {
+          undone = true;
+          setPlaying(false);
+          render();
+        }
+        return;
+      }
+      if (nx && nx.trigger === a) {
+        clearTimeout(timer);
+        b.classList.add("press");
+        step(1);
+        return;
+      }
+      if (a === "fake") {
+        b.blur();
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      // Arrow keys step the demo only while focus is inside it, so they still scroll the page elsewhere.
+      if (!(e.target.closest && e.target.closest("#sd-stage"))) return;
+      if (e.key === "ArrowRight") {
+        setPlaying(false);
+        step(1);
+      } else if (e.key === "ArrowLeft") {
+        setPlaying(false);
+        step(-1);
+      }
+    });
+    var q = new URLSearchParams(location.search),
+      si = parseInt(q.get("demo"), 10);
+    if (si >= 1 && si <= S.length) {
+      cur = si - 1;
+      maxSeen = cur;
+      pos = q.get("end") ? S[cur].steps.length : 0;
+    } else {
+      pos = S[0].steps.length;
+    }
+    render(false);
+    setPlaying(false);
+  })();
+</script>

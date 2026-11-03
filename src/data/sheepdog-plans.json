@@ -2,6 +2,7 @@
   {
     "id": "content",
     "name": "Content",
+    "offer": "Free for 3 months",
     "price": "£195",
     "amount": 195,
     "period": "a month",
@@ -11,6 +12,7 @@
   {
     "id": "studio",
     "name": "Studio",
+    "offer": "",
     "price": "£395",
     "amount": 395,
     "period": "a month",
@@ -20,6 +22,7 @@
   {
     "id": "team",
     "name": "Team",
+    "offer": "",
     "price": "£795",
     "amount": 795,
     "period": "a month",

@@ -5,6 +5,8 @@ import Grid from "@/components/Wrapper/Grid.astro";
 import SectionLabel from "@/components/Site/SectionLabel.astro";
 import PixelLink from "@/components/Site/PixelLink.astro";
 import PillBadge from "@/components/Site/PillBadge.astro";
+import SheepdogDemo from "@/components/Site/SheepdogDemo.astro";
+import Button from "@/components/Button.astro";
 import { SITE_URL } from "@/consts.ts";
 import sheepData from "../data/sheep.json";
 import stepsData from "../data/sheepdog-steps.json";
@@ -51,18 +53,29 @@ const schema = {
     set:html={JSON.stringify(schema)}
   />
 
-  {/* Intro */}
-  <Section containerClass="section-split reveal-block" paddingBottom="small">
-    <SectionLabel highlight="Sheepdog" />
-    <div class="sheepdog__intro">
-      <h1 class="statement">Your website team, in your team chat.</h1>
-      <p class="note">
-        Sheepdog is a managed website service from Electric Sheep. A small crew
-        of AI assistants, the sheep, makes the changes your team asks for in
-        Slack, tests them and sends back a preview. Someone you choose decides
-        what goes live, and Toby checks anything risky.
-      </p>
+  {/* Hero */}
+  <Section paddingBottom="small" containerClass="reveal-block">
+    <div class="sd-hero">
+      <div class="sd-hero__title">
+        <SectionLabel highlight="Sheepdog" />
+        <h1>Your website team, in your team chat.</h1>
+      </div>
+      <div class="sd-hero__aside">
+        <p class="sd-hero__lede">
+          Sheepdog is a managed website service from Electric Sheep. Post a
+          change in Slack the way you'd brief a person. A few minutes later you
+          get a preview link, phone and desktop screenshots and the test results
+          in the same thread. Nothing goes live until someone you trust presses
+          the button.
+        </p>
+        <Button id="sd-watch">Play the two-minute demo</Button>
+      </div>
     </div>
+  </Section>
+
+  {/* Demo */}
+  <Section paddingTop="small">
+    <SheepdogDemo />
   </Section>
 
   {/* The question */}
@@ -86,18 +99,44 @@ const schema = {
 
   {/* How it works */}
   <Section>
-    <SectionLabel tag="h2" highlight="How it works" />
-    <Grid xsmall={1} small={2} large={4} class="width-full reveal-group">
+    <div class="section-split sd-band-head reveal-block">
+      <SectionLabel tag="h2" highlight="How it works" />
+      <p class="sd-band-lede">
+        One thread, one change, one button. Each request gets its own private
+        copy of your site, so two people can ask for different things at the
+        same time without treading on each other. Follow-ups in the same thread
+        update the same preview.
+      </p>
+    </div>
+    <ol class="sd-timeline reveal-group">
       {
         steps.map((item) => (
-          <div class="step">
-            <span class="step__number">{item.number}</span>
-            <h3 class="step__title">{item.title}</h3>
-            <span class="step__body">{item.body}</span>
-          </div>
+          <li>
+            <span class="sd-timeline__number">{item.number}</span>
+            <h3 class="sd-timeline__title">{item.title}</h3>
+            <span class="sd-timeline__body">{item.body}</span>
+          </li>
         ))
       }
-    </Grid>
+    </ol>
+    <div class="sd-approve reveal-block">
+      <div>
+        <h3 class="sd-approve__title">Content and on-brand design</h3>
+        <p class="sd-approve__body">
+          News, events, team, jobs, copy edits, and design changes that use your
+          existing colours and components. The people you choose publish these
+          themselves once the checks pass.
+        </p>
+      </div>
+      <div>
+        <h3 class="sd-approve__title">Code, tracking and contact details</h3>
+        <p class="sd-approve__body">
+          New scripts, analytics, cookie changes, forms, phone numbers, bank
+          details and anything off-brand come to Toby, who checks the change and
+          the code before it goes live. Usually the same day.
+        </p>
+      </div>
+    </div>
   </Section>
 
   {/* The flock */}
@@ -142,28 +181,47 @@ const schema = {
 
   {/* Pricing */}
   <Section>
-    <SectionLabel tag="h2" highlight="per site.">One flat fee</SectionLabel>
-    <Grid xsmall={1} large={3} class="width-full reveal-group">
+    <div class="section-split sd-band-head reveal-block">
+      <SectionLabel tag="h2" highlight="per site.">One flat fee</SectionLabel>
+      <p class="sd-band-lede">
+        No hour caps and no AI credits to top up. Bigger jobs, like a new page
+        type or an integration, are quoted separately, and Sheepdog tells you
+        when a request is one of those.
+      </p>
+    </div>
+    <div class="sd-prices reveal-group">
       {
         plans.map((item) => (
-          <div class="plan">
-            <h3 class="plan__name">{item.name}</h3>
-            <span class="plan__price">
+          <div class:list={["sd-tier", item.offer && "sd-tier--offer"]}>
+            <div class="sd-tier__head">
+              <h3 class="sd-tier__name">{item.name}</h3>
+              {item.offer && (
+                <PillBadge color="var(--text)" filled>
+                  {item.offer}
+                </PillBadge>
+              )}
+            </div>
+            <span class="sd-tier__price">
               {item.price}
-              <span class="plan__period"> {item.period}</span>
+              <span class="sd-tier__period"> {item.period}</span>
             </span>
-            <span class="plan__body">{item.body}</span>
-            <span class="plan__allowance">{item.allowance}</span>
+            <p class="sd-tier__body">{item.body}</p>
+            <span class="sd-tier__allowance">{item.allowance}</span>
           </div>
         ))
       }
-    </Grid>
-    <p class="sheepdog__terms reveal-block">
-      Prices are per site, plus GST where it applies, as of November 2026. No
-      hour caps and no AI credits to top up. Setup is £750 if we built your site
-      and £1,500 if we didn't, and it's waived with a new build. Existing
-      Electric Sheep clients get the Content Sheep free for three months.
-    </p>
+    </div>
+    <div class="sd-price-foot reveal-block">
+      <span>Setup £750 if we built your site, £1,500 if we didn't.</span>
+      <span>Setup is waived with a new build on a 12-month term.</span>
+      <span
+        >Prices per site, plus GST where it applies, as of November 2026.</span
+      >
+      <span
+        >Existing Electric Sheep clients get the Content plan free for three
+        months.</span
+      >
+    </div>
   </Section>
 
   {/* Next step */}
@@ -173,21 +231,234 @@ const schema = {
       color="var(--text)"
       fontSize={24}>Ask about Sheepdog</PixelLink
     >
-    <PixelLink
-      href="https://agentic-cms-demo.esdev.co.uk"
-      color="var(--text)"
-      fontSize={24}>Watch the two-minute demo</PixelLink
+    <PixelLink href="/contact" color="var(--text)" fontSize={24}
+      >Start a conversation</PixelLink
     >
   </Section>
 </Layout>
 
 <style>
   @layer components {
-    .sheepdog__intro {
+    /* Hero: headline left, the pitch and the demo button right. */
+    .sd-hero {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: var(--space-6) var(--space-8);
+      align-items: end;
+      width: 100%;
+    }
+    .sd-hero__title {
       display: flex;
       flex-direction: column;
-      gap: var(--space-6);
+      gap: var(--space-5);
       align-items: flex-start;
+    }
+    .sd-hero__aside {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      align-items: flex-start;
+    }
+    .sd-hero__lede {
+      max-width: 34em;
+      font-size: var(--text-large);
+      line-height: var(--line-height-huge);
+      color: var(--text);
+    }
+    @media (width < 60rem) {
+      .sd-hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Section head: label beside a lede, as `.section-split` but full width. */
+    .sd-band-head {
+      width: 100%;
+    }
+    .sd-band-lede {
+      max-width: 40em;
+      font-size: var(--text-large);
+      line-height: var(--line-height-huge);
+      color: var(--text);
+    }
+
+    /* How it works: a timeline, one rule with a dot per step. */
+    .sd-timeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: calc(var(--rule-thin) * 2) solid var(--rule-strong);
+    }
+    .sd-timeline li {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--space-5) var(--space-5) 0 0;
+    }
+    .sd-timeline li::before {
+      content: "";
+      position: absolute;
+      top: -0.4375rem;
+      left: 0;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: var(--radius-round);
+      background-color: var(--text);
+    }
+    .sd-timeline__number {
+      font-family: var(--font-pixel);
+      font-size: var(--text-small);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+      opacity: 0.7;
+    }
+    .sd-timeline__title {
+      font-family: var(--primary-family);
+      font-weight: var(--primary-regular);
+      font-size: var(--h4);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .sd-timeline__body {
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+    }
+    @media (width < 60rem) {
+      .sd-timeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-6) 0;
+        border-top: 0;
+      }
+      .sd-timeline li {
+        border-top: calc(var(--rule-thin) * 2) solid var(--rule-strong);
+      }
+    }
+    @media (width < 30rem) {
+      .sd-timeline {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Who publishes what: two panels under the timeline. */
+    .sd-approve {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--rule-thin);
+      width: 100%;
+      overflow: hidden;
+      border: var(--rule-thin) solid var(--rule-hairline);
+      border-radius: var(--radius-small);
+      background-color: var(--rule-hairline);
+    }
+    .sd-approve > div {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding: var(--card-pad);
+      background-color: var(--background);
+    }
+    .sd-approve__title {
+      font-size: var(--h5);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .sd-approve__body {
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+    }
+    @media (width < 45rem) {
+      .sd-approve {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Pricing: three cards in one ruled frame. */
+    .sd-prices {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 100%;
+      overflow: hidden;
+      border: var(--rule-thin) solid var(--rule-strong);
+      border-radius: var(--radius-small);
+    }
+    .sd-tier {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      padding: var(--card-pad) var(--card-pad) var(--space-6);
+      border-right: var(--rule-thin) solid var(--rule-strong);
+    }
+    .sd-tier:last-child {
+      border-right: 0;
+    }
+    .sd-tier--offer {
+      background-color: color-mix(in lab, var(--text) 6%, var(--background));
+    }
+    .sd-tier__head {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      align-items: center;
+      justify-content: space-between;
+      min-height: 2.5rem;
+    }
+    .sd-tier__name {
+      font-family: var(--font-pixel);
+      font-size: var(--h5);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+    }
+    .sd-tier__price {
+      font-size: var(--display);
+      line-height: var(--line-height-medium);
+      color: var(--text);
+    }
+    .sd-tier__period {
+      font-size: var(--text-main);
+      opacity: 0.7;
+    }
+    .sd-tier__body {
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+    }
+    .sd-tier__allowance {
+      margin-top: auto;
+      padding-top: var(--space-3);
+      border-top: var(--rule-thin) solid var(--rule-hairline);
+      font-family: var(--font-pixel);
+      font-size: var(--text-small);
+      letter-spacing: var(--tracking-pixel);
+      color: var(--text);
+      opacity: 0.7;
+    }
+    .sd-price-foot {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-6);
+      width: 100%;
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
+      opacity: 0.7;
+    }
+    @media (width < 60rem) {
+      .sd-prices {
+        grid-template-columns: 1fr;
+      }
+      .sd-tier {
+        border-right: 0;
+        border-bottom: var(--rule-thin) solid var(--rule-strong);
+      }
+      .sd-tier:last-child {
+        border-bottom: 0;
+      }
     }
 
     /* A sheep card: render, status pill, then the same pixel label / title /
@@ -231,58 +502,6 @@ const schema = {
       font-size: var(--text-main);
       line-height: var(--line-height-large);
       color: var(--text);
-      text-wrap: pretty;
-    }
-
-    /* A plan: ruled column like the pillars, with the price at statement size. */
-    .plan {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      border-top: var(--rule-thin) solid var(--rule-hairline);
-      padding-top: var(--space-4);
-    }
-    .plan__name {
-      font-family: var(--font-pixel);
-      font-size: var(--h5);
-      letter-spacing: var(--tracking-pixel);
-      color: var(--text);
-    }
-    .plan__price {
-      font-family: var(--primary-family);
-      font-weight: var(--primary-regular);
-      font-size: var(--display);
-      line-height: var(--line-height-medium);
-      color: var(--text);
-    }
-    .plan__period {
-      font-size: var(--text-large);
-    }
-    .plan__body {
-      font-family: var(--primary-family);
-      font-weight: var(--primary-regular);
-      font-size: var(--text-main);
-      line-height: var(--line-height-large);
-      color: var(--text);
-      text-wrap: pretty;
-    }
-    .plan__allowance {
-      margin-top: auto;
-      padding-top: var(--space-1);
-      font-family: var(--font-pixel);
-      font-size: var(--text-main);
-      letter-spacing: var(--tracking-pixel);
-      color: var(--text);
-      opacity: 0.7;
-    }
-
-    .sheepdog__terms {
-      max-width: 60ch;
-      font-family: var(--primary-family);
-      font-size: var(--text-main);
-      line-height: var(--line-height-large);
-      color: var(--text);
-      opacity: 0.7;
       text-wrap: pretty;
     }
   }

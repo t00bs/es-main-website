@@ -124,6 +124,8 @@ const sheepdogPlans = defineCollection({
   loader: file("src/data/sheepdog-plans.json"),
   schema: z.object({
     name: z.string(),
+    /* Short offer shown as a filled pill on the card; "" for none. */
+    offer: z.string().optional(),
     price: z.string(),
     amount: z.number(),
     period: z.string(),
