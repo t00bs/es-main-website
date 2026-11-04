@@ -118,6 +118,18 @@ const sheepdogSteps = defineCollection({
   schema: z.object({ number: z.string(), title: z.string(), body: z.string() }),
 });
 
+// Sheepdog safeguards: the four answers under "Can AI update my website safely?".
+const sheepdogSafeguards = defineCollection({
+  loader: file("src/data/sheepdog-safeguards.json"),
+  schema: z.object({ label: z.string(), body: z.string() }),
+});
+
+// Sheepdog benefits: the "What your team gets" columns.
+const sheepdogBenefits = defineCollection({
+  loader: file("src/data/sheepdog-benefits.json"),
+  schema: z.object({ title: z.string(), body: z.string() }),
+});
+
 // Sheepdog plans. `amount` is the monthly price in pounds for the page's JSON-LD;
 // keep it in step with `price`.
 const sheepdogPlans = defineCollection({
@@ -144,4 +156,6 @@ export const collections = {
   sheep,
   sheepdogSteps,
   sheepdogPlans,
+  sheepdogSafeguards,
+  sheepdogBenefits,
 };

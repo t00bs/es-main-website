@@ -1,0 +1,17 @@
+[
+  {
+    "id": "chat",
+    "title": "The sheep work where you work.",
+    "body": "Ask in Slack, the way you'd message a colleague. Microsoft Teams is coming."
+  },
+  {
+    "id": "cms",
+    "title": "Nobody learns a CMS.",
+    "body": "No website logins, so a new starter can post an update on day one."
+  },
+  {
+    "id": "speed",
+    "title": "Changes in minutes, not days.",
+    "body": "Previews usually arrive within a few minutes, tested and with screenshots."
+  }
+]

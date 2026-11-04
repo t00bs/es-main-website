@@ -1,0 +1,22 @@
+[
+  {
+    "id": "private",
+    "label": "Private copy",
+    "body": "Every change is made on a private copy of your site and tested before the preview reaches you."
+  },
+  {
+    "id": "publish",
+    "label": "You publish",
+    "body": "News, events, team, jobs, copy and design changes within your brand. The people you choose put these live."
+  },
+  {
+    "id": "toby",
+    "label": "Toby checks",
+    "body": "Code, tracking, cookies, forms, and contact or bank details come to Toby before they go live, usually the same day."
+  },
+  {
+    "id": "undo",
+    "label": "Seven-day undo",
+    "body": "Any published change can be rolled back for seven days."
+  }
+]

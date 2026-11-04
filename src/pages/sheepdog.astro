@@ -12,10 +12,14 @@ import collieSrc from "@/assets/images/sheepdog-collie.png";
 import sheepData from "../data/sheep.json";
 import stepsData from "../data/sheepdog-steps.json";
 import plansData from "../data/sheepdog-plans.json";
+import safeguardsData from "../data/sheepdog-safeguards.json";
+import benefitsData from "../data/sheepdog-benefits.json";
 
 const sheep = sheepData;
 const steps = stepsData;
 const plans = plansData;
+const safeguards = safeguardsData;
+const benefits = benefitsData;
 
 // The hero's sheepdog: a transparent cutout, served as WebP with its alpha at
 // two widths. Decorative, so it carries no alt text.
@@ -101,44 +105,36 @@ const schema = {
     paddingTop="small"
   >
     <h2>Can AI update my website safely?</h2>
-    <p class="note">
-      Yes, if it can't publish on its own. Every change is made on a private
-      copy of your site, tested and sent to you as a preview. Only the people
-      you choose can put it live, any change can be undone for seven days, and
-      anything touching code or tracking comes to Toby first.
-    </p>
+    <div class="sd-answer">
+      <p class="note">
+        Yes, if it can't publish on its own. Sheepdog drafts every change, and
+        someone you've chosen decides what goes live.
+      </p>
+      <ul class="sd-guards">
+        {
+          safeguards.map((item) => (
+            <li class="sd-guard">
+              <span class="sd-guard__label">{item.label}</span>
+              <p class="sd-guard__body">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </Section>
 
   {/* What your team gets */}
-  <Section>
+  <Section gap="6">
     <h2 class="reveal-block">What your team gets</h2>
-    <Grid xsmall={1} small={2} large={4} class="width-full reveal-group">
-      <div class="sd-benefit">
-        <h3 class="sd-benefit__title">The sheep work where you work.</h3>
-        <p class="sd-benefit__body">
-          Ask in Slack, the way you'd message a colleague. Microsoft Teams is
-          coming.
-        </p>
-      </div>
-      <div class="sd-benefit">
-        <h3 class="sd-benefit__title">Nobody learns a CMS.</h3>
-        <p class="sd-benefit__body">
-          No website logins, so a new starter can post an update on day one.
-        </p>
-      </div>
-      <div class="sd-benefit">
-        <h3 class="sd-benefit__title">Changes in minutes, not days.</h3>
-        <p class="sd-benefit__body">
-          Previews usually arrive within a few minutes, tested and with
-          screenshots.
-        </p>
-      </div>
-      <div class="sd-benefit">
-        <h3 class="sd-benefit__title">Nothing goes live by accident.</h3>
-        <p class="sd-benefit__body">
-          Only the people you choose can publish, and Undo lasts seven days.
-        </p>
-      </div>
+    <Grid xsmall={1} small={3} large={3} class="width-full reveal-group">
+      {
+        benefits.map((item) => (
+          <div class="sd-benefit">
+            <h3 class="sd-benefit__title">{item.title}</h3>
+            <p class="sd-benefit__body">{item.body}</p>
+          </div>
+        ))
+      }
     </Grid>
   </Section>
 
@@ -162,22 +158,6 @@ const schema = {
         ))
       }
     </ol>
-    <div class="sd-approve reveal-block">
-      <div>
-        <h3 class="sd-approve__title">You publish</h3>
-        <p class="sd-approve__body">
-          News, events, team, jobs, copy and design changes within your brand.
-          The people you choose put these live once the checks pass.
-        </p>
-      </div>
-      <div>
-        <h3 class="sd-approve__title">Toby checks</h3>
-        <p class="sd-approve__body">
-          Code, tracking, cookies, forms, and contact or bank details. These
-          come to Toby before they go live, usually the same day.
-        </p>
-      </div>
-    </div>
   </Section>
 
   {/* The flock */}
@@ -285,13 +265,13 @@ const schema = {
       color: var(--text);
     }
 
-    /* What your team gets: four short benefits in ruled columns. */
+    /* What your team gets: three short benefits in ruled columns. */
     .sd-benefit {
       display: flex;
       flex-direction: column;
       gap: var(--space-3);
       border-top: var(--rule-thin) solid var(--rule-hairline);
-      padding-top: var(--space-4);
+      padding: var(--space-4) var(--space-5) 0 0;
     }
     .sd-benefit__title {
       font-size: var(--h4);
@@ -299,9 +279,12 @@ const schema = {
       color: var(--text);
     }
     .sd-benefit__body {
+      max-width: 32ch;
       font-size: var(--text-main);
       line-height: var(--line-height-large);
-      color: var(--text);
+      /* Secondary copy sits back a step so the titles lead. */
+      color: color-mix(in lab, var(--text) 72%, var(--background));
+      text-wrap: pretty;
     }
 
     /* Hero: copy on the left, the sheepdog behind it on the right, on a
@@ -432,7 +415,9 @@ const schema = {
     .sd-timeline__body {
       font-size: var(--text-main);
       line-height: var(--line-height-large);
-      color: var(--text);
+      /* Secondary copy sits back a step so the titles lead. */
+      color: color-mix(in lab, var(--text) 72%, var(--background));
+      text-wrap: pretty;
     }
     @media (width < 60rem) {
       .sd-timeline {
@@ -450,36 +435,48 @@ const schema = {
       }
     }
 
-    /* Who publishes what: two panels under the timeline. */
-    .sd-approve {
+    /* The safety answer: a short lead, then four safeguards in one tinted
+       ruled frame, so the answer reads as a checklist, not a paragraph. */
+    .sd-answer {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      max-width: 60rem;
+    }
+    .sd-guards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--rule-thin);
-      width: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
       overflow: hidden;
       border: var(--rule-thin) solid var(--rule-hairline);
       border-radius: var(--radius-small);
       background-color: var(--rule-hairline);
     }
-    .sd-approve > div {
+    .sd-guard {
       display: flex;
       flex-direction: column;
       gap: var(--space-3);
       padding: var(--card-pad);
-      background-color: var(--background);
+      background-color: color-mix(in lab, var(--text) 5%, var(--background));
     }
-    .sd-approve__title {
+    .sd-guard__label {
+      font-family: var(--font-pixel);
       font-size: var(--h5);
-      line-height: var(--line-height-medium);
+      letter-spacing: var(--tracking-pixel);
       color: var(--text);
     }
-    .sd-approve__body {
+    .sd-guard__body {
       font-size: var(--text-main);
       line-height: var(--line-height-large);
-      color: var(--text);
+      /* Secondary copy sits back a step so the titles lead. */
+      color: color-mix(in lab, var(--text) 72%, var(--background));
+      text-wrap: pretty;
     }
     @media (width < 45rem) {
-      .sd-approve {
+      .sd-guards {
         grid-template-columns: 1fr;
       }
     }
