@@ -13,14 +13,12 @@ import stepsData from "../data/sheepdog-steps.json";
 import plansData from "../data/sheepdog-plans.json";
 import safeguardsData from "../data/sheepdog-safeguards.json";
 import benefitsData from "../data/sheepdog-benefits.json";
-import problemsData from "../data/sheepdog-problems.json";
 
 const sheep = sheepData;
 const steps = stepsData;
 const plans = plansData;
 const safeguards = safeguardsData;
 const benefits = benefitsData;
-const problems = problemsData;
 
 // The hero's check row: short, one claim each.
 const heroChecks = [
@@ -94,33 +92,6 @@ const schema = {
             <li>
               <Mark kind="yes" />
               {text}
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-  </Section>
-
-  {/* The problem, as the reader's question */}
-  <Section
-    containerClass="section-split sd-band-head reveal-block"
-    paddingTop="small"
-  >
-    <h2>Why do small website changes take so long?</h2>
-    <div class="sd-answer">
-      <p class="note">
-        Most of the team never learned the CMS, so changes either wait for the
-        one person who did or join the agency's queue.
-      </p>
-      <ul class="sd-guards">
-        {
-          problems.map((item) => (
-            <li class="sd-guard">
-              <span class="sd-guard__head">
-                <Mark kind="no" />
-                <span class="sd-guard__label">{item.label}</span>
-              </span>
-              <p class="sd-guard__body">{item.body}</p>
             </li>
           ))
         }
