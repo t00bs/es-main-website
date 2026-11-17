@@ -58,21 +58,31 @@ const schema = {
     set:html={JSON.stringify(schema)}
   />
 
-  {/* Hero: the problem */}
+  {/* Hero: the problem, centred SaaS-style with two actions */}
   <Section paddingBottom="small" containerClass="reveal-block">
     <div class="sd-hero">
-      <div class="sd-hero__title">
-        <p class="sd-eyebrow">Sheepdog</p>
-        <h1>Small website changes shouldn't take three days.</h1>
+      <PillBadge color="var(--text)">Content Sheep is available now</PillBadge>
+      <h1 class="sd-hero__title">
+        Small website changes shouldn't take three days.
+      </h1>
+      <p class="sd-hero__lede">
+        Ask for website changes in Slack and check a tested preview minutes
+        later. Nobody needs a CMS login, and nothing goes live until you press
+        publish.
+      </p>
+      <div class="sd-hero__actions">
+        <Button
+          element="link"
+          href="mailto:hello@electricsheep.design?subject=Sheepdog"
+          >Ask about Sheepdog</Button
+        >
+        <Button id="sd-watch" emphasis="secondary"
+          >Play the two-minute demo</Button
+        >
       </div>
-      <div class="sd-hero__aside">
-        <p class="sd-hero__lede">
-          Adding an event means finding the one person with the login and hoping
-          the layout survives. The alternative is emailing your agency and
-          waiting. Sheepdog fixes that from your team chat.
-        </p>
-        <Button id="sd-watch">Play the two-minute demo</Button>
-      </div>
+      <p class="sd-hero__fine">
+        From £195 a month. Existing clients get three months free.
+      </p>
     </div>
   </Section>
 
@@ -266,13 +276,6 @@ const schema = {
 
 <style>
   @layer components {
-    .sd-eyebrow {
-      font-family: var(--font-pixel);
-      font-size: var(--h5);
-      letter-spacing: var(--tracking-pixel);
-      color: var(--text);
-    }
-
     /* What your team gets: three short benefits in ruled columns. */
     .sd-benefit {
       display: flex;
@@ -296,35 +299,38 @@ const schema = {
     }
 
     /* Hero: headline left, the pitch and the demo button right. */
+    /* Hero: centred column, pill, display headline, lede, two actions. */
     .sd-hero {
-      display: grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap: var(--space-6) var(--space-8);
-      align-items: end;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-5);
       width: 100%;
+      padding-block: var(--space-6) var(--space-4);
+      text-align: center;
     }
     .sd-hero__title {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-5);
-      align-items: flex-start;
-    }
-    .sd-hero__aside {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-5);
-      align-items: flex-start;
+      max-width: 16em;
+      font-size: var(--display);
+      text-wrap: balance;
     }
     .sd-hero__lede {
-      max-width: 34em;
+      max-width: 36em;
       font-size: var(--text-large);
       line-height: var(--line-height-huge);
-      color: var(--text);
+      color: color-mix(in lab, var(--text) 72%, var(--background));
+      text-wrap: pretty;
     }
-    @media (width < 60rem) {
-      .sd-hero {
-        grid-template-columns: 1fr;
-      }
+    .sd-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-top: var(--space-2);
+    }
+    .sd-hero__fine {
+      font-size: var(--text-small);
+      color: color-mix(in lab, var(--text) 60%, var(--background));
     }
 
     /* Section head: a plain h2 beside its lede, on the `.section-split` grid. */
