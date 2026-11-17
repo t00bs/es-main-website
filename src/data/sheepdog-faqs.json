@@ -1,0 +1,22 @@
+[
+  {
+    "id": "safe",
+    "question": "Can AI update my website safely?",
+    "answer": "Yes, as long as it can't publish on its own. Sheepdog makes every change on a private copy of your site and tests it before the preview reaches you. Nothing goes live until one of your publishers presses publish."
+  },
+  {
+    "id": "who-publishes",
+    "question": "Who decides what goes live?",
+    "answer": "The people you name as publishers when we set Sheepdog up. They see the preview and screenshots, and they press publish. Nobody else can, and that includes Sheepdog."
+  },
+  {
+    "id": "responsibility",
+    "question": "Who is responsible for changes once they're live?",
+    "answer": "You are. Your publishers check each preview and choose what goes live, the same as if they had edited the site themselves. If you'd like Electric Sheep to review changes before they go live, we can agree that in a separate contract."
+  },
+  {
+    "id": "undo",
+    "question": "What if something goes wrong?",
+    "answer": "Every published change has an Undo button in the Slack thread for seven days. Pressing it puts the previous version back."
+  }
+]

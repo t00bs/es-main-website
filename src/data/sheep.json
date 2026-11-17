@@ -24,7 +24,7 @@
     "status": "Coming soon",
     "image": "/assets/images/sheepdog/design-build-sheep.jpg",
     "alt": "A voxel sheep with burnt orange wool",
-    "body": "New sections and landing pages from your existing design, plus booking widgets, video and forms. Code changes go to Toby first."
+    "body": "New sections and landing pages from your existing design, plus booking widgets, video and forms."
   },
   {
     "id": "seo",
@@ -42,6 +42,6 @@
     "status": "Coming soon",
     "image": "/assets/images/sheepdog/tracking-sheep.jpg",
     "alt": "A voxel sheep with purple wool",
-    "body": "Analytics, conversions and cookie consent, set up properly. Every change goes to Toby first."
+    "body": "Analytics, conversions and cookie consent, set up properly."
   }
 ]

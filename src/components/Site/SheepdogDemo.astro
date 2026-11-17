@@ -1548,7 +1548,7 @@
               shot("heroA", "d", "Option A") +
               "<figcaption>A: Sea glass, large</figcaption></figure><figure>" +
               shot("heroB", "d", "Option B") +
-              '<figcaption>B: Navy, large, with arrow</figcaption></figure></div></div><p><b>A</b> uses sea glass, the colour already on your event tags, at the large button size (56px tall instead of 44px). The text is navy, because white on sea glass only reaches 1.9:1 contrast and fails accessibility. Navy reaches 6.9:1.</p><p><b>B</b> keeps navy at the large size and adds an arrow. It\u2019s the safer choice for the brand.</p><p>If you\u2019d rather have a new green, that\u2019s a brand change, so I\u2019ve noted it for Toby.</p><div class="btns"><button class="sbtn" data-act="chooseA" type="button">Use A</button><button class="sbtn" data-act="fake" type="button">Use B</button></div>',
+              '<figcaption>B: Navy, large, with arrow</figcaption></figure></div></div><p><b>A</b> uses sea glass, the colour already on your event tags, at the large button size (56px tall instead of 44px). The text is navy, because white on sea glass only reaches 1.9:1 contrast and fails accessibility. Navy reaches 6.9:1.</p><p><b>B</b> keeps navy at the large size and adds an arrow. It\u2019s the safer choice for the brand.</p><p>If you\u2019d rather have a new green, that\u2019s a brand change, so I\u2019ve noted it as a separate request.</p><div class="btns"><button class="sbtn" data-act="chooseA" type="button">Use A</button><button class="sbtn" data-act="fake" type="button">Use B</button></div>',
           },
           {
             who: "tom",
@@ -1594,8 +1594,8 @@
         tab: "Tracking",
         title: "Add the Meta pixel and track the contact form",
         caption:
-          "Tracking touches your visitors\u2019 privacy, so Sheepdog explains what changes in the cookie banner, tests that nothing loads before consent, and sends the change to Toby with the code.",
-        who: "<strong>Maya</strong> asks. <strong>Sheepdog Tracking</strong> plans it, <strong>QA</strong> tests consent, <strong>Toby</strong> reviews.",
+          "Tracking touches your visitors\u2019 privacy, so Sheepdog explains what changes in the cookie banner, tests that nothing loads before consent, and asks a lead publisher to approve it.",
+        who: "<strong>Maya</strong> asks. <strong>Sheepdog Tracking</strong> plans it, <strong>QA</strong> tests consent, a <strong>lead publisher</strong> approves.",
         thread: "c",
         day: "Wednesday 4 November",
         parent: {
@@ -1619,7 +1619,7 @@
               draft("cms-1104-meta-pixel") +
               '</p><p class="lbl">Contact form</p><p>Google Analytics will record a lead each time someone sends the form successfully. Like your analytics today, it only runs for visitors who accept analytics cookies.</p><p class="lbl">Meta pixel</p><p>The pixel sets advertising cookies, so it can only load after a visitor agrees. Your banner only asks about analytics at the moment, so I\u2019ve added a Marketing option, switched off by default. Anyone who leaves it off never loads the pixel.</p>' +
               shots("consent", "1104-meta-pixel") +
-              '<p class="lbl">I need from you</p><ul><li><span class="confirm">confirm: pixel ID</span> from Meta Events Manager. The preview uses a test ID until then.</li><li>Your privacy policy should mention Meta. I haven\u2019t changed it, because legal pages go to Toby.</li></ul>',
+              '<p class="lbl">I need from you</p><ul><li><span class="confirm">confirm: pixel ID</span> from Meta Events Manager. The preview uses a test ID until then.</li><li>Your privacy policy should mention Meta. I haven\u2019t changed it, because legal wording should come from you.</li></ul>',
           },
           {
             who: "qa",
@@ -1632,7 +1632,7 @@
               ["ok", "Speed 96 before, 94 with the pixel loaded"],
               [
                 "flag",
-                "New script from connect.facebook.net. Expected for this request, and it means Toby reviews the code.",
+                "New script from connect.facebook.net. Expected for this request, and it means a lead publisher approves it.",
               ],
             ]),
           },
@@ -1640,7 +1640,7 @@
             who: "tracking",
             time: "15:10",
             wait: 2000,
-            html: '<p>Tracking changes always go to Toby, so I\u2019ve sent him the code changes with a summary. You\u2019ll hear back in this thread.</p><span class="pill"><i></i>Waiting for Toby</span>',
+            html: '<p>Tracking changes need a lead publisher, so I\u2019ve added a plain summary of the code changes to the preview. Once one of them approves, it goes live.</p><span class="pill"><i></i>Waiting for a lead publisher</span>',
           },
         ],
       },
@@ -1650,7 +1650,7 @@
         title: "Checked, approved, live, and undoable",
         caption:
           "Back in Monday\u2019s thread. The preview has been tested before anyone looks at it. One press and it\u2019s live in under a minute, with Undo on the message for seven days and a record of who asked and who approved.",
-        who: "<strong>Maya</strong> publishes it herself. Toby gets a note and sees every change in the daily digest.",
+        who: "<strong>Maya</strong> publishes it herself.",
         thread: "a",
         day: "Monday 2 November",
         earlier: 3,
@@ -1671,7 +1671,7 @@
               link("1102-winter-supper-club") +
               "</p>" +
               shots("news2", "1102-winter-supper-club") +
-              '<div class="qa-row"><span class="ic ok" aria-hidden="true">✓</span><span>Checks ran again: 15 of 15 passed.</span></div><div class="card"><div class="card-b"><b>Ready to go live</b><p style="margin:4px 0 0">Content changes like this one are yours to publish. Toby gets a note, and Undo stays on the message for 7 days.</p><div class="btns"><button class="sbtn go" data-act="approve" type="button">Approve to go live</button><button class="sbtn" data-act="fake" type="button">Request changes</button><button class="sbtn" data-act="fake" type="button">Discard</button></div></div></div>',
+              '<div class="qa-row"><span class="ic ok" aria-hidden="true">✓</span><span>Checks ran again: 15 of 15 passed.</span></div><div class="card"><div class="card-b"><b>Ready to go live</b><p style="margin:4px 0 0">Content changes like this one are yours to publish. Undo stays on the message for 7 days.</p><div class="btns"><button class="sbtn go" data-act="approve" type="button">Approve to go live</button><button class="sbtn" data-act="fake" type="button">Request changes</button><button class="sbtn" data-act="fake" type="button">Discard</button></div></div></div>',
           },
           {
             who: "publish",

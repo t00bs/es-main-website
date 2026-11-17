@@ -118,10 +118,10 @@ const sheepdogSteps = defineCollection({
   schema: z.object({ number: z.string(), title: z.string(), body: z.string() }),
 });
 
-// Sheepdog safeguards: the four answers under "Can AI update my website safely?".
-const sheepdogSafeguards = defineCollection({
-  loader: file("src/data/sheepdog-safeguards.json"),
-  schema: z.object({ label: z.string(), body: z.string() }),
+// Sheepdog FAQ: the accordion near the foot of the page, also its FAQPage JSON-LD.
+const sheepdogFaqs = defineCollection({
+  loader: file("src/data/sheepdog-faqs.json"),
+  schema: z.object({ question: z.string(), answer: z.string() }),
 });
 
 // Sheepdog benefits: the three outcomes under the demo, one per problem.
@@ -158,6 +158,6 @@ export const collections = {
   sheep,
   sheepdogSteps,
   sheepdogPlans,
-  sheepdogSafeguards,
+  sheepdogFaqs,
   sheepdogBenefits,
 };

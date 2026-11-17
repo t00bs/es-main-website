@@ -7,17 +7,19 @@ import PillBadge from "@/components/Site/PillBadge.astro";
 import Mark from "@/components/Site/Mark.astro";
 import SheepdogDemo from "@/components/Site/SheepdogDemo.astro";
 import Button from "@/components/Button.astro";
+import Accordion from "@/components/Interactive/Accordion.astro";
+import AccordionItem from "@/components/Interactive/AccordionItem.astro";
 import { SITE_URL } from "@/consts.ts";
 import sheepData from "../data/sheep.json";
 import stepsData from "../data/sheepdog-steps.json";
 import plansData from "../data/sheepdog-plans.json";
-import safeguardsData from "../data/sheepdog-safeguards.json";
+import faqsData from "../data/sheepdog-faqs.json";
 import benefitsData from "../data/sheepdog-benefits.json";
 
 const sheep = sheepData;
 const steps = stepsData;
 const plans = plansData;
-const safeguards = safeguardsData;
+const faqs = faqsData;
 const benefits = benefitsData;
 
 // The hero's check row: short, one claim each.
@@ -37,7 +39,7 @@ const schema = {
   name: "Sheepdog",
   serviceType: "Managed website updates",
   description:
-    "A managed website service from Electric Sheep. Your team asks for website changes in Slack, gets a tested preview in minutes and publishes when it's ready. Code and tracking changes are checked by Electric Sheep.",
+    "A managed website service from Electric Sheep. Your team asks for website changes in Slack, gets a tested preview in minutes and publishes when it's ready.",
   url: `${SITE_URL}/sheepdog/`,
   provider: { "@id": `${SITE_URL}/#organization` },
   areaServed: ["Jersey", "United Kingdom"],
@@ -53,6 +55,17 @@ const schema = {
     },
   })),
 };
+
+// FAQPage markup from the same JSON as the accordion.
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: { "@type": "Answer", text: item.answer },
+  })),
+};
 ---
 
 <Layout
@@ -63,6 +76,11 @@ const schema = {
     slot="head"
     type="application/ld+json"
     set:html={JSON.stringify(schema)}
+  />
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(faqSchema)}
   />
 
   {/* Hero: the problem, centred SaaS-style with two actions */}
@@ -147,28 +165,18 @@ const schema = {
     </ol>
   </Section>
 
-  {/* Safety, after the how */}
+  {/* FAQ */}
   <Section containerClass="section-split sd-band-head reveal-block">
-    <h2>Can AI update my website safely?</h2>
-    <div class="sd-answer">
-      <p class="note">
-        Yes, if it can't publish on its own. Sheepdog drafts every change, and
-        someone you've chosen decides what goes live.
-      </p>
-      <ul class="sd-guards">
-        {
-          safeguards.map((item) => (
-            <li class="sd-guard">
-              <span class="sd-guard__head">
-                <Mark kind="yes" />
-                <span class="sd-guard__label">{item.label}</span>
-              </span>
-              <p class="sd-guard__body">{item.body}</p>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
+    <h2>Questions</h2>
+    <Accordion class="sd-faq" openFirst>
+      {
+        faqs.map((item) => (
+          <AccordionItem heading={item.question}>
+            <p>{item.answer}</p>
+          </AccordionItem>
+        ))
+      }
+    </Accordion>
   </Section>
 
   {/* The flock */}
@@ -209,8 +217,7 @@ const schema = {
   <Section containerClass="section-split sd-band-head reveal-block">
     <h2>Still very much human</h2>
     <p class="note">
-      Toby sets up every flock, writes the rules each sheep follows and checks
-      anything that touches code, tracking or your contact details. You can
+      Toby sets up every flock and writes the rules each sheep follows. You can
       still call him, same as always.
     </p>
   </Section>
@@ -423,55 +430,17 @@ const schema = {
       }
     }
 
-    /* The safety answer: a short lead, then four safeguards in one tinted
-       ruled frame, so the answer reads as a checklist, not a paragraph. */
-    .sd-answer {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-6);
-      max-width: 60rem;
+    /* FAQ: the Lumos accordion, kept to a readable measure. */
+    .sd-faq {
+      width: 100%;
+      max-width: 50rem;
+      border-top: var(--border-width) solid var(--border);
     }
-    .sd-guards {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--rule-thin);
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      overflow: hidden;
-      border: var(--rule-thin) solid var(--rule-hairline);
-      border-radius: var(--radius-small);
-      background-color: var(--rule-hairline);
-    }
-    .sd-guard {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-3);
-      padding: var(--card-pad);
-      background-color: color-mix(in lab, var(--text) 5%, var(--background));
-    }
-    .sd-guard__head {
-      display: flex;
-      gap: var(--space-3);
-      align-items: center;
-    }
-    .sd-guard__label {
-      font-family: var(--font-pixel);
-      font-size: var(--h5);
-      letter-spacing: var(--tracking-pixel);
-      color: var(--text);
-    }
-    .sd-guard__body {
+    .sd-faq :global(.accordion_body p) {
+      max-width: 60ch;
       font-size: var(--text-main);
       line-height: var(--line-height-large);
-      /* Secondary copy sits back a step so the titles lead. */
       color: color-mix(in lab, var(--text) 72%, var(--background));
-      text-wrap: pretty;
-    }
-    @media (width < 45rem) {
-      .sd-guards {
-        grid-template-columns: 1fr;
-      }
     }
 
     /* Pricing: three cards in one ruled frame. */
