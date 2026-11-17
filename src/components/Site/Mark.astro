@@ -1,0 +1,48 @@
+---
+// Yes/no mark for lists: a filled disc with a check for good things, an
+// outlined disc with a cross for bad ones. Monochrome on purpose (the site has
+// no accent hue), so fill vs outline carries the meaning. Decorative: the text
+// beside it says the same thing, so it is hidden from screen readers.
+import Icon from "@/components/Media/Icon.astro";
+import check from "@/assets/icons/check.svg";
+import close from "@/assets/icons/close.svg";
+
+interface Props {
+  kind?: "yes" | "no";
+}
+
+const { kind = "yes" } = Astro.props;
+---
+
+<span class:list={["mark", `mark--${kind}`]} aria-hidden="true">
+  <Icon src={kind === "yes" ? check : close} variant="small" />
+</span>
+
+<style>
+  @layer components {
+    .mark {
+      --border-width: 0.125rem;
+      display: inline-grid;
+      flex: none;
+      place-items: center;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+    }
+    .mark--yes {
+      background-color: var(--text);
+      color: var(--background);
+    }
+    .mark--no {
+      box-shadow: inset 0 0 0 var(--rule-thin)
+        color-mix(in lab, var(--text) 55%, var(--background));
+      color: color-mix(in lab, var(--text) 55%, var(--background));
+    }
+    .mark :global(.icon) {
+      --_size: 0.75rem;
+    }
+    .mark--no :global(.icon) {
+      --_size: 0.6rem;
+    }
+  }
+</style>

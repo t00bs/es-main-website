@@ -4,6 +4,7 @@ import Section from "@/components/Wrapper/Section.astro";
 import Grid from "@/components/Wrapper/Grid.astro";
 import PixelLink from "@/components/Site/PixelLink.astro";
 import PillBadge from "@/components/Site/PillBadge.astro";
+import Mark from "@/components/Site/Mark.astro";
 import SheepdogDemo from "@/components/Site/SheepdogDemo.astro";
 import Button from "@/components/Button.astro";
 import { SITE_URL } from "@/consts.ts";
@@ -20,6 +21,14 @@ const plans = plansData;
 const safeguards = safeguardsData;
 const benefits = benefitsData;
 const problems = problemsData;
+
+// The hero's check row: short, one claim each.
+const heroChecks = [
+  "No CMS logins",
+  "Previews in minutes",
+  "Nothing goes live until you publish",
+  "From £195 a month",
+];
 
 // Service + Offer markup, so answer engines read the prices as data. Built
 // from the plans JSON, so it follows the visual editor.
@@ -66,9 +75,8 @@ const schema = {
         Small website changes shouldn't take three days.
       </h1>
       <p class="sd-hero__lede">
-        Ask for website changes in Slack and check a tested preview minutes
-        later. Nobody needs a CMS login, and nothing goes live until you press
-        publish.
+        Ask for website changes in Slack and check a tested preview a few
+        minutes later.
       </p>
       <div class="sd-hero__actions">
         <Button
@@ -80,9 +88,16 @@ const schema = {
           >Play the two-minute demo</Button
         >
       </div>
-      <p class="sd-hero__fine">
-        From £195 a month. Existing clients get three months free.
-      </p>
+      <ul class="sd-hero__checks">
+        {
+          heroChecks.map((text) => (
+            <li>
+              <Mark kind="yes" />
+              {text}
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </Section>
 
@@ -101,7 +116,10 @@ const schema = {
         {
           problems.map((item) => (
             <li class="sd-guard">
-              <span class="sd-guard__label">{item.label}</span>
+              <span class="sd-guard__head">
+                <Mark kind="no" />
+                <span class="sd-guard__label">{item.label}</span>
+              </span>
               <p class="sd-guard__body">{item.body}</p>
             </li>
           ))
@@ -110,8 +128,8 @@ const schema = {
     </div>
   </Section>
 
-  {/* The fix: demo and outcomes */}
-  <Section gap="6">
+  {/* The fix: demo and outcomes, on the light band */}
+  <Section theme="light" gap="6">
     <div class="section-split sd-band-head reveal-block">
       <h2>Your website team, in your team chat</h2>
       <p class="sd-band-lede">
@@ -127,6 +145,7 @@ const schema = {
       {
         benefits.map((item) => (
           <div class="sd-benefit">
+            <Mark kind="yes" />
             <h3 class="sd-benefit__title">{item.title}</h3>
             <p class="sd-benefit__body">{item.body}</p>
           </div>
@@ -169,7 +188,10 @@ const schema = {
         {
           safeguards.map((item) => (
             <li class="sd-guard">
-              <span class="sd-guard__label">{item.label}</span>
+              <span class="sd-guard__head">
+                <Mark kind="yes" />
+                <span class="sd-guard__label">{item.label}</span>
+              </span>
               <p class="sd-guard__body">{item.body}</p>
             </li>
           ))
@@ -247,7 +269,14 @@ const schema = {
               {item.price}
               <span class="sd-tier__period"> {item.period}</span>
             </span>
-            <p class="sd-tier__body">{item.body}</p>
+            <ul class="sd-tier__features">
+              {item.features.map((feature) => (
+                <li>
+                  <Mark kind="yes" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
             <span class="sd-tier__allowance">{item.allowance}</span>
           </div>
         ))
@@ -328,9 +357,21 @@ const schema = {
       gap: var(--space-3);
       margin-top: var(--space-2);
     }
-    .sd-hero__fine {
+    .sd-hero__checks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-3) var(--space-5);
+      margin: var(--space-2) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .sd-hero__checks li {
+      display: inline-flex;
+      gap: var(--space-2);
+      align-items: center;
       font-size: var(--text-small);
-      color: color-mix(in lab, var(--text) 60%, var(--background));
+      color: color-mix(in lab, var(--text) 72%, var(--background));
     }
 
     /* Section head: a plain h2 beside its lede, on the `.section-split` grid. */
@@ -438,6 +479,11 @@ const schema = {
       padding: var(--card-pad);
       background-color: color-mix(in lab, var(--text) 5%, var(--background));
     }
+    .sd-guard__head {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+    }
     .sd-guard__label {
       font-family: var(--font-pixel);
       font-size: var(--h5);
@@ -501,6 +547,22 @@ const schema = {
     .sd-tier__period {
       font-size: var(--text-main);
       opacity: 0.7;
+    }
+    .sd-tier__features {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .sd-tier__features li {
+      display: flex;
+      gap: var(--space-3);
+      align-items: flex-start;
+      font-size: var(--text-main);
+      line-height: var(--line-height-large);
+      color: var(--text);
     }
     .sd-tier__body {
       font-size: var(--text-main);

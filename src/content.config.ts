@@ -148,6 +148,8 @@ const sheepdogPlans = defineCollection({
     amount: z.number(),
     period: z.string(),
     body: z.string(),
+    /* Ticked lines on the pricing card; `body` stays as the JSON-LD description. */
+    features: z.array(z.string()),
     allowance: z.string(),
   }),
 });

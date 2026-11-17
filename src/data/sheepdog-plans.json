@@ -7,6 +7,11 @@
     "amount": 195,
     "period": "a month",
     "body": "The Content and QA sheep, for news, events, team, jobs and page copy.",
+    "features": [
+      "Content Sheep and QA Sheep",
+      "News, events, team, jobs and page copy",
+      "Works in Slack"
+    ],
     "allowance": "Up to 25 requests a month"
   },
   {
@@ -17,6 +22,11 @@
     "amount": 395,
     "period": "a month",
     "body": "Everything in Content, plus the Design & Build and SEO sheep.",
+    "features": [
+      "Everything in Content",
+      "Design & Build Sheep",
+      "SEO Sheep"
+    ],
     "allowance": "Up to 60 requests a month"
   },
   {
@@ -27,6 +37,13 @@
     "amount": 795,
     "period": "a month",
     "body": "Everything in Studio, plus the Tracking sheep, Microsoft Teams, up to three sites and a quarterly review.",
+    "features": [
+      "Everything in Studio",
+      "Tracking Sheep",
+      "Microsoft Teams",
+      "Up to three sites",
+      "Quarterly review"
+    ],
     "allowance": "Up to 120 requests a month"
   }
 ]
