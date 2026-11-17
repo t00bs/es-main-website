@@ -118,13 +118,19 @@ const sheepdogSteps = defineCollection({
   schema: z.object({ number: z.string(), title: z.string(), body: z.string() }),
 });
 
+// Sheepdog problems: the four pain points under "Why do small website changes take so long?".
+const sheepdogProblems = defineCollection({
+  loader: file("src/data/sheepdog-problems.json"),
+  schema: z.object({ label: z.string(), body: z.string() }),
+});
+
 // Sheepdog safeguards: the four answers under "Can AI update my website safely?".
 const sheepdogSafeguards = defineCollection({
   loader: file("src/data/sheepdog-safeguards.json"),
   schema: z.object({ label: z.string(), body: z.string() }),
 });
 
-// Sheepdog benefits: the "What your team gets" columns.
+// Sheepdog benefits: the three outcomes under the demo, one per problem.
 const sheepdogBenefits = defineCollection({
   loader: file("src/data/sheepdog-benefits.json"),
   schema: z.object({ title: z.string(), body: z.string() }),
@@ -158,4 +164,5 @@ export const collections = {
   sheepdogPlans,
   sheepdogSafeguards,
   sheepdogBenefits,
+  sheepdogProblems,
 };

@@ -12,12 +12,14 @@ import stepsData from "../data/sheepdog-steps.json";
 import plansData from "../data/sheepdog-plans.json";
 import safeguardsData from "../data/sheepdog-safeguards.json";
 import benefitsData from "../data/sheepdog-benefits.json";
+import problemsData from "../data/sheepdog-problems.json";
 
 const sheep = sheepData;
 const steps = stepsData;
 const plans = plansData;
 const safeguards = safeguardsData;
 const benefits = benefitsData;
+const problems = problemsData;
 
 // Service + Offer markup, so answer engines read the prices as data. Built
 // from the plans JSON, so it follows the visual editor.
@@ -56,43 +58,38 @@ const schema = {
     set:html={JSON.stringify(schema)}
   />
 
-  {/* Hero */}
+  {/* Hero: the problem */}
   <Section paddingBottom="small" containerClass="reveal-block">
     <div class="sd-hero">
       <div class="sd-hero__title">
         <p class="sd-eyebrow">Sheepdog</p>
-        <h1>Your website team, in your team chat.</h1>
+        <h1>Small website changes shouldn't take three days.</h1>
       </div>
       <div class="sd-hero__aside">
         <p class="sd-hero__lede">
-          Ask for a website change in Slack, the way you'd message a colleague.
-          Minutes later you have a tested preview to check, and nothing goes
-          live until you press publish.
+          Adding an event means finding the one person with the login and hoping
+          the layout survives. The alternative is emailing your agency and
+          waiting. Sheepdog fixes that from your team chat.
         </p>
         <Button id="sd-watch">Play the two-minute demo</Button>
       </div>
     </div>
   </Section>
 
-  {/* Demo */}
-  <Section paddingTop="small">
-    <SheepdogDemo />
-  </Section>
-
-  {/* The question */}
+  {/* The problem, as the reader's question */}
   <Section
     containerClass="section-split sd-band-head reveal-block"
     paddingTop="small"
   >
-    <h2>Can AI update my website safely?</h2>
+    <h2>Why do small website changes take so long?</h2>
     <div class="sd-answer">
       <p class="note">
-        Yes, if it can't publish on its own. Sheepdog drafts every change, and
-        someone you've chosen decides what goes live.
+        Most of the team never learned the CMS, so changes either wait for the
+        one person who did or join the agency's queue.
       </p>
       <ul class="sd-guards">
         {
-          safeguards.map((item) => (
+          problems.map((item) => (
             <li class="sd-guard">
               <span class="sd-guard__label">{item.label}</span>
               <p class="sd-guard__body">{item.body}</p>
@@ -103,9 +100,19 @@ const schema = {
     </div>
   </Section>
 
-  {/* What your team gets */}
+  {/* The fix: demo and outcomes */}
   <Section gap="6">
-    <h2 class="reveal-block">What your team gets</h2>
+    <div class="section-split sd-band-head reveal-block">
+      <h2>Your website team, in your team chat</h2>
+      <p class="sd-band-lede">
+        Post the change in Slack the way you'd message a colleague. Sheepdog
+        makes it on a private copy of your site and sends a tested preview back
+        to the thread. When it looks right, you press publish.
+      </p>
+    </div>
+    <div class="width-full">
+      <SheepdogDemo />
+    </div>
     <Grid xsmall={1} small={3} large={3} class="width-full reveal-group">
       {
         benefits.map((item) => (
@@ -138,6 +145,27 @@ const schema = {
         ))
       }
     </ol>
+  </Section>
+
+  {/* Safety, after the how */}
+  <Section containerClass="section-split sd-band-head reveal-block">
+    <h2>Can AI update my website safely?</h2>
+    <div class="sd-answer">
+      <p class="note">
+        Yes, if it can't publish on its own. Sheepdog drafts every change, and
+        someone you've chosen decides what goes live.
+      </p>
+      <ul class="sd-guards">
+        {
+          safeguards.map((item) => (
+            <li class="sd-guard">
+              <span class="sd-guard__label">{item.label}</span>
+              <p class="sd-guard__body">{item.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </Section>
 
   {/* The flock */}

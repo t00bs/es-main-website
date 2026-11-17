@@ -1,0 +1,22 @@
+[
+  {
+    "id": "login",
+    "label": "Who has the login?",
+    "body": "The person who knows how to add an event is on holiday, or left in March."
+  },
+  {
+    "id": "queue",
+    "label": "Days for one line",
+    "body": "You email the agency, wait your turn, then check the change and ask again."
+  },
+  {
+    "id": "click",
+    "label": "One wrong click",
+    "body": "We've seen a client change an event date, press publish and watch the event disappear from the site."
+  },
+  {
+    "id": "training",
+    "label": "Back to square one",
+    "body": "Every new starter needs CMS training, and the how-to doc is always out of date."
+  }
+]
