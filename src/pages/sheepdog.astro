@@ -6,6 +6,7 @@ import PixelLink from "@/components/Site/PixelLink.astro";
 import PillBadge from "@/components/Site/PillBadge.astro";
 import Mark from "@/components/Site/Mark.astro";
 import SheepdogDemo from "@/components/Site/SheepdogDemo.astro";
+import SheepdogEnquiry from "@/components/Site/SheepdogEnquiry.astro";
 import Button from "@/components/Button.astro";
 import Accordion from "@/components/Interactive/Accordion.astro";
 import AccordionItem from "@/components/Interactive/AccordionItem.astro";
@@ -95,9 +96,7 @@ const faqSchema = {
         minutes later.
       </p>
       <div class="sd-hero__actions">
-        <Button
-          element="link"
-          href="mailto:hello@electricsheep.design?subject=Sheepdog"
+        <Button element="link" href="#sheepdog-enquiry"
           >Ask about Sheepdog</Button
         >
         <Button id="sd-watch" emphasis="secondary"
@@ -270,15 +269,14 @@ const faqSchema = {
 
   {/* Next step */}
   <Section containerClass="px-hover reveal-block gap-3">
-    <PixelLink
-      href="mailto:hello@electricsheep.design?subject=Sheepdog"
-      color="var(--text)"
-      fontSize={24}>Ask about Sheepdog</PixelLink
+    <PixelLink href="#sheepdog-enquiry" color="var(--text)" fontSize={24}
+      >Ask about Sheepdog</PixelLink
     >
     <PixelLink href="/contact" color="var(--text)" fontSize={24}
       >Start a conversation</PixelLink
     >
   </Section>
+  <SheepdogEnquiry />
 </Layout>
 
 <style>

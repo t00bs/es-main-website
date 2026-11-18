@@ -13,6 +13,11 @@ interface Props extends HTMLAttributes<"form"> {
   successMessage?: string;
   /** Shown beneath the fields when it could not send. */
   errorMessage?: string;
+  /**
+   * reCAPTCHA v3 site key. When set, the form loads Google's script on first
+   * use and sends a token as `g-recaptcha-response` with every submission.
+   */
+  recaptcha?: string;
 }
 
 const {
@@ -21,6 +26,7 @@ const {
   action,
   successMessage = "Thanks — we will be in touch.",
   errorMessage = "That did not send. Please try again.",
+  recaptcha,
   method = "post",
   class: className,
   ...rest
@@ -35,6 +41,7 @@ const content = await slotContent(Astro.slots);
       class:list={["form_wrap", className]}
       data-state="idle"
       data-endpoint={action}
+      data-recaptcha={recaptcha}
     >
       <form
         class="form_fields"
@@ -44,6 +51,18 @@ const content = await slotContent(Astro.slots);
         {...rest}
       >
         <Fragment set:html={content} />
+        {/* Spam trap: people never see or fill this; bots usually do. */}
+        <div class="form_trap" aria-hidden="true">
+          <label>
+            Leave this empty
+            <input
+              type="text"
+              name="website"
+              tabindex="-1"
+              autocomplete="off"
+            />
+          </label>
+        </div>
       </form>
 
       <p class="form_note form_note-sent text-style-main" role="status">
@@ -57,9 +76,42 @@ const content = await slotContent(Astro.slots);
 }
 
 <script>
+  type Grecaptcha = {
+    ready: (callback: () => void) => void;
+    execute: (key: string, options: { action: string }) => Promise<string>;
+  };
+  const loaded = Date.now();
+  let recaptchaScript: Promise<Grecaptcha> | undefined;
+
+  // Google's script loads on first use, not with the page.
+  const loadRecaptcha = (key: string) =>
+    (recaptchaScript ??= new Promise<Grecaptcha>((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(key)}`;
+      script.async = true;
+      script.onload = () => {
+        const g = (window as unknown as { grecaptcha: Grecaptcha }).grecaptcha;
+        g.ready(() => resolve(g));
+      };
+      script.onerror = () => {
+        recaptchaScript = undefined;
+        reject(new Error("reCAPTCHA did not load"));
+      };
+      document.head.append(script);
+    }));
+
   for (const form of document.querySelectorAll<HTMLElement>(".form_wrap")) {
     const fields = form.querySelector<HTMLFormElement>(".form_fields");
     if (!fields) continue;
+    const recaptcha = form.dataset.recaptcha;
+
+    if (recaptcha) {
+      fields.addEventListener(
+        "focusin",
+        () => loadRecaptcha(recaptcha).catch(() => {}),
+        { once: true },
+      );
+    }
 
     const submit = fields.querySelector<HTMLButtonElement | HTMLInputElement>(
       'button:not([type]), button[type="submit"], input[type="submit"]',
@@ -75,10 +127,25 @@ const content = await slotContent(Astro.slots);
       if (submit) submit.disabled = true;
 
       try {
-        if (endpoint) {
+        const body = new FormData(fields);
+        // A filled trap, or a submit within 3 s of load, is a bot: look sent,
+        // send nothing.
+        const bot =
+          String(body.get("website") ?? "") !== "" ||
+          Date.now() - loaded < 3000;
+        body.delete("website");
+
+        if (endpoint && !bot) {
+          if (recaptcha) {
+            const g = await loadRecaptcha(recaptcha);
+            body.set(
+              "g-recaptcha-response",
+              await g.execute(recaptcha, { action: "submit" }),
+            );
+          }
           const answer = await fetch(endpoint, {
             method: fields.method || "post",
-            body: new FormData(fields),
+            body,
             headers: { Accept: "application/json" },
           });
           if (!answer.ok) throw new Error(String(answer.status));
@@ -108,6 +175,20 @@ const content = await slotContent(Astro.slots);
       gap: var(--space-5);
       row-gap: var(--space-8);
       column-gap: var(--space-8);
+    }
+
+    .form_trap {
+      position: absolute;
+      left: -10000px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    /* The reCAPTCHA badge is hidden; forms using it carry Google's notice
+       in their own fine print instead, as Google's terms allow. */
+    .grecaptcha-badge {
+      visibility: hidden;
     }
 
     .form_note {

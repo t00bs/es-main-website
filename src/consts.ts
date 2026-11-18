@@ -57,3 +57,15 @@ export const WORK_TAG_SINGULAR: Record<string, string> = {
   "design-automation": "Design & Automation",
   portals: "Portal",
 };
+
+/**
+ * Sheepdog enquiry form (ElectricForms "Electric Sheep - Sheepdog enquiry").
+ * Notifications go to toby@electricsheep.design. reCAPTCHA is enforced on it.
+ */
+export const SHEEPDOG_FORM_ENDPOINT =
+  "https://electricforms.replit.app/api/submit/d806d7f8-afe0-447b-9c7a-a49dc3648aec";
+/**
+ * reCAPTCHA v3 site key ("Electric Sheep website"), registered for
+ * electricsheep.design, es-staging.esdev.co.uk and localhost.
+ */
+export const RECAPTCHA_SITE_KEY = "6LcGtSYuAAAAALvZOBanplugSwbXMfCA6D3QK5xV";
