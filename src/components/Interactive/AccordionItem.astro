@@ -107,8 +107,47 @@ const content = await slotContent(Astro.slots);
       content-visibility: visible;
     }
 
+    /* The content box clips while it animates open. Lumos trims each p up to
+       its cap height, so the first line's ascenders sit above the box edge:
+       pad the top so they aren't cut off, and take the same off the toggle. */
+    .accordion_item[open] > .accordion_toggle {
+      padding-bottom: var(--space-3);
+    }
     .accordion_body {
+      padding-top: var(--space-2);
       padding-bottom: var(--space-5);
+    }
+
+    /* Focus ring: keyboard only, drawn inside the row so it doesn't cross the
+       rules. A mouse or touch press on the toggle shows no ring. */
+    .accordion_toggle:focus-visible {
+      /* Room either side so the ring clears the title and the arrow, with
+         the negative margin keeping both aligned to the rules. */
+      margin-inline: calc(var(--space-3) * -1);
+      padding-inline: var(--space-3);
+      outline-offset: calc(var(--focus-width) * -1);
+      border-radius: var(--radius-small);
+    }
+    .accordion_item[data-pointer] > .accordion_toggle:focus-visible {
+      outline: none;
     }
   }
 </style>
+
+<script>
+  // Mark presses made with a pointer so the focus ring stays for keyboards.
+  for (const toggle of document.querySelectorAll<HTMLElement>(
+    ".accordion_toggle",
+  )) {
+    const item = toggle.parentElement as HTMLElement;
+    toggle.addEventListener("pointerdown", () => {
+      item.dataset.pointer = "";
+    });
+    toggle.addEventListener("keydown", () => {
+      delete item.dataset.pointer;
+    });
+    toggle.addEventListener("blur", () => {
+      delete item.dataset.pointer;
+    });
+  }
+</script>
